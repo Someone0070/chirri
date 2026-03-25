@@ -12,13 +12,16 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx packages/shared/src/db/seed.ts",
-    "db:migrate:test": "drizzle-kit migrate && psql $DATABASE_URL -f migrations/sql/001_partitions.sql"
+    "db:migrate:test": "drizzle-kit migrate && psql $DATABASE_URL -f migrations/sql/001_partitions.sql",
+    "test:mcp": "npx tsx scripts/test-mcp-wayback.ts",
+    "test:mcp:live": "npx tsx scripts/test-mcp-wayback.ts --live"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^2.1.0",
     "drizzle-kit": "^0.31.4",
     "eslint": "^9.0.0",
+    "mcp-wayback-machine": "^2.0.0",
     "prettier": "^3.4.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",

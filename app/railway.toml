@@ -1,0 +1,13 @@
+# Railway multi-service configuration
+# NOTE: Railway doesn't natively support multiple services in a single
+# railway.toml. Each service is configured separately in the Railway
+# dashboard. This file documents the intended configuration.
+# See docs/railway-deploy.md for full setup instructions.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
