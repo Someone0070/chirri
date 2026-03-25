@@ -118,6 +118,14 @@ export function getDb(): Database.Database {
     );
     CREATE INDEX IF NOT EXISTS idx_section_latest ON section_snapshots(url, resource_key, fetched_at DESC);
   `);
+
+  // Migration: add fetch_tier column if it doesn't exist
+  try {
+    _db.exec(`ALTER TABLE snapshots ADD COLUMN fetch_tier INTEGER NOT NULL DEFAULT 0`);
+  } catch {
+    // Column already exists — ignore
+  }
+
   return _db;
 }
 
@@ -167,13 +175,14 @@ export function storeSnapshot(data: {
   structuralDom: string;
   textOnly: string;
   fetchMethod: string;
+  fetchTier?: number;
   fetchTimeMs: number;
   error?: string | null;
 }): number {
   const db = getDb();
   const stmt = db.prepare(`
-    INSERT INTO snapshots (url, raw_html, readability_text, structural_dom, text_only, fetch_method, fetch_time_ms, error)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO snapshots (url, raw_html, readability_text, structural_dom, text_only, fetch_method, fetch_tier, fetch_time_ms, error)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const result = stmt.run(
     data.url,
@@ -182,6 +191,7 @@ export function storeSnapshot(data: {
     data.structuralDom,
     data.textOnly,
     data.fetchMethod,
+    data.fetchTier || 0,
     data.fetchTimeMs,
     data.error || null
   );

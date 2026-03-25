@@ -22,7 +22,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { fetchUrl, type FetchResult } from './fetcher.js';
+import { fetchUrl, type FetchResult, tier3Needed } from './fetcher.js';
 import { storeSnapshot, getLatestSnapshot, getSnapshotCount, closeDb } from './snapshot.js';
 import { diffAll, shouldReport, getBestDiff, type DiffResult, type DiffStrategy } from './differ.js';
 import { generateTextReport, generateJsonReport, type UrlReport, type FullReport } from './report.js';
@@ -187,7 +187,8 @@ async function processUrls(
       const snapshotCount = getSnapshotCount(entry.url);
       const previousSnapshot = snapshotCount > 0 ? getLatestSnapshot(entry.url) : null;
 
-      // Store new snapshot
+      // Store new snapshot (with tier info)
+      const tierLabel = `T${fetchResult.fetchTier}`;
       storeSnapshot({
         url: entry.url,
         rawHtml: fetchResult.rawHtml,
@@ -195,6 +196,7 @@ async function processUrls(
         structuralDom: fetchResult.structuralDom,
         textOnly: fetchResult.textOnly,
         fetchMethod: fetchResult.fetchMethod,
+        fetchTier: fetchResult.fetchTier,
         fetchTimeMs: fetchResult.fetchTimeMs,
         error: fetchResult.error,
       });
@@ -236,9 +238,9 @@ async function processUrls(
           diffs = votingResult.diffs;
 
           if (votingResult.votes > 0) {
-            console.log(`  ${formatVotingResult(votingResult, true)} (${fetchResult.fetchTimeMs}ms)`);
+            console.log(`  ${formatVotingResult(votingResult, true)} [${tierLabel}] (${fetchResult.fetchTimeMs}ms)`);
           } else {
-            console.log(`  ✨ No changes — 0/4 votes (${fetchResult.fetchTimeMs}ms)`);
+            console.log(`  ✨ No changes — 0/4 votes [${tierLabel}] (${fetchResult.fetchTimeMs}ms)`);
           }
 
           // Store voting metadata on the report
@@ -261,7 +263,7 @@ async function processUrls(
         const changedStrategies = diffs.filter(d => d.changed).map(d => d.strategy);
         if (changedStrategies.length > 0) {
           const reportStatus = reportDecision.report ? '📢 REPORTABLE' : '🔇 suppressed (noise)';
-          console.log(`  🔄 Changes detected via: ${changedStrategies.join(', ')} [${reportStatus}] (${fetchResult.fetchTimeMs}ms)`);
+          console.log(`  🔄 Changes detected via: ${changedStrategies.join(', ')} [${reportStatus}] [${tierLabel}] (${fetchResult.fetchTimeMs}ms)`);
           if (reportDecision.reasons.length > 0) {
             for (const reason of reportDecision.reasons) {
               console.log(`     → ${reason}`);
@@ -299,11 +301,11 @@ async function processUrls(
             console.log(`  🔗 Layer 5: ${correlation.message}`);
           }
         } else {
-          console.log(`  ✨ No changes (${fetchResult.fetchTimeMs}ms)`);
+          console.log(`  ✨ No changes [${tierLabel}] (${fetchResult.fetchTimeMs}ms)`);
         }
         } // end legacy pipeline else
       } else {
-        console.log(`  📸 First snapshot stored (${fetchResult.fetchTimeMs}ms)`);
+        console.log(`  📸 First snapshot stored [${tierLabel}] (${fetchResult.fetchTimeMs}ms)`);
       }
 
       // Layer 3: Calculate stability
@@ -415,6 +417,7 @@ async function runSectionExtraction(
         structuralDom: fetchResult.structuralDom,
         textOnly: fetchResult.textOnly,
         fetchMethod: fetchResult.fetchMethod,
+        fetchTier: fetchResult.fetchTier,
         fetchTimeMs: fetchResult.fetchTimeMs,
       });
       continue;
@@ -601,6 +604,14 @@ async function main() {
   }
 
   console.log(`\n⏱️  Total time: ${(elapsed / 1000).toFixed(1)}s`);
+
+  // Tier summary
+  if (tier3Needed.length > 0) {
+    console.log(`\n⚠️  Tier 3 needed for ${tier3Needed.length} URL(s):`);
+    for (const t of tier3Needed) {
+      console.log(`   ${t.url} (${t.textLength} chars)`);
+    }
+  }
 
   closeDb();
 }
