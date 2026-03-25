@@ -1,0 +1,21 @@
+{
+  "id": "auth0-01",
+  "source": "Auth0 Changelog",
+  "title": "Token endpoint now requires PKCE for public clients",
+  "date": "2026-02-10",
+  "raw_changelog": "Starting April 1, 2026, the /oauth/token endpoint requires PKCE (code_verifier) for all public clients.",
+  "before_text": "## Token Endpoint\n\nPOST /oauth/token\n\n### Public Clients\nPublic clients (no client_secret) can exchange authorization codes without PKCE.\n\n```\nPOST /oauth/token\n{\n  \"grant_type\": \"authorization_code\",\n  \"client_id\": \"xxx\",\n  \"code\": \"abc\",\n  \"redirect_uri\": \"https://app.example.com/callback\"\n}\n```",
+  "after_text": "## Token Endpoint\n\nPOST /oauth/token\n\n### Public Clients\nPublic clients (no client_secret) MUST include PKCE parameters when exchanging authorization codes.\n\n```\nPOST /oauth/token\n{\n  \"grant_type\": \"authorization_code\",\n  \"client_id\": \"xxx\",\n  \"code\": \"abc\",\n  \"redirect_uri\": \"https://app.example.com/callback\",\n  \"code_verifier\": \"dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk\"\n}\n```\n\n**Breaking Change (April 1, 2026):** Requests without code_verifier will return 400 Bad Request.",
+  "diff_text": "--- before\n+++ after\n@@ -4,12 +4,15 @@\n ### Public Clients\n-Public clients (no client_secret) can exchange authorization codes without PKCE.\n+Public clients (no client_secret) MUST include PKCE parameters.\n \n POST /oauth/token\n {\n   ...\n-  \"redirect_uri\": \"https://app.example.com/callback\"\n+  \"redirect_uri\": \"https://app.example.com/callback\",\n+  \"code_verifier\": \"dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk\"\n }\n+\n+**Breaking Change (April 1, 2026):** Requests without code_verifier will return 400 Bad Request.",
+  "ground_truth": {
+    "severity": "critical",
+    "is_breaking": true,
+    "breaking_reason": "code_verifier becomes required. Public clients not using PKCE will get 400 errors.",
+    "affected_endpoints": [
+      "POST /oauth/token"
+    ],
+    "action_required": "Implement PKCE flow in all public clients. Add code_challenge to authorization requests and code_verifier to token requests. Deadline: April 1, 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Clear breaking change with new required parameter"
+  }
+}

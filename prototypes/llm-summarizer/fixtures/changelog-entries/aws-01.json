@@ -1,0 +1,21 @@
+{
+  "id": "aws-01",
+  "source": "AWS Service Announcements",
+  "title": "Amazon S3 now requires virtual-hosted-style requests",
+  "date": "2026-03-01",
+  "raw_changelog": "Amazon S3 will stop supporting path-style API requests on September 30, 2026. All requests must use virtual-hosted-style.",
+  "before_text": "## S3 Request Styles\n\n### Path Style (supported)\nhttps://s3.amazonaws.com/bucket-name/key-name\n\n### Virtual Hosted Style (supported)\nhttps://bucket-name.s3.amazonaws.com/key-name\n\nBoth styles are supported for all S3 operations.",
+  "after_text": "## S3 Request Styles\n\n### Path Style (DEPRECATED - removed September 30, 2026)\nhttps://s3.amazonaws.com/bucket-name/key-name\n\n### Virtual Hosted Style (required)\nhttps://bucket-name.s3.amazonaws.com/key-name\n\n**Breaking Change:** Path-style requests will return 403 Forbidden after September 30, 2026. Migrate to virtual-hosted-style requests.",
+  "diff_text": "--- before\n+++ after\n@@ -1,9 +1,9 @@\n ## S3 Request Styles\n \n-### Path Style (supported)\n+### Path Style (DEPRECATED - removed September 30, 2026)\n https://s3.amazonaws.com/bucket-name/key-name\n \n-### Virtual Hosted Style (supported)\n+### Virtual Hosted Style (required)\n https://bucket-name.s3.amazonaws.com/key-name\n \n-Both styles are supported for all S3 operations.\n+**Breaking Change:** Path-style requests will return 403 Forbidden after September 30, 2026.",
+  "ground_truth": {
+    "severity": "critical",
+    "is_breaking": true,
+    "breaking_reason": "Path-style S3 requests will stop working. Applications using path-style URLs will receive 403 errors.",
+    "affected_endpoints": [
+      "All S3 API endpoints"
+    ],
+    "action_required": "Migrate all S3 requests to virtual-hosted-style URLs. Update AWS SDK to latest version. Deadline: September 30, 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Major breaking change with clear deadline"
+  }
+}

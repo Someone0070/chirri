@@ -1,0 +1,21 @@
+{
+  "id": "aws-02",
+  "source": "AWS Service Announcements",
+  "title": "Lambda adds support for Node.js 22 runtime",
+  "date": "2026-02-15",
+  "raw_changelog": "AWS Lambda now supports Node.js 22 as a managed runtime.",
+  "before_text": "## Lambda Runtimes\n\n### Supported Node.js Runtimes\n| Runtime | Identifier | End of Support |\n|---------|-----------|----------------|\n| Node.js 20 | nodejs20.x | March 2026 |\n| Node.js 18 | nodejs18.x | September 2025 (deprecated) |",
+  "after_text": "## Lambda Runtimes\n\n### Supported Node.js Runtimes\n| Runtime | Identifier | End of Support |\n|---------|-----------|----------------|\n| Node.js 22 | nodejs22.x | April 2027 |\n| Node.js 20 | nodejs20.x | March 2026 |\n| Node.js 18 | nodejs18.x | September 2025 (deprecated) |",
+  "diff_text": "--- before\n+++ after\n@@ -5,6 +5,7 @@\n |---------|-----------|----------------|\n+| Node.js 22 | nodejs22.x | April 2027 |\n | Node.js 20 | nodejs20.x | March 2026 |",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "AWS Lambda"
+    ],
+    "action_required": "Consider migrating to Node.js 22 runtime, especially since Node.js 20 support ends March 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Additive new runtime option"
+  }
+}

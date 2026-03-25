@@ -1,0 +1,21 @@
+{
+  "id": "twilio-05",
+  "source": "Twilio Changelog",
+  "title": "ConversationRelay widget now available in Studio",
+  "date": "2026-03-06",
+  "raw_changelog": "Studio now includes a ConversationRelay widget for connecting live voice calls to WebSocket servers.",
+  "before_text": "## Studio Widgets\n\n### Available Widgets\n- Say/Play\n- Gather Input\n- Send Message\n- HTTP Request\n- Split Based On\n- Connect Call\n- Enqueue Call\n- Set Variables",
+  "after_text": "## Studio Widgets\n\n### Available Widgets\n- Say/Play\n- Gather Input\n- Send Message\n- HTTP Request\n- Split Based On\n- Connect Call\n- Enqueue Call\n- Set Variables\n- ConversationRelay (NEW)\n  - Connects voice calls to WebSocket servers\n  - Supports custom parameters and voice controls\n  - Provides Success and Failed transitions",
+  "diff_text": "--- before\n+++ after\n@@ -9,3 +9,7 @@\n - Enqueue Call\n - Set Variables\n+- ConversationRelay (NEW)\n+  - Connects voice calls to WebSocket servers\n+  - Supports custom parameters and voice controls\n+  - Provides Success and Failed transitions",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Twilio Studio"
+    ],
+    "action_required": "No action required. New widget available for connecting voice calls to WebSocket servers.",
+    "cosmetic_only": false,
+    "confidence_notes": "Purely additive new feature"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "vercel-02",
+  "source": "Vercel Changelog",
+  "title": "Sandbox SDK adds file permission control",
+  "date": "2026-03-20",
+  "raw_changelog": "Vercel Sandbox SDK 1.9.0 supports setting file permissions when writing files via mode property.",
+  "before_text": "## Sandbox SDK - writeFiles\n\n```javascript\nsandbox.writeFiles([\n  { path: 'run.sh', content: '#!/bin/bash\\necho \"ready\"' }\n]);\n```\n\nNote: To make files executable, use a separate chmod call after writing.",
+  "after_text": "## Sandbox SDK - writeFiles\n\n```javascript\nsandbox.writeFiles([\n  { path: 'run.sh', content: '#!/bin/bash\\necho \"ready\"', mode: 0o755 }\n]);\n```\n\nThe optional `mode` property sets file permissions directly, eliminating the need for a separate chmod call.",
+  "diff_text": "--- before\n+++ after\n@@ -3,6 +3,6 @@\n sandbox.writeFiles([\n-  { path: 'run.sh', content: '#!/bin/bash\\necho \"ready\"' }\n+  { path: 'run.sh', content: '#!/bin/bash\\necho \"ready\"', mode: 0o755 }\n ]);\n \n-Note: To make files executable, use a separate chmod call after writing.\n+The optional `mode` property sets file permissions directly.",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Sandbox SDK writeFiles"
+    ],
+    "action_required": "No action required. New optional mode property available for setting file permissions.",
+    "cosmetic_only": false,
+    "confidence_notes": "Additive optional parameter"
+  }
+}

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyoto Studio — Chirri Design System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            kinari:     '#FAF7F2',
+            shironeri:  '#F3EEE8',
+            torinoko:   '#EBE5DC',
+            kurocha:    '#2C2825',
+            nibi:       '#7A756F',
+            nezumi:     '#A6A09A',
+            ai:         '#3D5167',
+            kachi:      '#2E3E50',
+            aijiro:     '#E8EDF2',
+            tobi:       '#C07856',
+            sakura:     '#D4A0A7',
+            usuzakura:  '#F0E0E3',
+            enji:       '#B5495B',
+            aka:        '#C43D3D',
+            kaki:       '#D47A3D',
+            ukon:       '#C4A43D',
+            matsu:      '#5B8A5B',
+            hanada:     '#5B7B94',
+            'sev-crit-bg': '#FDF2F2',
+            'sev-high-bg': '#FDF6F0',
+            'sev-med-bg':  '#FDFAF0',
+            'sev-low-bg':  '#F0F7F0',
+            'sev-info-bg': '#F0F4F7',
+            'border-subtle':  '#E8E2DA',
+            'border-default': '#D4CEC6',
+            'border-strong':  '#A09A92',
+            yoru:       '#1E1C1A',
+            yorucard:   '#2A2725',
+            yoruborder: '#3D3935',
+          },
+          fontFamily: {
+            ui:      ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"Noto Serif JP"', '"Noto Serif"', 'Georgia', 'serif'],
+            mono:    ['"JetBrains Mono"', '"Fira Code"', '"SF Mono"', 'monospace'],
+          },
+          borderRadius: {
+            chirri:    '3px',
+            'chirri-md': '6px',
+            'chirri-lg': '10px',
+          },
+          boxShadow: {
+            'warm-sm': '0 1px 2px rgba(44, 40, 37, 0.06)',
+            'warm-md': '0 2px 8px rgba(44, 40, 37, 0.08)',
+            'warm-lg': '0 4px 16px rgba(44, 40, 37, 0.10)',
+            'warm-xl': '0 8px 32px rgba(44, 40, 37, 0.12)',
+          },
+          fontSize: {
+            'chirri-xs':  ['0.75rem',   { lineHeight: '1.3' }],
+            'chirri-sm':  ['0.8125rem', { lineHeight: '1.6' }],
+            'chirri-base':['0.9375rem', { lineHeight: '1.6' }],
+            'chirri-md':  ['1.0625rem', { lineHeight: '1.6' }],
+            'chirri-lg':  ['1.25rem',   { lineHeight: '1.3' }],
+            'chirri-xl':  ['1.625rem',  { lineHeight: '1.3' }],
+            'chirri-2xl': ['2.25rem',   { lineHeight: '1.2' }],
+            'chirri-3xl': ['3.25rem',   { lineHeight: '1.1' }],
+          },
+          letterSpacing: {
+            chirri:    '0.04em',
+            'chirri-wide': '0.08em',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Washi paper texture */
+    .washi-bg {
+      background-color: #FAF7F2;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* Dark washi */
+    .washi-dark {
+      background-color: #2D2A26;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    }
+
+    /* Petal SVG */
+    .petal {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Petal drift animation */
+    @keyframes petal-drift {
+      0% { transform: translateY(-10px) rotate(0deg) scale(1); opacity: 0; }
+      10% { opacity: 0.7; }
+      50% { transform: translateY(30px) rotate(45deg) scale(0.95); opacity: 0.5; }
+      100% { transform: translateY(80px) rotate(120deg) scale(0.8); opacity: 0; }
+    }
+
+    @keyframes petal-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .petal-animate {
+      animation: petal-drift 6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    }
+
+    .petal-pulse {
+      animation: petal-pulse 3s ease-in-out infinite;
+    }
+
+    /* Severity pulse */
+    @keyframes dot-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212, 160, 167, 0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(212, 160, 167, 0); }
+    }
+
+    .dot-chirp {
+      animation: dot-pulse 2s ease-in-out infinite;
+    }
+
+    /* Smooth transitions */
+    .transition-warm {
+      transition: all 200ms cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    }
+
+    /* Custom checkbox */
+    .checkbox-warm {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #D4CEC6;
+      border-radius: 3px;
+      background: white;
+      cursor: pointer;
+      position: relative;
+      transition: all 200ms ease;
+    }
+    .checkbox-warm:checked {
+      background: #3D5167;
+      border-color: #3D5167;
+    }
+    .checkbox-warm:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 5px;
+      height: 9px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .checkbox-warm:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(61, 81, 103, 0.3);
+    }
+
+    /* Custom radio */
+    .radio-warm {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #D4CEC6;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      position: relative;
+      transition: all 200ms ease;
+    }
+    .radio-warm:checked {
+      border-color: #3D5167;
+    }
+    .radio-warm:checked::after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #3D5167;
+    }
+    .radio-warm:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(61, 81, 103, 0.3);
+    }
+
+    /* Toggle */
+    .toggle-track {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      background: #C4BEB6;
+      position: relative;
+      cursor: pointer;
+      transition: background 300ms cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    }
+    .toggle-track.active {
+      background: #3D5167;
+    }
+    .toggle-knob {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: transform 300ms cubic-bezier(0.25, 0.1, 0.25, 1.0);
+      box-shadow: 0 1px 3px rgba(44, 40, 37, 0.15);
+    }
+    .toggle-track.active .toggle-knob {
+      transform: translateX(16px);
+    }
+
+    /* Custom select */
+    .select-warm {
+      appearance: none;
+      background: #FAFAF8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A756F' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+      padding-right: 36px;
+      border-color: #E8E6E1 !important;
+      box-shadow: 0 2px 8px rgba(44, 40, 37, 0.08);
+      border-radius: 10px !important;
+    }
+    .select-warm option {
+      background: #FAFAF8;
+      color: #2C2825;
+      padding: 8px 12px;
+    }
+    .select-warm option:hover,
+    .select-warm option:checked {
+      background: #F5F3EE;
+    }
+
+    /* Section divider */
+    .section-label {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      color: #A6A09A;
+    }
+
+    /* Ink underline for tabs */
+    .tab-active {
+      border-bottom: 2px solid #2C2825;
+      color: #2C2825;
+      font-weight: 500;
+    }
+
+    /* Petal SVG inline */
+    .petal-svg {
+      fill: #D4A0A7;
+      opacity: 0.6;
+    }
+
+    /* Toast slide in */
+    @keyframes toast-in {
+      0% { transform: translateX(100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    .toast-animate {
+      animation: toast-in 0.4s cubic-bezier(0, 0, 0.2, 1) forwards;
+    }
+  </style>
+</head>
+<body class="washi-bg font-ui text-kurocha antialiased">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HERO / TITLE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <header class="max-w-6xl mx-auto px-8 pt-20 pb-16">
+    <div class="flex items-center gap-3 mb-6">
+      <span class="font-display text-chirri-sm tracking-chirri-wide text-nezumi uppercase">Chirri Design System</span>
+      <span class="text-nezumi">—</span>
+      <span class="font-display text-chirri-sm tracking-chirri-wide text-nezumi uppercase">Direction D</span>
+    </div>
+    <h1 class="font-display font-light text-chirri-3xl tracking-tight text-kurocha leading-none mb-6">
+      Kyoto Studio
+    </h1>
+    <p class="text-chirri-md text-nibi max-w-2xl leading-relaxed">
+      95% warm Japanese minimalism. 5% sakura petal moments.<br>
+      The Japanese-ness comes from <em class="font-display not-italic">space</em>, <em class="font-display not-italic">texture</em>, and <em class="font-display not-italic">proportion</em> — not from pink.
+    </p>
+    <div class="mt-8 flex items-center gap-3 text-chirri-xs text-nezumi">
+      <span class="inline-block w-2 h-2 rounded-full bg-matsu"></span>
+      <span>Tokens defined</span>
+      <span class="text-border-default">·</span>
+      <span>Components specified</span>
+      <span class="text-border-default">·</span>
+      <span>Ready for implementation</span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-8 pb-24 space-y-20">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 1. COLOR PALETTE -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">一 · Color Palette — 色彩</div>
+
+      <!-- Foundation Neutrals -->
+      <h3 class="font-light text-chirri-lg mb-6">Foundation — Warm Neutrals</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <!-- Kinari -->
+        <div class="group">
+          <div class="h-24 rounded-chirri-md bg-kinari border border-border-subtle shadow-warm-sm"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Kinari</div>
+            <div class="text-chirri-xs text-nezumi font-display">生成 — raw silk</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#FAF7F2</div>
+          </div>
+        </div>
+        <!-- Shironeri -->
+        <div class="group">
+          <div class="h-24 rounded-chirri-md bg-shironeri border border-border-subtle shadow-warm-sm"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Shironeri</div>
+            <div class="text-chirri-xs text-nezumi font-display">白練 — refined white</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#F3EEE8</div>
+          </div>
+        </div>
+        <!-- Torinoko -->
+        <div class="group">
+          <div class="h-24 rounded-chirri-md bg-torinoko border border-border-subtle shadow-warm-sm"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Torinoko</div>
+            <div class="text-chirri-xs text-nezumi font-display">鳥の子 — eggshell</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#EBE5DC</div>
+          </div>
+        </div>
+        <!-- Pure White (elevated) -->
+        <div class="group">
+          <div class="h-24 rounded-chirri-md bg-white border border-border-subtle shadow-warm-md"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Elevated White</div>
+            <div class="text-chirri-xs text-nezumi font-display">Cards that float</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#FFFFFF</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Colors -->
+      <h3 class="font-light text-chirri-lg mb-6">Text</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div>
+          <div class="h-24 rounded-chirri-md bg-kurocha"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Kuro-cha</div>
+            <div class="text-chirri-xs text-nezumi font-display">黒茶 — black tea</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#2C2825</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-nibi"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Nibi</div>
+            <div class="text-chirri-xs text-nezumi font-display">鈍 — muted</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#7A756F</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-nezumi"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Nezumi</div>
+            <div class="text-chirri-xs text-nezumi font-display">鼠 — mouse grey</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#A6A09A</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-border-default"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Border Default</div>
+            <div class="text-chirri-xs text-nezumi font-display">Pencil on washi</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#D4CEC6</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brand & Accent -->
+      <h3 class="font-light text-chirri-lg mb-6">Brand & Accent</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div>
+          <div class="h-24 rounded-chirri-md bg-ai"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Ai-iro</div>
+            <div class="text-chirri-xs text-nezumi font-display">藍色 — indigo</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#3D5167</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-kachi"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Kachi</div>
+            <div class="text-chirri-xs text-nezumi font-display">勝色 — victory indigo</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#2E3E50</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-tobi"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Tobi-iro</div>
+            <div class="text-chirri-xs text-nezumi font-display">鳶色 — kite brown</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#C07856</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-aijiro border border-border-subtle"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Ai-jiro</div>
+            <div class="text-chirri-xs text-nezumi font-display">藍白 — indigo white</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#E8EDF2</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Petal (accent) -->
+      <h3 class="font-light text-chirri-lg mb-6">The Petal — Reserved for moments of delight</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div>
+          <div class="h-24 rounded-chirri-md bg-sakura"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Sakura-nezumi</div>
+            <div class="text-chirri-xs text-nezumi font-display">桜鼠 — cherry grey</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#D4A0A7</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-usuzakura border border-border-subtle"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Usuzakura</div>
+            <div class="text-chirri-xs text-nezumi font-display">薄桜 — pale cherry</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#F0E0E3</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-enji"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Enji</div>
+            <div class="text-chirri-xs text-nezumi font-display">臙脂 — cochineal</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#B5495B</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md border border-border-subtle" style="background: rgba(212,160,167,0.15)"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Petal Glow</div>
+            <div class="text-chirri-xs text-nezumi font-display">For halos & glows</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">rgba(212,160,167,0.15)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Severity -->
+      <h3 class="font-light text-chirri-lg mb-6">Severity — Nature-Derived</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-10">
+        <div>
+          <div class="h-24 rounded-chirri-md bg-aka"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Aka</div>
+            <div class="text-chirri-xs text-nezumi font-display">赤 — critical</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#C43D3D</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-kaki"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Kaki</div>
+            <div class="text-chirri-xs text-nezumi font-display">柿 — persimmon</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#D47A3D</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-ukon"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Ukon</div>
+            <div class="text-chirri-xs text-nezumi font-display">鬱金 — turmeric</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#C4A43D</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-matsu"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Matsu</div>
+            <div class="text-chirri-xs text-nezumi font-display">松 — pine</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#5B8A5B</div>
+          </div>
+        </div>
+        <div>
+          <div class="h-24 rounded-chirri-md bg-hanada"></div>
+          <div class="mt-3">
+            <div class="text-chirri-sm font-medium">Hanada</div>
+            <div class="text-chirri-xs text-nezumi font-display">縹 — light indigo</div>
+            <div class="text-chirri-xs text-nezumi font-mono mt-1">#5B7B94</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warm vs Cold comparison -->
+      <h3 class="font-light text-chirri-lg mb-6">Warm vs Cold — Feel the difference</h3>
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <div class="text-chirri-xs text-nezumi mb-3 tracking-chirri uppercase">Kyoto Studio (warm)</div>
+          <div class="flex gap-2">
+            <div class="w-12 h-12 rounded-chirri" style="background:#FAF7F2; border:1px solid #E8E2DA"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#F3EEE8; border:1px solid #E8E2DA"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#EBE5DC; border:1px solid #E8E2DA"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#D4CEC6"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#A6A09A"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#7A756F"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#2C2825"></div>
+          </div>
+        </div>
+        <div>
+          <div class="text-chirri-xs text-nezumi mb-3 tracking-chirri uppercase">Corporate cold (avoid)</div>
+          <div class="flex gap-2">
+            <div class="w-12 h-12 rounded-chirri" style="background:#F5F5F5; border:1px solid #E0E0E0"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#EEEEEE; border:1px solid #E0E0E0"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#E0E0E0"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#BDBDBD"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#9E9E9E"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#616161"></div>
+            <div class="w-12 h-12 rounded-chirri" style="background:#212121"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 2. TYPOGRAPHY -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">二 · Typography — 書体</div>
+
+      <div class="space-y-10">
+        <!-- Display / Noto Serif JP -->
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Display — Noto Serif JP</div>
+          <p class="font-display font-light text-chirri-3xl tracking-tight mb-2">Every change, heard.</p>
+          <p class="font-display font-light text-chirri-2xl tracking-tight mb-2">The stone garden is complete</p>
+          <p class="font-display text-chirri-xl mb-2">when there is nothing left to remove</p>
+          <p class="font-display text-chirri-lg text-nibi">And then one petal falls.</p>
+        </div>
+
+        <!-- UI / Inter -->
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">UI — Inter</div>
+          <p class="font-light text-chirri-2xl tracking-tight mb-2">Dashboard Overview</p>
+          <p class="text-chirri-xl font-light mb-2">Change Detection — v2.4.1</p>
+          <p class="text-chirri-lg mb-2">Provider configuration settings</p>
+          <p class="text-chirri-md mb-2">Monitoring 48 paths across 12 providers with 3 active chirps</p>
+          <p class="text-chirri-base text-nibi mb-2">Last checked 2 minutes ago · Next check in 13 minutes · All systems operational</p>
+          <p class="text-chirri-sm text-nezumi mb-2">Updated Mar 24, 2026 · 14:32 UTC</p>
+          <p class="text-chirri-xs text-nezumi">SEVERITY · STATUS · METADATA</p>
+        </div>
+
+        <!-- Mono -->
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Monospace — JetBrains Mono</div>
+          <div class="bg-white rounded-chirri-md p-6 shadow-warm-sm border border-border-subtle font-mono text-chirri-base leading-relaxed">
+            <span class="text-matsu">+ "pricing": {</span><br>
+            <span class="text-matsu">+   "monthly": 29,</span><br>
+            <span class="text-matsu">+   "annual": 290</span><br>
+            <span class="text-matsu">+ }</span><br>
+            <span class="text-nezumi">  "features": ["api", "webhooks"]</span><br>
+            <span class="text-tobi" style="text-decoration: line-through; opacity: 0.6">- "beta": true</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 3. BUTTONS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">三 · Buttons — 釦</div>
+
+      <div class="space-y-8">
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Default</div>
+          <div class="flex flex-wrap gap-4 items-center">
+            <button class="bg-sakura text-white px-5 py-2.5 rounded-chirri text-chirri-sm font-medium transition-warm hover:bg-enji focus:outline-none focus:ring-2 focus:ring-sakura focus:ring-offset-2 focus:ring-offset-kinari">
+              Primary CTA
+            </button>
+            <button class="bg-ai text-white px-5 py-2.5 rounded-chirri text-chirri-sm font-medium transition-warm hover:bg-kachi focus:outline-none focus:ring-2 focus:ring-ai focus:ring-offset-2 focus:ring-offset-kinari">
+              Brand Action
+            </button>
+            <button class="bg-white text-kurocha px-5 py-2.5 rounded-chirri text-chirri-sm font-medium border border-border-default transition-warm hover:bg-shironeri hover:border-border-strong focus:outline-none focus:ring-2 focus:ring-ai focus:ring-offset-2 focus:ring-offset-kinari">
+              Secondary
+            </button>
+            <button class="text-nibi px-5 py-2.5 rounded-chirri text-chirri-sm font-medium transition-warm hover:text-kurocha hover:bg-shironeri focus:outline-none focus:ring-2 focus:ring-ai focus:ring-offset-2 focus:ring-offset-kinari">
+              Ghost
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Small</div>
+          <div class="flex flex-wrap gap-3 items-center">
+            <button class="bg-sakura text-white px-3.5 py-1.5 rounded-chirri text-chirri-xs font-medium transition-warm hover:bg-enji">
+              Primary
+            </button>
+            <button class="bg-ai text-white px-3.5 py-1.5 rounded-chirri text-chirri-xs font-medium transition-warm hover:bg-kachi">
+              Brand
+            </button>
+            <button class="bg-white text-kurocha px-3.5 py-1.5 rounded-chirri text-chirri-xs font-medium border border-border-default transition-warm hover:bg-shironeri">
+              Secondary
+            </button>
+            <button class="text-nibi px-3.5 py-1.5 rounded-chirri text-chirri-xs font-medium transition-warm hover:text-kurocha hover:bg-shironeri">
+              Ghost
+            </button>
+          </div>
+        </div>
+        <div class="bg-white rounded-chirri-md p-6 border border-border-subtle">
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-3">Note</div>
+          <p class="text-chirri-sm text-nibi">The sakura pink button is the <strong class="text-kurocha">one</strong> pink element in the entire system. It appears only as the primary CTA — a moment of warmth in a restrained palette. All other interactive elements use brand indigo or warm neutrals.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 4. FORM ELEMENTS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">四 · Form Elements — 入力</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <!-- Text Inputs -->
+        <div class="space-y-6">
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-2">Text Inputs</div>
+
+          <div>
+            <label class="text-chirri-sm text-nibi mb-2 block">Provider name</label>
+            <input type="text" value="GitHub API" class="w-full bg-transparent border-b-2 border-border-default pb-2 text-chirri-base text-kurocha focus:border-ai focus:outline-none transition-warm placeholder:text-nezumi" />
+          </div>
+
+          <div>
+            <label class="text-chirri-sm text-nibi mb-2 block">Webhook URL</label>
+            <input type="text" placeholder="https://api.example.com/webhook" class="w-full bg-transparent border-b-2 border-border-default pb-2 text-chirri-base text-kurocha focus:border-ai focus:outline-none transition-warm placeholder:text-nezumi" />
+          </div>
+
+          <div>
+            <label class="text-chirri-sm text-nibi mb-2 block">API Key</label>
+            <input type="password" value="sk-1234567890" class="w-full bg-white border border-border-default rounded-chirri px-3 py-2.5 text-chirri-base text-kurocha focus:border-ai focus:outline-none focus:ring-2 focus:ring-ai/20 transition-warm font-mono" />
+          </div>
+        </div>
+
+        <!-- Checkboxes, Radios, Toggle -->
+        <div class="space-y-6">
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-2">Controls</div>
+
+          <!-- Checkboxes -->
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" checked class="checkbox-warm" />
+              <span class="text-chirri-base">Enable webhook notifications</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" checked class="checkbox-warm" />
+              <span class="text-chirri-base">Monitor on schedule</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" class="checkbox-warm" />
+              <span class="text-chirri-base text-nibi">Include unchanged fields</span>
+            </label>
+          </div>
+
+          <!-- Radios -->
+          <div class="space-y-3 mt-4">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="radio" name="frequency" checked class="radio-warm" />
+              <span class="text-chirri-base">Every 15 minutes</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="radio" name="frequency" class="radio-warm" />
+              <span class="text-chirri-base">Every hour</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="radio" name="frequency" class="radio-warm" />
+              <span class="text-chirri-base text-nibi">Manual only</span>
+            </label>
+          </div>
+
+          <!-- Toggle -->
+          <div class="flex items-center gap-4 mt-4">
+            <div class="toggle-track active">
+              <div class="toggle-knob"></div>
+            </div>
+            <span class="text-chirri-base">Active monitoring</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="toggle-track">
+              <div class="toggle-knob"></div>
+            </div>
+            <span class="text-chirri-base text-nibi">Debug logging</span>
+          </div>
+
+          <!-- Select -->
+          <div class="mt-4">
+            <label class="text-chirri-sm text-nibi mb-2 block">Severity filter</label>
+            <select class="select-warm w-full border border-[#E8E6E1] rounded-chirri-lg px-3 py-2.5 text-chirri-base text-kurocha focus:border-ai focus:outline-none focus:ring-2 focus:ring-ai/20 transition-warm shadow-warm-md" style="background-color: #FAFAF8;">
+              <option>All severities</option>
+              <option>Critical & High</option>
+              <option>Medium and above</option>
+              <option>Low only</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 5. CARDS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">五 · Cards — 牌</div>
+
+      <div class="space-y-8">
+        <!-- Provider Card -->
+        <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-3">Provider Card</div>
+        <div class="bg-white rounded-chirri-md p-6 shadow-warm-md border border-border-subtle max-w-md">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-chirri-md font-medium">GitHub API</h4>
+              <p class="text-chirri-sm text-nibi mt-1">api.github.com/repos/chirri</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 bg-sev-low-bg text-matsu text-chirri-xs font-medium px-2 py-1 rounded-full">
+              <span class="w-1.5 h-1.5 bg-matsu rounded-full"></span>
+              Healthy
+            </span>
+          </div>
+          <div class="text-chirri-xs text-nezumi space-y-1">
+            <div class="flex justify-between"><span>Last check</span><span class="text-nibi">2 min ago</span></div>
+            <div class="flex justify-between"><span>Changes today</span><span class="text-nibi">3</span></div>
+            <div class="flex justify-between"><span>Watching</span><span class="text-nibi">12 paths</span></div>
+          </div>
+        </div>
+
+        <!-- Change Cards with Severity -->
+        <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-3">Change Cards — Severity Borders</div>
+        <div class="space-y-3 max-w-lg">
+          <!-- Critical -->
+          <div class="bg-white rounded-chirri-md p-5 shadow-warm-sm border border-border-subtle border-l-[6px] border-l-aka">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="text-chirri-base font-medium">SSL certificate expiring</h4>
+                <p class="text-chirri-sm text-nibi mt-1">Certificate expires in 3 days — immediate renewal required</p>
+              </div>
+              <span class="text-chirri-xs text-aka font-medium shrink-0 ml-3">Critical</span>
+            </div>
+            <div class="text-chirri-xs text-nezumi mt-3">api.example.com · 14 min ago</div>
+          </div>
+          <!-- High -->
+          <div class="bg-white rounded-chirri-md p-5 shadow-warm-sm border border-border-subtle border-l-[5px] border-l-kaki">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="text-chirri-base font-medium">Pricing structure changed</h4>
+                <p class="text-chirri-sm text-nibi mt-1">3 fields modified in /api/v2/pricing endpoint</p>
+              </div>
+              <span class="text-chirri-xs text-kaki font-medium shrink-0 ml-3">High</span>
+            </div>
+            <div class="text-chirri-xs text-nezumi mt-3">stripe-api · 1 hour ago</div>
+          </div>
+          <!-- Medium -->
+          <div class="bg-white rounded-chirri-md p-5 shadow-warm-sm border border-border-subtle border-l-4 border-l-ukon">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="text-chirri-base font-medium">Terms of service updated</h4>
+                <p class="text-chirri-sm text-nibi mt-1">Section 4.2 modified — data retention policy</p>
+              </div>
+              <span class="text-chirri-xs text-ukon font-medium shrink-0 ml-3">Medium</span>
+            </div>
+            <div class="text-chirri-xs text-nezumi mt-3">legal-docs · 3 hours ago</div>
+          </div>
+          <!-- Low -->
+          <div class="bg-white rounded-chirri-md p-5 shadow-warm-sm border border-border-subtle border-l-[3px] border-l-matsu">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="text-chirri-base font-medium">New feature announced</h4>
+                <p class="text-chirri-sm text-nibi mt-1">Changelog entry added — webhook retry support</p>
+              </div>
+              <span class="text-chirri-xs text-matsu font-medium shrink-0 ml-3">Low</span>
+            </div>
+            <div class="text-chirri-xs text-nezumi mt-3">github-releases · 6 hours ago</div>
+          </div>
+          <!-- Info -->
+          <div class="bg-white rounded-chirri-md p-5 border border-border-subtle border-l-[3px] border-l-hanada">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="text-chirri-base font-medium">Metadata refresh</h4>
+                <p class="text-chirri-sm text-nibi mt-1">Schema version bumped from 2.3 to 2.4</p>
+              </div>
+              <span class="text-chirri-xs text-hanada font-medium shrink-0 ml-3">Info</span>
+            </div>
+            <div class="text-chirri-xs text-nezumi mt-3">internal-api · 12 hours ago</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 3. MA (Negative Space) Comparison -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">六 · Ma — 間 — Negative Space</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Normal spacing -->
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Normal spacing</div>
+          <div class="bg-white rounded-chirri-md border border-border-subtle shadow-warm-sm p-3">
+            <h4 class="text-sm font-medium mb-1">Provider Status</h4>
+            <p class="text-xs text-gray-500 mb-2">3 providers active</p>
+            <div class="space-y-1 text-xs">
+              <div class="flex justify-between py-1 border-b border-gray-100"><span>GitHub API</span><span class="text-green-600">Active</span></div>
+              <div class="flex justify-between py-1 border-b border-gray-100"><span>Stripe API</span><span class="text-green-600">Active</span></div>
+              <div class="flex justify-between py-1"><span>Legal Docs</span><span class="text-yellow-600">Checking</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Ma spacing -->
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Ma spacing — let it breathe</div>
+          <div class="bg-white rounded-chirri-md border border-border-subtle shadow-warm-md p-6">
+            <h4 class="text-chirri-md font-medium mb-2">Provider Status</h4>
+            <p class="text-chirri-sm text-nibi mb-5">3 providers active</p>
+            <div class="space-y-0 text-chirri-sm">
+              <div class="flex justify-between py-3 border-b border-border-subtle"><span>GitHub API</span><span class="text-matsu">Active</span></div>
+              <div class="flex justify-between py-3 border-b border-border-subtle"><span>Stripe API</span><span class="text-matsu">Active</span></div>
+              <div class="flex justify-between py-3"><span>Legal Docs</span><span class="text-ukon">Checking</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 6. STATUS DOTS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">七 · Status Dots — 状態</div>
+
+      <div class="flex flex-wrap gap-8 items-end">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-aka"></span>
+          <span class="text-chirri-sm">Critical</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-kaki"></span>
+          <span class="text-chirri-sm">High</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-ukon"></span>
+          <span class="text-chirri-sm">Medium</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-matsu"></span>
+          <span class="text-chirri-sm">Low</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-hanada"></span>
+          <span class="text-chirri-sm">Info</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-sakura dot-chirp"></span>
+          <span class="text-chirri-sm font-display italic text-sakura">Chirp received</span>
+          <span class="text-chirri-xs text-usuzakura bg-usuzakura/30 px-2 py-0.5 rounded-full">petal pulse</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 7. NAVIGATION -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">八 · Navigation — 案内</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <!-- Sidebar -->
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Sidebar</div>
+          <div class="bg-shironeri rounded-chirri-md p-5 w-52 shadow-warm-sm">
+            <div class="font-display text-chirri-base font-light tracking-tight text-kurocha mb-8">Chirri</div>
+            <nav class="space-y-1">
+              <a href="#" class="flex items-center gap-2 text-chirri-sm font-semibold text-ai border-l-[3px] border-ai pl-3 py-2 bg-aijiro/40 rounded-r-chirri -ml-5">
+                Dashboard
+              </a>
+              <a href="#" class="flex items-center gap-2 text-chirri-sm text-nibi pl-3 py-2 hover:text-kurocha transition-warm -ml-5 border-l-[3px] border-transparent">
+                Providers
+              </a>
+              <a href="#" class="flex items-center gap-2 text-chirri-sm text-nibi pl-3 py-2 hover:text-kurocha transition-warm -ml-5 border-l-[3px] border-transparent">
+                Changes
+              </a>
+              <a href="#" class="flex items-center gap-2 text-chirri-sm text-nibi pl-3 py-2 hover:text-kurocha transition-warm -ml-5 border-l-[3px] border-transparent">
+                Settings
+              </a>
+            </nav>
+            <!-- Ma: empty space at the bottom is intentional -->
+            <div class="h-24"></div>
+            <div class="text-chirri-xs text-nezumi border-t border-border-subtle pt-3">
+              v2.4.1
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Tabs</div>
+          <div class="bg-white rounded-chirri-md p-6 shadow-warm-sm border border-border-subtle">
+            <div class="flex gap-6 border-b border-border-subtle mb-6">
+              <button class="pb-3 text-chirri-sm tab-active">Overview</button>
+              <button class="pb-3 text-chirri-sm text-nibi hover:text-kurocha transition-warm">Changes</button>
+              <button class="pb-3 text-chirri-sm text-nibi hover:text-kurocha transition-warm">History</button>
+              <button class="pb-3 text-chirri-sm text-nibi hover:text-kurocha transition-warm">Settings</button>
+            </div>
+            <p class="text-chirri-sm text-nibi">Tab content area with generous padding. The warm underline on the active tab uses the text color, not pink — keeping things understated.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 8. BADGES -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-8">九 · Badges — 標識</div>
+
+      <div class="flex flex-wrap gap-3">
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          <span class="w-1.5 h-1.5 bg-aka rounded-full"></span>
+          Critical
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          <span class="w-1.5 h-1.5 bg-kaki rounded-full"></span>
+          High
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          <span class="w-1.5 h-1.5 bg-ukon rounded-full"></span>
+          Medium
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          <span class="w-1.5 h-1.5 bg-matsu rounded-full"></span>
+          Low
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          <span class="w-1.5 h-1.5 bg-hanada rounded-full"></span>
+          Info
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          <span class="w-1.5 h-1.5 bg-ai rounded-full"></span>
+          API
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          <span class="w-1.5 h-1.5 bg-tobi rounded-full"></span>
+          Webhook
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-shironeri text-kurocha text-chirri-xs font-medium px-2.5 py-1 rounded-full border border-border-subtle">
+          New
+        </span>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 9. PETAL MOMENTS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-4">十 · Petal Moments — 花弁 — The 5%</div>
+      <p class="text-chirri-sm text-nibi mb-10 max-w-xl">Petals are reserved for moments of delight. They appear in exactly these places — nowhere else. The scarcity is what makes them special.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Petal: Logo -->
+        <div class="bg-white rounded-chirri-md p-8 shadow-warm-md border border-border-subtle relative overflow-hidden">
+          <div class="absolute top-2 right-3 text-chirri-xs font-ui font-medium tracking-chirri-wide bg-usuzakura/40 text-enji px-2 py-0.5 rounded-full">PETAL MOMENT</div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-6">Logo accent</div>
+          <div class="flex items-center gap-2">
+            <span class="font-display text-chirri-xl font-light text-kurocha">Chirri</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="petal-svg -mt-1">
+              <path d="M12 2C12 2 8 6 8 10C8 14 12 16 12 16C12 16 16 14 16 10C16 6 12 2 12 2Z" />
+            </svg>
+          </div>
+          <p class="text-chirri-xs text-nezumi mt-4">A single static petal beside the wordmark. Subtle. Just enough.</p>
+        </div>
+
+        <!-- Petal: Toast -->
+        <div class="bg-white rounded-chirri-md p-8 shadow-warm-md border border-border-subtle relative overflow-hidden">
+          <div class="absolute top-2 right-3 text-chirri-xs font-ui font-medium tracking-chirri-wide bg-usuzakura/40 text-enji px-2 py-0.5 rounded-full">PETAL MOMENT</div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-6">Chirp toast</div>
+          <div class="bg-white rounded-chirri-md border border-border-default shadow-warm-lg p-4 toast-animate">
+            <div class="flex items-start gap-3">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="petal-svg mt-0.5 petal-pulse shrink-0">
+                <path d="M12 2C12 2 8 6 8 10C8 14 12 16 12 16C12 16 16 14 16 10C16 6 12 2 12 2Z" />
+              </svg>
+              <div>
+                <div class="text-chirri-sm font-medium">Chirp received</div>
+                <div class="text-chirri-xs text-nibi mt-0.5">Pricing changed on Stripe API</div>
+              </div>
+            </div>
+          </div>
+          <p class="text-chirri-xs text-nezumi mt-4">The petal pulses gently when a chirp fires. A tiny reward.</p>
+        </div>
+
+        <!-- Petal: Empty State -->
+        <div class="bg-white rounded-chirri-md p-8 shadow-warm-md border border-border-subtle relative overflow-hidden">
+          <div class="absolute top-2 right-3 text-chirri-xs font-ui font-medium tracking-chirri-wide bg-usuzakura/40 text-enji px-2 py-0.5 rounded-full">PETAL MOMENT</div>
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-6">Empty state</div>
+          <div class="text-center py-8">
+            <p class="font-display text-chirri-base text-nibi italic leading-relaxed">
+              No chirps yet.<br>
+              <span class="text-nezumi">The garden is still.</span>
+            </p>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="mx-auto mt-4" style="opacity: 0.25; transform: rotate(45deg) translateX(4px);">
+              <path d="M12 2C12 2 8 6 8 10C8 14 12 16 12 16C12 16 16 14 16 10C16 6 12 2 12 2Z" fill="#D4A0A7"/>
+            </svg>
+          </div>
+          <p class="text-chirri-xs text-nezumi mt-4">A single fallen petal, off-center. Fukinsei meets mono no aware.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 10. SAMPLE DASHBOARD — BENTO GRID -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-4">十一 · Sample Dashboard — 弁当</div>
+      <p class="text-chirri-sm text-nibi mb-10 max-w-xl">Asymmetric bento layout. One large card, two small, one wide. Not equal columns — fukinsei asymmetry creates visual interest and hierarchy.</p>
+
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-4 grid-rows-3 gap-4" style="grid-template-rows: auto auto auto;">
+        <!-- Large card: Changes Feed (spans 3 cols, 2 rows) -->
+        <div class="col-span-3 row-span-2 bg-white rounded-chirri-md p-6 shadow-warm-md border border-border-subtle">
+          <div class="flex items-center justify-between mb-5">
+            <h3 class="text-chirri-md font-medium">Recent Changes</h3>
+            <span class="text-chirri-xs text-nezumi">Last 24 hours</span>
+          </div>
+          <div class="space-y-0">
+            <div class="flex items-start gap-3 py-3 border-b border-border-subtle">
+              <span class="w-2 h-2 rounded-full bg-aka mt-1.5 shrink-0"></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="text-chirri-sm font-medium truncate">SSL certificate expiring</span>
+                  <span class="text-chirri-xs text-nezumi shrink-0">14m</span>
+                </div>
+                <span class="text-chirri-xs text-nibi">api.example.com</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 py-3 border-b border-border-subtle">
+              <span class="w-2 h-2 rounded-full bg-kaki mt-1.5 shrink-0"></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="text-chirri-sm font-medium truncate">Pricing structure changed</span>
+                  <span class="text-chirri-xs text-nezumi shrink-0">1h</span>
+                </div>
+                <span class="text-chirri-xs text-nibi">stripe-api</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 py-3 border-b border-border-subtle">
+              <span class="w-2 h-2 rounded-full bg-ukon mt-1.5 shrink-0"></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="text-chirri-sm font-medium truncate">Terms of service updated</span>
+                  <span class="text-chirri-xs text-nezumi shrink-0">3h</span>
+                </div>
+                <span class="text-chirri-xs text-nibi">legal-docs</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 py-3 border-b border-border-subtle">
+              <span class="w-2 h-2 rounded-full bg-matsu mt-1.5 shrink-0"></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="text-chirri-sm font-medium truncate">New feature announced</span>
+                  <span class="text-chirri-xs text-nezumi shrink-0">6h</span>
+                </div>
+                <span class="text-chirri-xs text-nibi">github-releases</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 py-3">
+              <span class="w-2 h-2 rounded-full bg-hanada mt-1.5 shrink-0"></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="text-chirri-sm font-medium truncate">Schema version bumped</span>
+                  <span class="text-chirri-xs text-nezumi shrink-0">12h</span>
+                </div>
+                <span class="text-chirri-xs text-nibi">internal-api</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Small card: Severity Summary -->
+        <div class="col-span-1 bg-white rounded-chirri-md p-5 shadow-warm-sm border border-border-subtle">
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Severity</div>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-aka"></span>
+                <span class="text-chirri-sm">Critical</span>
+              </div>
+              <span class="text-chirri-lg font-light">1</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-kaki"></span>
+                <span class="text-chirri-sm">High</span>
+              </div>
+              <span class="text-chirri-lg font-light">1</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-ukon"></span>
+                <span class="text-chirri-sm">Medium</span>
+              </div>
+              <span class="text-chirri-lg font-light">1</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-matsu"></span>
+                <span class="text-chirri-sm">Low</span>
+              </div>
+              <span class="text-chirri-lg font-light">1</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Small card: Quick stats -->
+        <div class="col-span-1 bg-white rounded-chirri-md p-5 shadow-warm-sm border border-border-subtle">
+          <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-4">Overview</div>
+          <div class="space-y-4">
+            <div>
+              <div class="text-chirri-2xl font-light text-kurocha">48</div>
+              <div class="text-chirri-xs text-nibi">paths monitored</div>
+            </div>
+            <div>
+              <div class="text-chirri-2xl font-light text-kurocha">12</div>
+              <div class="text-chirri-xs text-nibi">providers</div>
+            </div>
+            <div>
+              <div class="text-chirri-2xl font-light text-matsu">99.2%</div>
+              <div class="text-chirri-xs text-nibi">uptime</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wide card: bottom spanning 3 cols -->
+        <div class="col-span-3 bg-white rounded-chirri-md p-5 shadow-warm-sm border border-border-subtle">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-chirri-xs text-nezumi tracking-chirri uppercase mb-1">Latest Diff</div>
+              <span class="text-chirri-sm font-medium">stripe-api/pricing.json</span>
+              <span class="text-chirri-xs text-nibi ml-2">+12 −3 lines</span>
+            </div>
+            <button class="text-ai text-chirri-sm font-medium hover:text-kachi transition-warm">View diff →</button>
+          </div>
+          <div class="mt-4 bg-kinari rounded-chirri p-4 font-mono text-chirri-xs border border-border-subtle">
+            <div class="text-nezumi">  "plans": {</div>
+            <div class="text-matsu bg-sev-low-bg px-2 -mx-2 border-l-2 border-matsu">+   "starter": { "price": 29, "seats": 5 },</div>
+            <div class="text-matsu bg-sev-low-bg px-2 -mx-2 border-l-2 border-matsu">+   "pro": { "price": 79, "seats": 25 },</div>
+            <div class="text-tobi/60 line-through px-2 -mx-2 border-l-2 border-tobi bg-[#F7F0F0]">-   "basic": { "price": 19 },</div>
+            <div class="text-nezumi">  }</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 11. DARK MODE PREVIEW -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section>
+      <div class="section-label mb-4">十二 · Dark Mode — 夜 · Yoru</div>
+      <p class="text-chirri-sm text-nibi mb-10 max-w-xl">Warm dark, not space-black. The feeling of dark wood and lacquer, not a computer screen at midnight. Every surface has warmth.</p>
+
+      <div class="washi-dark rounded-chirri-lg p-8 md:p-12 shadow-warm-xl">
+        <!-- Dark palette swatches -->
+        <div class="flex gap-3 mb-10">
+          <div class="text-center">
+            <div class="w-14 h-14 rounded-chirri-md" style="background:#2D2A26; border:1px solid #46423D"></div>
+            <div class="text-[10px] mt-2" style="color:#9B9590">Yoru<br>#2D2A26</div>
+          </div>
+          <div class="text-center">
+            <div class="w-14 h-14 rounded-chirri-md" style="background:#36332F; border:1px solid #46423D"></div>
+            <div class="text-[10px] mt-2" style="color:#9B9590">Card<br>#36332F</div>
+          </div>
+          <div class="text-center">
+            <div class="w-14 h-14 rounded-chirri-md" style="background:#46423D; border:1px solid #56524D"></div>
+            <div class="text-[10px] mt-2" style="color:#9B9590">Border<br>#46423D</div>
+          </div>
+          <div class="text-center">
+            <div class="w-14 h-14 rounded-chirri-md" style="background:#56524D"></div>
+            <div class="text-[10px] mt-2" style="color:#9B9590">Muted<br>#56524D</div>
+          </div>
+          <div class="text-center">
+            <div class="w-14 h-14 rounded-chirri-md bg-sakura"></div>
+            <div class="text-[10px] mt-2" style="color:#9B9590">Petal<br>#D4A0A7</div>
+          </div>
+        </div>
+
+        <!-- Dark mode sample dashboard -->
+        <div class="grid grid-cols-4 gap-4">
+          <!-- Nav sidebar dark -->
+          <div class="col-span-1 rounded-chirri-md p-4" style="background:#36332F; border:1px solid #46423D">
+            <div class="font-display text-chirri-sm font-light mb-6" style="color:#E8E4DE">Chirri</div>
+            <nav class="space-y-1">
+              <a href="#" class="block text-chirri-xs font-semibold py-2 pl-3 rounded-r-chirri -ml-1" style="color:#E8E4DE; border-left: 3px solid #3D5167; background:rgba(61,81,103,0.15)">Dashboard</a>
+              <a href="#" class="block text-chirri-xs py-2 pl-3 -ml-1" style="color:#9B9590; border-left: 3px solid transparent">Providers</a>
+              <a href="#" class="block text-chirri-xs py-2 pl-3 -ml-1" style="color:#9B9590; border-left: 3px solid transparent">Changes</a>
+              <a href="#" class="block text-chirri-xs py-2 pl-3 -ml-1" style="color:#9B9590; border-left: 3px solid transparent">Settings</a>
+            </nav>
+          </div>
+
+          <!-- Main content area dark -->
+          <div class="col-span-3 space-y-4">
+            <!-- Title -->
+            <div>
+              <h3 class="text-chirri-lg font-light" style="color:#E8E4DE">Dashboard</h3>
+              <p class="text-chirri-xs mt-1" style="color:#9B9590">5 changes in the last 24 hours</p>
+            </div>
+
+            <!-- Cards row -->
+            <div class="grid grid-cols-3 gap-3">
+              <div class="rounded-chirri-md p-4" style="background:#36332F; border:1px solid #46423D">
+                <div class="text-chirri-2xl font-light" style="color:#E8E4DE">48</div>
+                <div class="text-chirri-xs" style="color:#9B9590">paths</div>
+              </div>
+              <div class="rounded-chirri-md p-4" style="background:#36332F; border:1px solid #46423D">
+                <div class="text-chirri-2xl font-light" style="color:#E8E4DE">12</div>
+                <div class="text-chirri-xs" style="color:#9B9590">providers</div>
+              </div>
+              <div class="rounded-chirri-md p-4" style="background:#36332F; border:1px solid #46423D">
+                <div class="text-chirri-2xl font-light" style="color:#5B8A5B">99.2%</div>
+                <div class="text-chirri-xs" style="color:#9B9590">uptime</div>
+              </div>
+            </div>
+
+            <!-- Change feed dark -->
+            <div class="rounded-chirri-md p-5" style="background:#36332F; border:1px solid #46423D">
+              <div class="flex items-start gap-3 py-2" style="border-bottom:1px solid #46423D">
+                <span class="w-2 h-2 rounded-full bg-aka mt-1.5 shrink-0"></span>
+                <div class="flex-1">
+                  <div class="flex justify-between">
+                    <span class="text-chirri-xs font-medium" style="color:#E8E4DE">SSL certificate expiring</span>
+                    <span class="text-[10px]" style="color:#9B9590">14m</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 py-2" style="border-bottom:1px solid #46423D">
+                <span class="w-2 h-2 rounded-full bg-kaki mt-1.5 shrink-0"></span>
+                <div class="flex-1">
+                  <div class="flex justify-between">
+                    <span class="text-chirri-xs font-medium" style="color:#E8E4DE">Pricing changed</span>
+                    <span class="text-[10px]" style="color:#9B9590">1h</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 py-2">
+                <span class="w-2 h-2 rounded-full bg-matsu mt-1.5 shrink-0"></span>
+                <div class="flex-1">
+                  <div class="flex justify-between">
+                    <span class="text-chirri-xs font-medium" style="color:#E8E4DE">New feature announced</span>
+                    <span class="text-[10px]" style="color:#9B9590">6h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FOOTER -->
+    <!-- ═══════════════════════════════════════════ -->
+    <footer class="pt-16 pb-8 text-center">
+      <div class="w-px h-16 bg-border-subtle mx-auto mb-8"></div>
+      <p class="font-display text-chirri-sm text-nezumi italic">
+        "The stone garden is complete when there is nothing left to remove."
+      </p>
+      <p class="font-display text-chirri-sm text-sakura mt-2 italic">
+        And then one petal falls.
+      </p>
+      <div class="mt-8 text-chirri-xs text-nezumi">
+        Kyoto Studio · Chirri Design System · Direction D
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

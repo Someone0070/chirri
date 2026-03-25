@@ -1,0 +1,21 @@
+{
+  "id": "openai-01",
+  "source": "OpenAI API Changelog",
+  "title": "Structured Outputs now support recursive schemas",
+  "date": "2026-03-10",
+  "raw_changelog": "Structured Outputs JSON schema now supports recursive type definitions.",
+  "before_text": "## Structured Outputs\n\n### Limitations\n- Maximum schema depth: 5 levels\n- No recursive types\n- No `$ref` to self\n- Maximum 100 properties per schema",
+  "after_text": "## Structured Outputs\n\n### Limitations\n- Maximum schema depth: 10 levels\n- Recursive types supported (max depth: 5 recursions)\n- `$ref` to self allowed with recursion limit\n- Maximum 200 properties per schema",
+  "diff_text": "--- before\n+++ after\n@@ -3,5 +3,5 @@\n ### Limitations\n-- Maximum schema depth: 5 levels\n-- No recursive types\n-- No `$ref` to self\n-- Maximum 100 properties per schema\n+- Maximum schema depth: 10 levels\n+- Recursive types supported (max depth: 5 recursions)\n+- `$ref` to self allowed with recursion limit\n+- Maximum 200 properties per schema",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "POST /v1/chat/completions"
+    ],
+    "action_required": "No action required. Structured Outputs now support more complex schemas.",
+    "cosmetic_only": false,
+    "confidence_notes": "Relaxation of constraints, non-breaking"
+  }
+}

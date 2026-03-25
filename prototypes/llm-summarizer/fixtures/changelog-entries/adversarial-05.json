@@ -1,0 +1,21 @@
+{
+  "id": "adversarial-05",
+  "source": "Adversarial Test",
+  "title": "Ambiguous parameter description rewording",
+  "date": "2026-02-20",
+  "raw_changelog": "Clarified description of the timeout parameter.",
+  "before_text": "## Execute Query\n\nPOST /v1/query\n\n### Parameters\n| name | type | description |\n|------|------|-------------|\n| query | string | SQL query to execute |\n| timeout | integer | Query timeout in seconds. The query will be terminated if it exceeds this limit. |",
+  "after_text": "## Execute Query\n\nPOST /v1/query\n\n### Parameters\n| name | type | description |\n|------|------|-------------|\n| query | string | SQL query to execute |\n| timeout | integer | Maximum execution time in seconds. Queries exceeding this duration may be cancelled. Results are not guaranteed after timeout. |",
+  "diff_text": "--- before\n+++ after\n@@ -7,4 +7,4 @@\n | query | string | SQL query to execute |\n-| timeout | integer | Query timeout in seconds. The query will be terminated if it exceeds this limit. |\n+| timeout | integer | Maximum execution time in seconds. Queries exceeding this duration may be cancelled. Results are not guaranteed after timeout. |",
+  "ground_truth": {
+    "severity": "medium",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "POST /v1/query"
+    ],
+    "action_required": "Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+    "cosmetic_only": false,
+    "confidence_notes": "Ambiguous - could be just a wording clarification or could indicate a behavior change from guaranteed termination to possible cancellation"
+  }
+}

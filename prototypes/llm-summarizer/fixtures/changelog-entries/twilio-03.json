@@ -1,0 +1,21 @@
+{
+  "id": "twilio-03",
+  "source": "Twilio Changelog",
+  "title": "Certificate rotation for all REST API endpoints",
+  "date": "2026-03-04",
+  "raw_changelog": "The end-user certificate for all Twilio REST API endpoints will be rotated on April 8, 2026.",
+  "before_text": "## TLS Certificates\n\nTwilio REST API endpoints use TLS certificates issued by DigiCert.\n\nCurrent certificate:\n- Issuer: DigiCert SHA2 Extended Validation Server CA\n- Valid until: June 15, 2026\n- Serial: 0A:1B:2C:3D",
+  "after_text": "## TLS Certificates\n\nTwilio REST API endpoints use TLS certificates issued by DigiCert.\n\nCurrent certificate (until April 8, 2026):\n- Issuer: DigiCert SHA2 Extended Validation Server CA\n- Valid until: June 15, 2026\n- Serial: 0A:1B:2C:3D\n\nNew certificate (effective April 8, 2026):\n- Issuer: DigiCert Global G2 TLS RSA SHA256 2020 CA1\n- Valid until: April 8, 2027\n- Serial: 4E:5F:6G:7H\n\n**Action Required:** If you pin certificates, update your pinned certificates before April 8, 2026.",
+  "diff_text": "--- before\n+++ after\n@@ -3,5 +3,12 @@\n Twilio REST API endpoints use TLS certificates issued by DigiCert.\n \n-Current certificate:\n+Current certificate (until April 8, 2026):\n ...\n+\n+New certificate (effective April 8, 2026):\n+- Issuer: DigiCert Global G2 TLS RSA SHA256 2020 CA1\n+- Valid until: April 8, 2027\n+- Serial: 4E:5F:6G:7H\n+\n+**Action Required:** If you pin certificates, update your pinned certificates before April 8, 2026.",
+  "ground_truth": {
+    "severity": "high",
+    "is_breaking": true,
+    "breaking_reason": "Certificate rotation will break clients that pin TLS certificates",
+    "affected_endpoints": [
+      "All Twilio REST API endpoints"
+    ],
+    "action_required": "If you pin certificates, update pinned certs before April 8, 2026. If you don't pin, no action needed.",
+    "cosmetic_only": false,
+    "confidence_notes": "Breaking only for certificate-pinning clients"
+  }
+}

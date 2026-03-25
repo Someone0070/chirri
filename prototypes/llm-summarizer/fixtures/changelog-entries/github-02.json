@@ -1,0 +1,21 @@
+{
+  "id": "github-02",
+  "source": "GitHub API Changelog",
+  "title": "New required permissions for GitHub App fine-grained tokens",
+  "date": "2026-03-10",
+  "raw_changelog": "Starting April 15, 2026, the contents:write permission is now required for the POST /repos/{owner}/{repo}/git/refs endpoint when using fine-grained personal access tokens or GitHub App tokens.",
+  "before_text": "## Create a reference\n\nPOST /repos/{owner}/{repo}/git/refs\n\n### Permissions\n- Fine-grained tokens: contents:read",
+  "after_text": "## Create a reference\n\nPOST /repos/{owner}/{repo}/git/refs\n\n### Permissions\n- Fine-grained tokens: contents:write (changed from contents:read, effective April 15, 2026)",
+  "diff_text": "--- before\n+++ after\n@@ -4,4 +4,4 @@\n ### Permissions\n-- Fine-grained tokens: contents:read\n+- Fine-grained tokens: contents:write (changed from contents:read, effective April 15, 2026)",
+  "ground_truth": {
+    "severity": "critical",
+    "is_breaking": true,
+    "breaking_reason": "Permission requirement changed from read to write. Existing tokens with only read permission will fail.",
+    "affected_endpoints": [
+      "POST /repos/{owner}/{repo}/git/refs"
+    ],
+    "action_required": "Update fine-grained tokens to include contents:write permission before April 15, 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Breaking permission change with deadline"
+  }
+}

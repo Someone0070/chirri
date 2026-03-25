@@ -1,0 +1,7 @@
+<svg width="40" height="48" viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 2C24 10 34 20 30 32C26 44 18 44 14 36C10 28 12 12 18 4C19 2 19.5 2 20 2Z" fill="url(#g)"/>
+  <path d="M19 8C19 8 18 22 17 34" stroke="#FFD4DE" stroke-width="0.8" opacity="0.6"/>
+  <path d="M19 16L14 26" stroke="#FFD4DE" stroke-width="0.5" opacity="0.4"/>
+  <path d="M19 16L24 28" stroke="#FFD4DE" stroke-width="0.5" opacity="0.4"/>
+  <defs><radialGradient id="g" cx="42%" cy="32%" r="58%"><stop offset="0%" stop-color="#FFD9E2"/><stop offset="100%" stop-color="#FFB0C0"/></radialGradient></defs>
+</svg>

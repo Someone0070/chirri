@@ -1,0 +1,21 @@
+{
+  "id": "vercel-03",
+  "source": "Vercel Changelog",
+  "title": "Elastic build machines available in Beta",
+  "date": "2026-03-24",
+  "raw_changelog": "Elastic build machines automatically assign the right machine for each project's needs.",
+  "before_text": "## Build Configuration\n\n### Build Machines\nAll projects use Standard build machines by default.\n\nTo upgrade, select Enhanced or Turbo in project settings.\n\n| Machine | vCPU | RAM | Cost |\n|---------|------|-----|------|\n| Standard | 2 | 4GB | Included |\n| Enhanced | 4 | 8GB | $0.02/min |\n| Turbo | 8 | 16GB | $0.04/min |",
+  "after_text": "## Build Configuration\n\n### Build Machines\nProjects can use fixed or elastic build machines.\n\n**Elastic (Beta):** Automatically assigns the optimal machine per project.\n**Fixed:** Manually select Standard, Enhanced, or Turbo.\n\n| Machine | vCPU | RAM | Cost |\n|---------|------|-----|------|\n| Standard | 2 | 4GB | Included |\n| Enhanced | 4 | 8GB | $0.02/min |\n| Turbo | 8 | 16GB | $0.04/min |\n| Elastic | Auto | Auto | Varies |",
+  "diff_text": "--- before\n+++ after\n@@ -2,5 +2,7 @@\n ### Build Machines\n-All projects use Standard build machines by default.\n-\n-To upgrade, select Enhanced or Turbo in project settings.\n+Projects can use fixed or elastic build machines.\n+\n+**Elastic (Beta):** Automatically assigns the optimal machine per project.\n+**Fixed:** Manually select Standard, Enhanced, or Turbo.\n@@ -9,3 +11,4 @@\n | Turbo | 8 | 16GB | $0.04/min |\n+| Elastic | Auto | Auto | Varies |",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Build Configuration"
+    ],
+    "action_required": "No action required. New elastic build machine option available in beta.",
+    "cosmetic_only": false,
+    "confidence_notes": "New optional feature"
+  }
+}

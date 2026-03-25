@@ -1,0 +1,21 @@
+{
+  "id": "plaid-01",
+  "source": "Plaid Changelog",
+  "title": "Transactions sync endpoint pagination change",
+  "date": "2026-01-15",
+  "raw_changelog": "The /transactions/sync endpoint now returns a maximum of 100 transactions per page (down from 500).",
+  "before_text": "## Transactions Sync\n\nPOST /transactions/sync\n\n### Response\n- Maximum 500 transactions per page\n- Use `cursor` for pagination\n- `has_more`: boolean indicating more pages",
+  "after_text": "## Transactions Sync\n\nPOST /transactions/sync\n\n### Response\n- Maximum 100 transactions per page (changed from 500)\n- Use `cursor` for pagination\n- `has_more`: boolean indicating more pages\n\n**Note:** You may need to make more pagination requests to retrieve all transactions.",
+  "diff_text": "--- before\n+++ after\n@@ -4,4 +4,6 @@\n ### Response\n-- Maximum 500 transactions per page\n+- Maximum 100 transactions per page (changed from 500)\n - Use `cursor` for pagination\n - `has_more`: boolean indicating more pages\n+\n+**Note:** You may need to make more pagination requests.",
+  "ground_truth": {
+    "severity": "medium",
+    "is_breaking": true,
+    "breaking_reason": "Page size reduced 5x. Code that assumes all transactions fit in one page may miss data.",
+    "affected_endpoints": [
+      "POST /transactions/sync"
+    ],
+    "action_required": "Ensure pagination logic properly handles has_more flag and continues fetching. Test with accounts that have >100 recent transactions.",
+    "cosmetic_only": false,
+    "confidence_notes": "Subtle breaking change in pagination behavior"
+  }
+}

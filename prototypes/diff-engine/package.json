@@ -1,0 +1,28 @@
+{
+  "name": "chirri-diff-engine",
+  "version": "0.1.0",
+  "description": "Diff engine prototype for Chirri - detects meaningful changes on API doc/changelog pages",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.5.0",
+    "better-sqlite3": "^11.0.0",
+    "cheerio": "^1.2.0",
+    "diff": "^7.0.0",
+    "jsdom": "^25.0.0",
+    "node-fetch": "^3.3.2",
+    "playwright": "^1.48.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/diff": "^6.0.0",
+    "@types/jsdom": "^28.0.1",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

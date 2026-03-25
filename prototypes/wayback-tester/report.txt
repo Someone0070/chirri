@@ -1,0 +1,236 @@
+═══════════════════════════════════════════════════════════════
+   WAYBACK MACHINE HISTORICAL DIFF ANALYSIS REPORT
+═══════════════════════════════════════════════════════════════
+
+📊 OVERALL SUMMARY
+  Snapshots fetched:    117
+  Unique pairs:         99
+  Diff runs (all strats): 297
+  Changes detected:     153
+  Pure noise (≥90%):    45
+  Real changes (<90%):  108
+  LLM analyses:         28
+  Total LLM cost:       $0.0186
+  False positive rate:  29.4%
+
+🎯 SEVERITY DISTRIBUTION (LLM)
+  low            17 (0 breaking)
+  medium         10 (0 breaking)
+  high            1 (1 breaking)
+  ────────────
+  Total breaking: 1/28 (3.6%)
+
+🤖 MODEL USAGE
+  gpt-4o             2 calls  $0.0109
+  gpt-4o-mini       26 calls  $0.0077
+
+───────────────────────────────────────────────────────────────
+   PER-URL BREAKDOWN
+───────────────────────────────────────────────────────────────
+
+📄 Stripe Charges (big) - docs.stripe.com/api/charges
+  Snapshots: 16 | Pairs: 15 | Changes: 26 | Real: 8 | Noise: 18
+  Strategy breakdown:
+    raw_html        14/15 changed  avg_noise=72%
+    readability     4/15 changed  avg_noise=27%
+    text_only       8/15 changed  avg_noise=48%
+  LLM classifications:
+    🟢 [low] Whitespace and formatting changes in the documentation. (conf=1, gpt-4o-mini)
+  Sample diffs (text_only, first 1):
+    20240623071503 → 20240709230126 (11 lines, noise=18%)
+      -Find anything/IntroductionAuthenticationConnected AccountsErrorsExpanding ResponsesIdempotent reque
+
+📄 GitHub Repos (big) - docs.github.com/en/rest/repos
+  ⚠ No snapshots fetched
+
+📄 AWS S3 API (big) - docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html
+  ⚠ No snapshots fetched
+
+📄 Cloudflare API (big) - developers.cloudflare.com/api
+  Snapshots: 16 | Pairs: 15 | Changes: 13 | Real: 8 | Noise: 5
+  Strategy breakdown:
+    raw_html        11/15 changed  avg_noise=46%
+    readability     1/15 changed  avg_noise=0%
+    text_only       1/15 changed  avg_noise=0%
+  LLM classifications:
+    🟢 [low] Cosmetic changes including the removal of the previous text and addition of new  (conf=1, gpt-4o-mini)
+  Sample diffs (text_only, first 1):
+    20201009202250 → 20201024202610 (2 lines, noise=0%)
+      -DevelopersDocsSponsorshipsOpen SourceServerlist NewsletterCloudflare APIGenerating and managing tok
+      +This app works best with JavaScript enabled.Skip to contentCloudflare docs logomarkCloudflare DocsC
+
+📄 GCS JSON API (big) - cloud.google.com/storage/docs/json_api
+  ⚠ No snapshots fetched
+
+📄 SendGrid Mail (mid) - docs.sendgrid.com/api-reference/mail-send/mail-send
+  Snapshots: 19 | Pairs: 14 | Changes: 35 | Real: 35 | Noise: 0
+  Strategy breakdown:
+    raw_html        14/14 changed  avg_noise=1%
+    readability     8/14 changed  avg_noise=10%
+    text_only       13/14 changed  avg_noise=0%
+  LLM classifications:
+    🟢 [low] Corrected spelling of 'recpient' to 'recipient' in the descriptions for 'cc' and (conf=1, gpt-4o-mini)
+    🟢 [medium] The section 'E-Mail Activity' was removed and replaced with 'Email Activity' alo (conf=0.9, gpt-4o-mini)
+    🟢 [low] Rephrased feedback request and reformatted feedback options. (conf=1, gpt-4o-mini)
+    🟢 [low] The title 'Segmenting Contacts V2 - Beta' was changed to 'Segmenting Contacts V2 (conf=1, gpt-4o-mini)
+    🟢 [medium] Added new sections for IP Address Management API including multiple endpoints fo (conf=0.9, gpt-4o-mini)
+  Sample diffs (text_only, first 3):
+    20210729020436 → 20210823153935 (10 lines, noise=0%)
+      -An array of recipients who will receive a copy of your email. Each object in this array must contai
+      +An array of recipients who will receive a copy of your email. Each object in this array must contai
+      -An array of recipients who will receive a blind carbon copy of your email. Each object in this arra
+      +An array of recipients who will receive a blind carbon copy of your email. Each object in this arra
+      -We all do sometimes; code is hard. Get help now from our
+    20210823153935 → 20211017120318 (72 lines, noise=0%)
+      -E-Mail Activity
+      -Filter all messages
+      -Filter messages by message ID
+      -Request a CSV
+      -Download CSV
+    20220124223252 → 20220316163422 (16 lines, noise=0%)
+      -We are always striving to improve our documentation quality, and your feedback is valuable to us. P
+      +Please select the reason(s) for your feedback. The additional information you provide helps us impr
+      -The page is missing information or code
+      -The page content is confusing or hard to follow
+      -The page has inaccurate or outdated information
+
+📄 Twilio Messages (mid) - www.twilio.com/docs/messaging/api/message-resource
+  ⚠ No snapshots fetched
+
+📄 Plaid Transactions (mid) - plaid.com/docs/api/transactions
+  ⚠ No snapshots fetched
+
+📄 Sentry API (mid) - docs.sentry.io/api
+  Snapshots: 18 | Pairs: 15 | Changes: 22 | Real: 19 | Noise: 3
+  Strategy breakdown:
+    raw_html        15/15 changed  avg_noise=32%
+    readability     3/15 changed  avg_noise=0%
+    text_only       4/15 changed  avg_noise=0%
+  LLM classifications:
+    🟢 [low] Added 'Rendered with Jekyll' to the end of the document. (conf=1, gpt-4o-mini)
+    🟢 [low] Formatting of the API documentation was altered, resulting in a single-line conc (conf=1, gpt-4o)
+    🟢 [low] Replaced 'No results for ''Sign inGet started' with 'Home'. Removed 'Endpoints'  (conf=1, gpt-4o-mini)
+    🟢 [low] Whitespace change: No newline at end of file. (conf=1, gpt-4o-mini)
+  Sample diffs (text_only, first 3):
+    20200529225941 → 20200705031615 (3 lines, noise=0%)
+      -Endpoints
+      +Endpoints
+      +Rendered with Jekyll
+    20200720170253 → 20200807133712 (97 lines, noise=0%)
+      -Sign in
+      -Get started
+      -API Reference
+      -The Sentry API is used for submitting events to the Sentry collector as well as exporting and manag
+      -Versioning
+    20200807133712 → 20200908194109 (2 lines, noise=0%)
+      -No results for ''Sign inGet startedAPI ReferenceThe Sentry API is used for submitting events to the
+      +HomeAPI ReferenceAPI ReferenceThe Sentry API is used for submitting events to the Sentry collector 
+
+📄 Datadog API (mid) - docs.datadog.com/api/latest
+  ⚠ No snapshots fetched
+
+📄 LemonSqueezy (small) - docs.lemonsqueezy.com/api
+  Snapshots: 11 | Pairs: 8 | Changes: 18 | Real: 18 | Noise: 0
+  Strategy breakdown:
+    raw_html        8/8 changed  avg_noise=8%
+    readability     5/8 changed  avg_noise=1%
+    text_only       5/8 changed  avg_noise=1%
+  LLM classifications:
+    🟢 [low] The phrase 'read-only endpoints for all resources' was changed to 'read-only end (conf=1, gpt-4o-mini)
+    🟢 [low] Added a 'Quickstart' section and a 'Resource Object Structure' section. The text (conf=0.9, gpt-4o-mini)
+    🟢 [low] Removed the phrase 'Currently, the API is considered BETA and as such only provi (conf=1, gpt-4o-mini)
+    🟢 [medium] Added a new 'price-model' object with links to related resources. (conf=0.9, gpt-4o-mini)
+    🟢 [medium] Added new unofficial SDKs for Python, PHP, and Elixir. (conf=1, gpt-4o-mini)
+  Sample diffs (text_only, first 3):
+    20221109201716 → 20221127152111 (2 lines, noise=0%)
+      -The Lemon Squeezy API is a REST API that has predictable resource-oriented URLs, returns valid JSON
+      +The Lemon Squeezy API is a REST API that has predictable resource-oriented URLs, returns valid JSON
+    20230131115856 → 20230319151143 (36 lines, noise=0%)
+      -The Lemon Squeezy API is a REST API that has predictable resource-oriented URLs, returns valid JSON
+      -Unauthenticated requests will receive a 401 Unauthorized response.Rate LimitingTo make it easier to
+      -Here, page[number] is the index of the page you want to retrieve and page[size] is the number of re
+      -The response will contain a new top-level included array which will contain the related resources.N
+      -VersioningThe Lemon Squeezy API includes the major version number as a prefix for all endpoints (e.
+    20230319151143 → 20230510040532 (75 lines, noise=4%)
+      -The Lemon Squeezy API is a REST API that has predictable resource-oriented URLs, returns valid JSON
+      +The Lemon Squeezy API is a REST API that has predictable resource-oriented URLs, returns valid JSON
+      -The response will contain a new top-level included array which will contain the related resources.I
+      +The response will contain a new top-level included array which will contain the related resources.T
+      +Related resources are returned in responses in a top-level included object.{
+
+📄 Buttondown (small) - docs.buttondown.com/api-introduction
+  Snapshots: 16 | Pairs: 15 | Changes: 19 | Real: 0 | Noise: 19
+  Strategy breakdown:
+    raw_html        13/15 changed  avg_noise=87%
+    readability     0/15 changed  avg_noise=0%
+    text_only       6/15 changed  avg_noise=40%
+
+📄 Cal.com (small) - docs.cal.com/api-reference
+  ⚠ No snapshots fetched
+
+📄 Render (small) - docs.render.com/api
+  Snapshots: 11 | Pairs: 10 | Changes: 12 | Real: 12 | Noise: 0
+  Strategy breakdown:
+    raw_html        9/10 changed  avg_noise=6%
+    readability     1/10 changed  avg_noise=2%
+    text_only       2/10 changed  avg_noise=6%
+  LLM classifications:
+    🟢 [low] An iframe element was added at the beginning of the text. (conf=1, gpt-4o-mini)
+    🟢 [medium] The Render API description was updated to include more details about managing se (conf=0.9, gpt-4o-mini)
+  Sample diffs (text_only, first 2):
+    20240506201058 → 20240614014205 (2 lines, noise=50%)
+      -The Render APIRender provides a public REST API for managing services and resources programmaticall
+      +<iframe src="https://www.googletagmanager.com/ns.html?id=[GA_ID]" height="0" width="0" style="displ
+    20240705144903 → 20240808125606 (40 lines, noise=5%)
+      -<iframe src="https://www.googletagmanager.com/ns.html?id=[GA_ID]" height="0" width="0" style="displ
+      -The API supports many of the same actions available from the Render Dashboard. It currently provide
+      -Services
+      +<iframe src="https://www.googletagmanager.com/ns.html?id=[GA_ID]" height="0" width="0" style="displ
+      +Open the API reference
+
+📄 Tinybird (small) - docs.tinybird.co
+  Snapshots: 10 | Pairs: 7 | Changes: 8 | Real: 8 | Noise: 0
+  Strategy breakdown:
+    raw_html        3/7 changed  avg_noise=3%
+    readability     2/7 changed  avg_noise=4%
+    text_only       3/7 changed  avg_noise=3%
+  LLM classifications:
+    🟢 [medium] The name 'Tinybird' was changed to 'Tinybird Analytics'. The example CSV file ch (conf=1, gpt-4o-mini)
+    🟢 [low] Corrected the spelling of 'intial' to 'initial' in the description of a Pipe. (conf=1, gpt-4o-mini)
+    🟢 [low] Added 'TIPSBETA', 'Data Source tips', and 'SQL tips' after 'Kafka connector'. (conf=1, gpt-4o-mini)
+  Sample diffs (text_only, first 3):
+    20190722143137 → 20190820041707 (166 lines, noise=20%)
+      -The Tinybird platform provides you with an easy way to ingest and query large amounts of data in re
+      -Tinybird works with CSV files, especially those that are too big for Excel. If you have one around,
+      -As an example, the code below illustrates how you can quickly build a simple frontend application w
+      -local file with events data¶
+      -$ cat local_file.csv
+    20210725225212 → 20210918203052 (3 lines, noise=0%)
+      -A pipe is essentially a sequence of one or more SQL queries (transformation nodes) using one or man
+      +A pipe is essentially a sequence of one or more SQL queries (transformation nodes) using one or man
+      +Kafka connector
+    20220406104952 → 20220525012734 (5 lines, noise=0%)
+      -Kafka connector
+      +Kafka connector
+      +TIPSBETA
+      +Data Source tips
+      +SQL tips
+
+📄 SuperSaaS (ultra-small) - docs.supersaas.com
+  ⚠ No snapshots fetched
+
+📄 BrieflyAI (ultra-small) - docs.brieflyai.com
+  ⚠ No snapshots fetched
+
+📄 Checkly (ultra-small) - api.checklyhq.com/docs
+  ⚠ No snapshots fetched
+
+📄 PostHog (ultra-small) - docs.posthog.com/api
+  ⚠ No snapshots fetched
+
+📄 Hookdeck (ultra-small) - docs.hookdeck.com
+  ⚠ No snapshots fetched
+
+═══════════════════════════════════════════════════════════════
+   END OF REPORT
+═══════════════════════════════════════════════════════════════

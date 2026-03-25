@@ -1,0 +1,19 @@
+{
+  "id": "stripe-02",
+  "source": "Stripe API Changelog",
+  "title": "Makes Boleto tax ID nullable in payment method details for Payment Records",
+  "date": "2026-02-25",
+  "raw_changelog": "Makes Boleto tax ID nullable in payment method details for Payment Records. Previously the tax_id field was required. Now it can be null. Affected Products: All products. Breaking change: Non-breaking.",
+  "before_text": "## Payment Records - Boleto Payment Method Details\n\n### Response Schema\n```json\n{\n  \"payment_method_details\": {\n    \"boleto\": {\n      \"tax_id\": \"string (required)\",\n      \"fingerprint\": \"string\"\n    }\n  }\n}\n```\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| tax_id | string | Yes | The tax ID of the customer |\n| fingerprint | string | No | Unique identifier for the bank account |",
+  "after_text": "## Payment Records - Boleto Payment Method Details\n\n### Response Schema\n```json\n{\n  \"payment_method_details\": {\n    \"boleto\": {\n      \"tax_id\": \"string or null\",\n      \"fingerprint\": \"string\"\n    }\n  }\n}\n```\n\n| Field | Type | Required | Description |\n|-------|------|----------|-------------|\n| tax_id | string or null | No | The tax ID of the customer. Can be null. |\n| fingerprint | string | No | Unique identifier for the bank account |",
+  "diff_text": "--- before\n+++ after\n@@ -5,7 +5,7 @@\n     \"boleto\": {\n-      \"tax_id\": \"string (required)\",\n+      \"tax_id\": \"string or null\",\n       \"fingerprint\": \"string\"\n@@ -12,7 +12,7 @@\n-| tax_id | string | Yes | The tax ID of the customer |\n+| tax_id | string or null | No | The tax ID of the customer. Can be null. |",
+  "ground_truth": {
+    "severity": "medium",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": ["Payment Records API"],
+    "action_required": "Review code that reads Boleto tax_id field - it can now be null. Add null checks if not already present.",
+    "cosmetic_only": false,
+    "confidence_notes": "Field changed from required to optional/nullable. Not breaking for request, but consumers parsing responses should handle null."
+  }
+}

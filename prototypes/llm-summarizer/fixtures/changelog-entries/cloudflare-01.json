@@ -1,0 +1,21 @@
+{
+  "id": "cloudflare-01",
+  "source": "Cloudflare Changelog",
+  "title": "Dynamic Workers now in open beta",
+  "date": "2026-03-24",
+  "raw_changelog": "Dynamic Workers are now in open beta. Workers can now spin up other Workers at runtime.",
+  "before_text": "## Workers API\n\n### Creating Workers\nWorkers are deployed via the Wrangler CLI or API.\n\n```\nPUT /client/v4/accounts/{account_id}/workers/scripts/{script_name}\n```",
+  "after_text": "## Workers API\n\n### Creating Workers\nWorkers are deployed via the Wrangler CLI or API.\n\n```\nPUT /client/v4/accounts/{account_id}/workers/scripts/{script_name}\n```\n\n### Dynamic Workers (Beta)\nWorkers can now create other Workers at runtime using the LOADER binding.\n\n```javascript\nconst worker = env.LOADER.load({\n  compatibilityDate: \"2026-01-01\",\n  mainModule: \"src/index.js\",\n  modules: { \"src/index.js\": code }\n});\nreturn worker.getEntrypoint().fetch(request);\n```",
+  "diff_text": "--- before\n+++ after\n@@ -6,3 +6,14 @@\n PUT /client/v4/accounts/{account_id}/workers/scripts/{script_name}\n ```\n+\n+### Dynamic Workers (Beta)\n+Workers can now create other Workers at runtime using the LOADER binding.\n+\n+```javascript\n+const worker = env.LOADER.load({ ... });\n+return worker.getEntrypoint().fetch(request);\n+```",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Workers API"
+    ],
+    "action_required": "No action required. New feature available for dynamically creating Workers at runtime.",
+    "cosmetic_only": false,
+    "confidence_notes": "New additive feature in beta"
+  }
+}

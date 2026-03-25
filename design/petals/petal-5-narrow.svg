@@ -1,0 +1,4 @@
+<svg width="28" height="48" viewBox="0 0 28 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 2C16 10 22 20 20 30C18 40 14 44 12 38C10 32 9 18 12 8C13 4 13.5 2 14 2Z" fill="url(#g)"/>
+  <defs><radialGradient id="g" cx="40%" cy="28%" r="60%"><stop offset="0%" stop-color="#FFE4EB"/><stop offset="100%" stop-color="#FFAFC0"/></radialGradient></defs>
+</svg>

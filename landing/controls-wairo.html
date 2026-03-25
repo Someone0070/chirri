@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+<title>和色 Controls -- Japanese Traditional Colors</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #FAF8F5;
+  color: #2C2825;
+  padding: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+h1 { font-family: 'Noto Serif JP', serif; font-weight: 400; font-size: 28px; margin-bottom: 4px; }
+.jp-title { font-family: 'Noto Serif JP', serif; font-size: 16px; color: #A28C73; margin-bottom: 8px; }
+.subtitle { font-size: 14px; color: #7A756F; margin-bottom: 48px; max-width: 700px; line-height: 1.6; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-bottom: 56px; }
+
+.column {
+  background: #FFFDF9;
+  border: 1px solid #E8E4DD;
+  border-radius: 12px;
+  padding: 32px;
+  position: relative;
+}
+
+.col-title { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+.col-jp { font-family: 'Noto Serif JP', serif; font-size: 12px; color: #A28C73; margin-bottom: 4px; }
+.col-desc { font-size: 12px; color: #7A756F; margin-bottom: 28px; line-height: 1.5; }
+
+.control-group { margin-bottom: 28px; }
+.control-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #A6A09A; margin-bottom: 12px;
+}
+
+/* Color swatch strip */
+.swatches { display: flex; gap: 6px; margin-bottom: 20px; }
+.swatch {
+  width: 32px; height: 32px; border-radius: 6px;
+  position: relative; cursor: default;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.swatch-label {
+  position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
+  font-size: 8px; color: #A6A09A; white-space: nowrap;
+}
+
+/* Shared control styles */
+.row { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
+.lbl { font-size: 13px; color: #2C2825; }
+
+/* Checkbox base */
+.cb { width: 18px; height: 18px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.cb svg { width: 12px; height: 12px; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+/* Radio base */
+.radio { width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.radio-dot { border-radius: 50%; }
+
+/* Toggle base */
+.toggle { width: 36px; height: 20px; border-radius: 10px; position: relative; flex-shrink: 0; }
+.toggle-knob { width: 14px; height: 14px; border-radius: 50%; position: absolute; top: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+/* Button base */
+.btn { padding: 8px 20px; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Tag base */
+.tag { padding: 4px 10px; font-size: 11px; font-weight: 500; border-radius: 6px; }
+.tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* Custom dropdown */
+.dropdown { position: relative; }
+.dropdown-trigger {
+  width: 100%; padding: 10px 36px 10px 12px; font-size: 14px; font-family: 'Inter', sans-serif;
+  border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  user-select: none; position: relative;
+}
+.dropdown-trigger::after {
+  content: ''; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent;
+}
+.dropdown-panel {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: #FFFDF9; border-radius: 8px; overflow: hidden; z-index: 10;
+  box-shadow: 0 4px 20px rgba(44,40,37,0.1); animation: fadeIn 0.15s ease;
+}
+.dropdown-panel.open { display: block; }
+.dropdown-option {
+  padding: 10px 14px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+}
+.dropdown-check { width: 14px; font-size: 13px; opacity: 0; }
+.dropdown-option.selected .dropdown-check { opacity: 1; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Input base */
+.input-demo {
+  width: 100%; padding: 10px 0; font-size: 14px; font-family: 'Inter', sans-serif;
+  background: transparent; outline: none; margin-bottom: 8px; border: none;
+}
+
+/* ============================================================
+   COLUMN D: Cha-nezumi (茶鼠) -- Tea Ceremony Grey-Brown
+   ============================================================ */
+.cb-d-on { background: #A28C73; border: 1.5px solid #A28C73; }
+.cb-d-on svg { stroke: #FFFDF9; }
+.cb-d-off { background: #FFFDF9; border: 1.5px solid #CFC6B8; }
+.cb-d-dis { background: #F0ECE6; border: 1px solid #E4DFD6; opacity: 0.6; }
+.cb-d-dis svg { stroke: #B8B0A4; }
+
+.radio-d-on { border: 2px solid #A28C73; background: #FFFDF9; }
+.radio-d-on .radio-dot { width: 7px; height: 7px; background: #A28C73; }
+.radio-d-off { border: 1.5px solid #CFC6B8; background: #FFFDF9; }
+
+.toggle-d-on { background: #A28C73; }
+.toggle-d-on .toggle-knob { left: 19px; background: #FFFDF9; }
+.toggle-d-off { background: #DDD6CB; }
+.toggle-d-off .toggle-knob { left: 3px; background: #FFFDF9; }
+
+.input-d { border-bottom: 1.5px solid #CFC6B8; color: #2C2825; }
+.input-d:focus { border-bottom-color: #A28C73; }
+.input-d::placeholder { color: #B8B0A4; }
+
+.dd-d .dropdown-trigger { background: #FFFDF9; border: 1.5px solid #CFC6B8; color: #2C2825; }
+.dd-d .dropdown-trigger::after { border-top: 5px solid #A28C73; }
+.dd-d .dropdown-panel { border: 1px solid #E4DFD6; }
+.dd-d .dropdown-option:hover { background: #F5F1EA; }
+.dd-d .dropdown-check { color: #A28C73; }
+
+.btn-d-pri { background: #A28C73; color: #FFFDF9; }
+.btn-d-sec { background: transparent; color: #A28C73; border: 1.5px solid #CFC6B8; }
+.btn-d-ghost { background: transparent; color: #A28C73; text-decoration: underline; }
+
+.tag-d { background: #A28C73; color: #FFFDF9; }
+.tag-d-outline { background: #F5F1EA; color: #8A7660; border: 1px solid #DDD6CB; }
+
+/* ============================================================
+   COLUMN E: Rikyū (利休) -- Zen Master Green-Grey
+   ============================================================ */
+.cb-e-on { background: #7E7B72; border: 1.5px solid #7E7B72; }
+.cb-e-on svg { stroke: #FFFDF9; }
+.cb-e-off { background: #FFFDF9; border: 1.5px solid #C4C0B6; }
+.cb-e-dis { background: #F0ECE6; border: 1px solid #E4DFD6; opacity: 0.6; }
+.cb-e-dis svg { stroke: #B0ACA4; }
+
+.radio-e-on { border: 2px solid #7E7B72; background: #FFFDF9; }
+.radio-e-on .radio-dot { width: 7px; height: 7px; background: #7E7B72; }
+.radio-e-off { border: 1.5px solid #C4C0B6; background: #FFFDF9; }
+
+.toggle-e-on { background: #7E7B72; }
+.toggle-e-on .toggle-knob { left: 19px; background: #FFFDF9; }
+.toggle-e-off { background: #D4D0C8; }
+.toggle-e-off .toggle-knob { left: 3px; background: #FFFDF9; }
+
+.input-e { border-bottom: 1.5px solid #C4C0B6; color: #2C2825; }
+.input-e:focus { border-bottom-color: #7E7B72; }
+.input-e::placeholder { color: #B0ACA4; }
+
+.dd-e .dropdown-trigger { background: #FFFDF9; border: 1.5px solid #C4C0B6; color: #2C2825; }
+.dd-e .dropdown-trigger::after { border-top: 5px solid #7E7B72; }
+.dd-e .dropdown-panel { border: 1px solid #DAD6CE; }
+.dd-e .dropdown-option:hover { background: #F2F0EA; }
+.dd-e .dropdown-check { color: #7E7B72; }
+
+.btn-e-pri { background: #7E7B72; color: #FFFDF9; }
+.btn-e-sec { background: transparent; color: #7E7B72; border: 1.5px solid #C4C0B6; }
+.btn-e-ghost { background: transparent; color: #7E7B72; text-decoration: underline; }
+
+.tag-e { background: #7E7B72; color: #FFFDF9; }
+.tag-e-outline { background: #F0EDE8; color: #6A6760; border: 1px solid #D4D0C8; }
+
+/* ============================================================
+   COLUMN F: Asagi-Ai (浅葱藍) -- Soft Teal-Blue
+   ============================================================ */
+.cb-f-on { background: #5F8F8A; border: 1.5px solid #5F8F8A; }
+.cb-f-on svg { stroke: #FFFDF9; }
+.cb-f-off { background: #FFFDF9; border: 1.5px solid #B8CCC8; }
+.cb-f-dis { background: #EEF2F0; border: 1px solid #DDE6E2; opacity: 0.6; }
+.cb-f-dis svg { stroke: #9AB4AE; }
+
+.radio-f-on { border: 2px solid #5F8F8A; background: #FFFDF9; }
+.radio-f-on .radio-dot { width: 7px; height: 7px; background: #5F8F8A; }
+.radio-f-off { border: 1.5px solid #B8CCC8; background: #FFFDF9; }
+
+.toggle-f-on { background: #5F8F8A; }
+.toggle-f-on .toggle-knob { left: 19px; background: #FFFDF9; }
+.toggle-f-off { background: #CADAD6; }
+.toggle-f-off .toggle-knob { left: 3px; background: #FFFDF9; }
+
+.input-f { border-bottom: 1.5px solid #B8CCC8; color: #2C2825; }
+.input-f:focus { border-bottom-color: #5F8F8A; }
+.input-f::placeholder { color: #9AB4AE; }
+
+.dd-f .dropdown-trigger { background: #FFFDF9; border: 1.5px solid #B8CCC8; color: #2C2825; }
+.dd-f .dropdown-trigger::after { border-top: 5px solid #5F8F8A; }
+.dd-f .dropdown-panel { border: 1px solid #CADAD6; }
+.dd-f .dropdown-option:hover { background: #F0F5F3; }
+.dd-f .dropdown-check { color: #5F8F8A; }
+
+.btn-f-pri { background: #5F8F8A; color: #FFFDF9; }
+.btn-f-sec { background: transparent; color: #5F8F8A; border: 1.5px solid #B8CCC8; }
+.btn-f-ghost { background: transparent; color: #5F8F8A; text-decoration: underline; }
+
+.tag-f { background: #5F8F8A; color: #FFFDF9; }
+.tag-f-outline { background: #EEF4F2; color: #4A736F; border: 1px solid #CADAD6; }
+
+/* Section title */
+.section-title { font-family: 'Noto Serif JP', serif; font-weight: 400; font-size: 20px; margin: 56px 0 12px; }
+.section-desc { font-size: 13px; color: #7A756F; margin-bottom: 32px; line-height: 1.6; max-width: 700px; }
+
+/* Context form */
+.mock-form { background: #FFFDF9; border: 1px solid #E8E4DD; border-radius: 12px; padding: 32px; max-width: 480px; margin-bottom: 40px; }
+.mock-form h3 { font-size: 16px; font-weight: 500; margin-bottom: 24px; }
+.form-field { margin-bottom: 20px; }
+.form-field label { display: block; font-size: 12px; font-weight: 500; color: #5C5652; margin-bottom: 6px; }
+.form-input {
+  width: 100%; padding: 10px 12px; font-size: 14px; font-family: 'Inter', sans-serif;
+  border: 1px solid #E4DFD6; border-radius: 8px; background: #FAF8F5; color: #2C2825; outline: none;
+}
+.form-input:focus { border-color: #A28C73; box-shadow: 0 0 0 3px rgba(162,140,115,0.1); }
+.form-input::placeholder { color: #B8B0A4; }
+.form-row { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+.form-actions { display: flex; gap: 12px; margin-top: 24px; }
+
+@media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>和色 Form Controls</h1>
+<div class="jp-title">Traditional Japanese Color Palettes for UI</div>
+<p class="subtitle">Three approaches using real Japanese traditional colors. Each has a distinct warmth that "generic dark grey" and "brand indigo" can't achieve. These are the colors of tea houses, kimono dye, and zen gardens.</p>
+
+<!-- ============ THREE COLUMNS ============ -->
+<div class="grid">
+
+<!-- COLUMN D: Cha-nezumi -->
+<div class="column">
+<div class="col-title">D. Cha-nezumi</div>
+<div class="col-jp">茶鼠 -- Tea-Ceremony Grey</div>
+<div class="col-desc">The color of aged wood and tea dust. Warm brown-grey used in sado (tea ceremony) aesthetics. Feels organic and grounded.</div>
+
+<div class="swatches">
+  <div class="swatch" style="background:#A28C73"><span class="swatch-label">Active</span></div>
+  <div class="swatch" style="background:#CFC6B8"><span class="swatch-label">Border</span></div>
+  <div class="swatch" style="background:#DDD6CB"><span class="swatch-label">Off</span></div>
+  <div class="swatch" style="background:#F5F1EA"><span class="swatch-label">Hover</span></div>
+  <div class="swatch" style="background:#FFFDF9"><span class="swatch-label">Surface</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Checkboxes</div>
+  <div class="row"><div class="cb cb-d-on"><svg viewBox="0 0 12 12"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div><span class="lbl">Checked</span></div>
+  <div class="row"><div class="cb cb-d-off"></div><span class="lbl">Unchecked</span></div>
+  <div class="row"><div class="cb cb-d-dis"><svg viewBox="0 0 12 12"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div><span class="lbl" style="opacity:0.5">Disabled</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Radios</div>
+  <div class="row"><div class="radio radio-d-on"><div class="radio-dot"></div></div><span class="lbl">Selected</span></div>
+  <div class="row"><div class="radio radio-d-off"></div><span class="lbl">Unselected</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Toggle</div>
+  <div class="row"><div class="toggle toggle-d-on"><div class="toggle-knob"></div></div><span class="lbl">On</span></div>
+  <div class="row"><div class="toggle toggle-d-off"><div class="toggle-knob"></div></div><span class="lbl">Off</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Input</div>
+  <input class="input-demo input-d" type="text" placeholder="monitoring@example.com" readonly>
+  <input class="input-demo input-d" type="text" value="chirri.io/api" readonly style="border-bottom-color:#A28C73">
+</div>
+
+<div class="control-group">
+  <div class="control-label">Dropdown</div>
+  <div class="dropdown dd-d">
+    <div class="dropdown-trigger" onclick="toggleDD(this)">Every 5 minutes</div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 1 minute</div>
+      <div class="dropdown-option selected" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 5 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 15 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every hour</div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Buttons</div>
+  <div class="btn-row">
+    <button class="btn btn-d-pri">Save</button>
+    <button class="btn btn-d-sec">Cancel</button>
+    <button class="btn btn-d-ghost">Reset</button>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Tags</div>
+  <div class="tag-row">
+    <span class="tag tag-d">Active</span>
+    <span class="tag tag-d-outline">REST API</span>
+    <span class="tag tag-d-outline">5 min</span>
+  </div>
+</div>
+</div>
+
+<!-- COLUMN E: Rikyū-nezumi -->
+<div class="column">
+<div class="col-title">E. Rikyū-nezumi</div>
+<div class="col-jp">利休鼠 -- Zen Master Grey</div>
+<div class="col-desc">Named after Sen no Rikyū, the father of tea ceremony. A green-grey like moss on stone. The most "zen" option -- restrained but alive.</div>
+
+<div class="swatches">
+  <div class="swatch" style="background:#7E7B72"><span class="swatch-label">Active</span></div>
+  <div class="swatch" style="background:#C4C0B6"><span class="swatch-label">Border</span></div>
+  <div class="swatch" style="background:#D4D0C8"><span class="swatch-label">Off</span></div>
+  <div class="swatch" style="background:#F2F0EA"><span class="swatch-label">Hover</span></div>
+  <div class="swatch" style="background:#FFFDF9"><span class="swatch-label">Surface</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Checkboxes</div>
+  <div class="row"><div class="cb cb-e-on"><svg viewBox="0 0 12 12"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div><span class="lbl">Checked</span></div>
+  <div class="row"><div class="cb cb-e-off"></div><span class="lbl">Unchecked</span></div>
+  <div class="row"><div class="cb cb-e-dis"><svg viewBox="0 0 12 12"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div><span class="lbl" style="opacity:0.5">Disabled</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Radios</div>
+  <div class="row"><div class="radio radio-e-on"><div class="radio-dot"></div></div><span class="lbl">Selected</span></div>
+  <div class="row"><div class="radio radio-e-off"></div><span class="lbl">Unselected</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Toggle</div>
+  <div class="row"><div class="toggle toggle-e-on"><div class="toggle-knob"></div></div><span class="lbl">On</span></div>
+  <div class="row"><div class="toggle toggle-e-off"><div class="toggle-knob"></div></div><span class="lbl">Off</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Input</div>
+  <input class="input-demo input-e" type="text" placeholder="monitoring@example.com" readonly>
+  <input class="input-demo input-e" type="text" value="chirri.io/api" readonly style="border-bottom-color:#7E7B72">
+</div>
+
+<div class="control-group">
+  <div class="control-label">Dropdown</div>
+  <div class="dropdown dd-e">
+    <div class="dropdown-trigger" onclick="toggleDD(this)">Every 5 minutes</div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 1 minute</div>
+      <div class="dropdown-option selected" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 5 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 15 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every hour</div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Buttons</div>
+  <div class="btn-row">
+    <button class="btn btn-e-pri">Save</button>
+    <button class="btn btn-e-sec">Cancel</button>
+    <button class="btn btn-e-ghost">Reset</button>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Tags</div>
+  <div class="tag-row">
+    <span class="tag tag-e">Active</span>
+    <span class="tag tag-e-outline">REST API</span>
+    <span class="tag tag-e-outline">5 min</span>
+  </div>
+</div>
+</div>
+
+<!-- COLUMN F: Asagi -->
+<div class="column">
+<div class="col-title">F. Asagi-iro</div>
+<div class="col-jp">浅葱色 -- Shallow Onion Blue</div>
+<div class="col-desc">A soft teal-green found in Kabuki curtains and samurai linings. Cooler than the others but still organic -- the color of shallow sea over sand.</div>
+
+<div class="swatches">
+  <div class="swatch" style="background:#5F8F8A"><span class="swatch-label">Active</span></div>
+  <div class="swatch" style="background:#B8CCC8"><span class="swatch-label">Border</span></div>
+  <div class="swatch" style="background:#CADAD6"><span class="swatch-label">Off</span></div>
+  <div class="swatch" style="background:#F0F5F3"><span class="swatch-label">Hover</span></div>
+  <div class="swatch" style="background:#FFFDF9"><span class="swatch-label">Surface</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Checkboxes</div>
+  <div class="row"><div class="cb cb-f-on"><svg viewBox="0 0 12 12"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div><span class="lbl">Checked</span></div>
+  <div class="row"><div class="cb cb-f-off"></div><span class="lbl">Unchecked</span></div>
+  <div class="row"><div class="cb cb-f-dis"><svg viewBox="0 0 12 12"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div><span class="lbl" style="opacity:0.5">Disabled</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Radios</div>
+  <div class="row"><div class="radio radio-f-on"><div class="radio-dot"></div></div><span class="lbl">Selected</span></div>
+  <div class="row"><div class="radio radio-f-off"></div><span class="lbl">Unselected</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Toggle</div>
+  <div class="row"><div class="toggle toggle-f-on"><div class="toggle-knob"></div></div><span class="lbl">On</span></div>
+  <div class="row"><div class="toggle toggle-f-off"><div class="toggle-knob"></div></div><span class="lbl">Off</span></div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Input</div>
+  <input class="input-demo input-f" type="text" placeholder="monitoring@example.com" readonly>
+  <input class="input-demo input-f" type="text" value="chirri.io/api" readonly style="border-bottom-color:#5F8F8A">
+</div>
+
+<div class="control-group">
+  <div class="control-label">Dropdown</div>
+  <div class="dropdown dd-f">
+    <div class="dropdown-trigger" onclick="toggleDD(this)">Every 5 minutes</div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 1 minute</div>
+      <div class="dropdown-option selected" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 5 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 15 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every hour</div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Buttons</div>
+  <div class="btn-row">
+    <button class="btn btn-f-pri">Save</button>
+    <button class="btn btn-f-sec">Cancel</button>
+    <button class="btn btn-f-ghost">Reset</button>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Tags</div>
+  <div class="tag-row">
+    <span class="tag tag-f">Active</span>
+    <span class="tag tag-f-outline">REST API</span>
+    <span class="tag tag-f-outline">5 min</span>
+  </div>
+</div>
+</div>
+
+</div>
+
+<!-- IN CONTEXT: Cha-nezumi form -->
+<div class="section-title">In Context -- Cha-nezumi Form</div>
+<p class="section-desc">The tea ceremony palette applied to a real form. Notice how checked controls feel warm and organic instead of heavy or corporate.</p>
+
+<div class="mock-form">
+<h3>Add URL to Monitor</h3>
+<div class="form-field">
+  <label>URL</label>
+  <input class="form-input" type="text" value="https://api.example.com/health" readonly>
+</div>
+<div class="form-field">
+  <label>Display Name</label>
+  <input class="form-input" type="text" placeholder="Optional" readonly>
+</div>
+<div class="form-field">
+  <label>Check Interval</label>
+  <div class="dropdown dd-d">
+    <div class="dropdown-trigger" onclick="toggleDD(this)" style="background:#FAF8F5; border:1px solid #E4DFD6; border-radius:8px;">Every 5 minutes</div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 1 minute</div>
+      <div class="dropdown-option selected" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 5 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every 15 minutes</div>
+      <div class="dropdown-option" onclick="selectOpt(this)"><span class="dropdown-check">&#10003;</span>Every hour</div>
+    </div>
+  </div>
+</div>
+<div class="form-row">
+  <div class="cb cb-d-on"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+  <span class="lbl">Enable uptime monitoring</span>
+</div>
+<div class="form-row">
+  <div class="cb cb-d-off"></div>
+  <span class="lbl">Include in status page</span>
+</div>
+<div class="form-row">
+  <span class="lbl" style="flex:1">Active monitoring</span>
+  <div class="toggle toggle-d-on"><div class="toggle-knob"></div></div>
+</div>
+<div class="form-row">
+  <span class="lbl" style="flex:1">Email alerts</span>
+  <div class="toggle toggle-d-off"><div class="toggle-knob"></div></div>
+</div>
+<div class="form-actions">
+  <button class="btn" style="background:#FFB7C5; color:#2C2825; font-weight:600; padding:10px 24px;">Add URL</button>
+  <button class="btn btn-d-sec" style="padding:10px 24px;">Cancel</button>
+</div>
+</div>
+
+<!-- COLOR STORY -->
+<div class="section-title">The Color Story</div>
+<p class="section-desc">How each palette interacts with the sakura pink CTA button and the overall Kyoto Studio warm background.</p>
+
+<div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+<div style="background:#FFFDF9; border:1px solid #E8E4DD; border-radius:12px; padding:24px;">
+  <div style="font-size:12px; color:#A6A09A; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600;">Cha-nezumi + Sakura</div>
+  <div style="display:flex; gap:8px; margin-bottom:16px;">
+    <div style="flex:1; height:40px; background:#A28C73; border-radius:6px;"></div>
+    <div style="flex:1; height:40px; background:#FFB7C5; border-radius:6px;"></div>
+  </div>
+  <div style="font-size:11px; color:#7A756F; line-height:1.5;">Warm earth + warm bloom. Harmonious. Like a tea house in spring.</div>
+</div>
+<div style="background:#FFFDF9; border:1px solid #E8E4DD; border-radius:12px; padding:24px;">
+  <div style="font-size:12px; color:#A6A09A; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600;">Rikyū + Sakura</div>
+  <div style="display:flex; gap:8px; margin-bottom:16px;">
+    <div style="flex:1; height:40px; background:#7E7B72; border-radius:6px;"></div>
+    <div style="flex:1; height:40px; background:#FFB7C5; border-radius:6px;"></div>
+  </div>
+  <div style="font-size:11px; color:#7A756F; line-height:1.5;">Stone + bloom. More contrast. The pink pops more against the cooler grey.</div>
+</div>
+<div style="background:#FFFDF9; border:1px solid #E8E4DD; border-radius:12px; padding:24px;">
+  <div style="font-size:12px; color:#A6A09A; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600;">Asagi + Sakura</div>
+  <div style="display:flex; gap:8px; margin-bottom:16px;">
+    <div style="flex:1; height:40px; background:#5F8F8A; border-radius:6px;"></div>
+    <div style="flex:1; height:40px; background:#FFB7C5; border-radius:6px;"></div>
+  </div>
+  <div style="font-size:11px; color:#7A756F; line-height:1.5;">Sea + bloom. Complementary colors. Most visually striking but furthest from "warm."</div>
+</div>
+</div>
+
+<script>
+function toggleDD(trigger) {
+  const panel = trigger.nextElementSibling;
+  const isOpen = panel.classList.contains('open');
+  document.querySelectorAll('.dropdown-panel').forEach(p => p.classList.remove('open'));
+  if (!isOpen) panel.classList.add('open');
+}
+function selectOpt(opt) {
+  const panel = opt.parentElement;
+  const trigger = panel.previousElementSibling;
+  panel.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
+  opt.classList.add('selected');
+  trigger.textContent = opt.textContent.replace('✓', '').trim();
+  panel.classList.remove('open');
+}
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown-panel').forEach(p => p.classList.remove('open'));
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "id": "adversarial-04",
+  "source": "Adversarial Test",
+  "title": "Multi-change diff: one breaking, one cosmetic",
+  "date": "2026-03-01",
+  "raw_changelog": "Updated API endpoint with breaking change and cosmetic fixes.",
+  "before_text": "## List Items\n\nGET  /v1/items\n\n### Parameters\n|  name  |  type  |\n|---|---|\n|  limit  |  integer (default: 50)  |\n|  offset  |  integer  |\n\n### Authentication\nAPI Key via query parameter: ?api_key=xxx",
+  "after_text": "## List Items\n\nGET /v1/items\n\n### Parameters\n| name | type |\n|------|------|\n| limit | integer (default: 25) |\n| offset | integer |\n\n### Authentication\nAPI Key via Authorization header: Authorization: Bearer xxx\n\n**Breaking:** Query parameter authentication removed. Use header-based auth.",
+  "diff_text": "--- before\n+++ after\n@@ -1,12 +1,14 @@\n ## List Items\n \n-GET  /v1/items\n+GET /v1/items\n \n ### Parameters\n-|  name  |  type  |\n-|---|---|\n-|  limit  |  integer (default: 50)  |\n-|  offset  |  integer  |\n+| name | type |\n+|------|------|\n+| limit | integer (default: 25) |\n+| offset | integer |\n \n ### Authentication\n-API Key via query parameter: ?api_key=xxx\n+API Key via Authorization header: Authorization: Bearer xxx\n+\n+**Breaking:** Query parameter authentication removed. Use header-based auth.",
+  "ground_truth": {
+    "severity": "critical",
+    "is_breaking": true,
+    "breaking_reason": "Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.",
+    "affected_endpoints": [
+      "GET /v1/items"
+    ],
+    "action_required": "Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+    "cosmetic_only": false,
+    "confidence_notes": "Multiple changes: breaking auth change + default value change + cosmetic whitespace. Should identify breaking one."
+  }
+}

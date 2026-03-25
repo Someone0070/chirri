@@ -1,0 +1,22 @@
+{
+  "id": "cloudflare-03",
+  "source": "Cloudflare Changelog",
+  "title": "Containers now support Docker Hub images",
+  "date": "2026-03-24",
+  "raw_changelog": "Containers now support Docker Hub images directly in Wrangler configuration.",
+  "before_text": "## Containers Configuration\n\nContainers require images from Cloudflare Registry.\n\n```toml\n[[containers]]\nimage = \"registry.cloudflare.com/my-account/my-image:latest\"\n```",
+  "after_text": "## Containers Configuration\n\nContainers support images from Cloudflare Registry or Docker Hub.\n\n```toml\n[[containers]]\nimage = \"registry.cloudflare.com/my-account/my-image:latest\"\n# OR\nimage = \"docker.io/library/nginx:latest\"\n```\n\nPrivate Docker Hub images are also supported. See documentation for credential configuration.",
+  "diff_text": "--- before\n+++ after\n@@ -1,5 +1,9 @@\n ## Containers Configuration\n \n-Containers require images from Cloudflare Registry.\n+Containers support images from Cloudflare Registry or Docker Hub.\n \n [[containers]]\n image = \"registry.cloudflare.com/my-account/my-image:latest\"\n+# OR\n+image = \"docker.io/library/nginx:latest\"\n+\n+Private Docker Hub images are also supported.",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Containers API",
+      "Wrangler config"
+    ],
+    "action_required": "No action required. Docker Hub images now available as alternative to Cloudflare Registry.",
+    "cosmetic_only": false,
+    "confidence_notes": "Additive feature, expands image source options"
+  }
+}

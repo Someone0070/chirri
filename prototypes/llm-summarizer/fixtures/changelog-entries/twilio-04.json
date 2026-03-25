@@ -1,0 +1,21 @@
+{
+  "id": "twilio-04",
+  "source": "Twilio Changelog",
+  "title": "Cipher suite list update for all REST API endpoints",
+  "date": "2026-03-03",
+  "raw_changelog": "Upcoming cipher suite list update. Legacy cipher suites will be removed on June 3, 2026.",
+  "before_text": "## Supported Cipher Suites\n\nThe following cipher suites are supported:\n- TLS_AES_256_GCM_SHA384\n- TLS_AES_128_GCM_SHA256\n- TLS_CHACHA20_POLY1305_SHA256\n- TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (legacy)\n- TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (legacy)\n- TLS_RSA_WITH_AES_256_CBC_SHA (legacy)",
+  "after_text": "## Supported Cipher Suites\n\nThe following cipher suites are supported:\n- TLS_AES_256_GCM_SHA384\n- TLS_AES_128_GCM_SHA256\n- TLS_CHACHA20_POLY1305_SHA256\n\n**Removed (effective June 3, 2026):**\n- ~~TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384~~\n- ~~TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256~~\n- ~~TLS_RSA_WITH_AES_256_CBC_SHA~~\n\n**Action Required:** Ensure your TLS client supports at least one of the retained cipher suites.",
+  "diff_text": "--- before\n+++ after\n@@ -4,6 +4,11 @@\n - TLS_AES_256_GCM_SHA384\n - TLS_AES_128_GCM_SHA256\n - TLS_CHACHA20_POLY1305_SHA256\n-- TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (legacy)\n-- TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (legacy)\n-- TLS_RSA_WITH_AES_256_CBC_SHA (legacy)\n+\n+**Removed (effective June 3, 2026):**\n+- ~~TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384~~\n+- ~~TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256~~\n+- ~~TLS_RSA_WITH_AES_256_CBC_SHA~~\n+\n+**Action Required:** Ensure your TLS client supports at least one of the retained cipher suites.",
+  "ground_truth": {
+    "severity": "high",
+    "is_breaking": true,
+    "breaking_reason": "Legacy cipher suites being removed. Clients using only legacy ciphers will fail to connect.",
+    "affected_endpoints": [
+      "All Twilio REST API endpoints"
+    ],
+    "action_required": "Verify your TLS client supports modern cipher suites (TLS 1.3 AES-GCM or ChaCha20). Update before June 3, 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Breaking for clients using only legacy ciphers"
+  }
+}

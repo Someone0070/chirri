@@ -1,0 +1,1183 @@
+[
+  {
+    "file": "adversarial-01.json",
+    "title": "Cosmetic-only change: whitespace and formatting",
+    "ground_truth": {
+      "severity": "none",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No action needed. Whitespace and table formatting changes only.",
+      "cosmetic_only": true,
+      "confidence_notes": "Pure cosmetic change - whitespace normalization in markdown table"
+    },
+    "llm_output": {
+      "severity": "low",
+      "what_changed": "Improved formatting of parameter table in the documentation",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No action required; the change is purely cosmetic.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 7.98e-05,
+    "latency": 2.4320199489593506,
+    "tokens": {
+      "in": 244,
+      "out": 72
+    }
+  },
+  {
+    "file": "adversarial-02.json",
+    "title": "Copyright year update only",
+    "ground_truth": {
+      "severity": "none",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No action needed. Copyright year and timestamp update only.",
+      "cosmetic_only": true,
+      "confidence_notes": "Pure metadata change - copyright year and date"
+    },
+    "llm_output": {
+      "severity": "low",
+      "what_changed": "The copyright year and last updated date of the documentation were updated.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No action required as this change does not affect the API functionality.",
+      "confidence": 1.0
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 7.589999999999999e-05,
+    "latency": 2.844719171524048,
+    "tokens": {
+      "in": 194,
+      "out": 78
+    }
+  },
+  {
+    "file": "adversarial-03.json",
+    "title": "New optional field added to response",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "GET /v1/users/{id}"
+      ],
+      "action_required": "No action required. New optional metadata field in response.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive optional field should be low severity"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "Added a new optional field 'metadata' to the API response.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "POST /users",
+        "GET /users/{id}"
+      ],
+      "action_required": "Developers can now use the 'metadata' field if needed, but it's optional and can be ignored.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 9.03e-05,
+    "latency": 2.8889782428741455,
+    "tokens": {
+      "in": 210,
+      "out": 98
+    }
+  },
+  {
+    "file": "adversarial-04.json",
+    "title": "Multi-change diff: one breaking, one cosmetic",
+    "ground_truth": {
+      "severity": "critical",
+      "is_breaking": true,
+      "breaking_reason": "Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.",
+      "affected_endpoints": [
+        "GET /v1/items"
+      ],
+      "action_required": "Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+      "cosmetic_only": false,
+      "confidence_notes": "Multiple changes: breaking auth change + default value change + cosmetic whitespace. Should identify breaking one."
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "The authentication method has changed from query parameter to header-based authentication, and the default value for the 'limit' parameter was changed from 50 to 25.",
+      "is_breaking": true,
+      "breaking_reason": "Existing implementations that relied on query parameter authentication will no longer function, as this method has been removed.",
+      "affected_endpoints": [
+        "/v1/items"
+      ],
+      "action_required": "Update code to use header-based authentication by including the API key in the Authorization header as 'Authorization: Bearer xxx'. Also, adjust the default limit parameter to 25 if applicable.",
+      "confidence": 1.0
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.000129,
+    "latency": 4.529913902282715,
+    "tokens": {
+      "in": 280,
+      "out": 145
+    }
+  },
+  {
+    "file": "adversarial-05.json",
+    "title": "Ambiguous parameter description rewording",
+    "ground_truth": {
+      "severity": "medium",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "POST /v1/query"
+      ],
+      "action_required": "Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+      "cosmetic_only": false,
+      "confidence_notes": "Ambiguous - could be just a wording clarification or could indicate a behavior change from guaranteed termination to possible cancellation"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "The description of the 'timeout' parameter was altered to clarify that results are not guaranteed after the timeout duration.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "Developers should review the new description to understand the implications of query timeouts.",
+      "confidence": 0.95
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 8.475e-05,
+    "latency": 2.31223464012146,
+    "tokens": {
+      "in": 205,
+      "out": 90
+    }
+  },
+  {
+    "file": "auth0-01.json",
+    "title": "Token endpoint now requires PKCE for public clients",
+    "ground_truth": {
+      "severity": "critical",
+      "is_breaking": true,
+      "breaking_reason": "code_verifier becomes required. Public clients not using PKCE will get 400 errors.",
+      "affected_endpoints": [
+        "POST /oauth/token"
+      ],
+      "action_required": "Implement PKCE flow in all public clients. Add code_challenge to authorization requests and code_verifier to token requests. Deadline: April 1, 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Clear breaking change with new required parameter"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "Public clients are now required to include PKCE parameters, specifically a 'code_verifier', when exchanging authorization codes.",
+      "is_breaking": true,
+      "breaking_reason": "Existing implementations that do not include a 'code_verifier' will start receiving 400 Bad Request errors from the API.",
+      "affected_endpoints": [
+        "/oauth/token"
+      ],
+      "action_required": "Developers must update their implementations to include the 'code_verifier' parameter in requests to the /oauth/token endpoint.",
+      "confidence": 1.0
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00011834999999999999,
+    "latency": 3.2223286628723145,
+    "tokens": {
+      "in": 285,
+      "out": 126
+    }
+  },
+  {
+    "file": "aws-01.json",
+    "title": "Amazon S3 now requires virtual-hosted-style requests",
+    "ground_truth": {
+      "severity": "critical",
+      "is_breaking": true,
+      "breaking_reason": "Path-style S3 requests will stop working. Applications using path-style URLs will receive 403 errors.",
+      "affected_endpoints": [
+        "All S3 API endpoints"
+      ],
+      "action_required": "Migrate all S3 requests to virtual-hosted-style URLs. Update AWS SDK to latest version. Deadline: September 30, 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Major breaking change with clear deadline"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "Path style requests have been deprecated and will be removed, requiring the use of virtual hosted style instead.",
+      "is_breaking": true,
+      "breaking_reason": "Existing code that uses path style requests will result in 403 Forbidden responses after the deprecation date.",
+      "affected_endpoints": [],
+      "action_required": "Developers must transition existing path style request implementations to virtual hosted style before September 30, 2026.",
+      "confidence": 1.0
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00010485,
+    "latency": 3.109515428543091,
+    "tokens": {
+      "in": 247,
+      "out": 113
+    }
+  },
+  {
+    "file": "aws-02.json",
+    "title": "Lambda adds support for Node.js 22 runtime",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "AWS Lambda"
+      ],
+      "action_required": "Consider migrating to Node.js 22 runtime, especially since Node.js 20 support ends March 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive new runtime option"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "Added new Node.js version (Node.js 22) to the support list in the documentation.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No action required; simply be aware of the new supported Node.js version.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 7.934999999999999e-05,
+    "latency": 1.8221557140350342,
+    "tokens": {
+      "in": 185,
+      "out": 86
+    }
+  },
+  {
+    "file": "aws-03.json",
+    "title": "DynamoDB changes default read consistency for Global Tables",
+    "ground_truth": {
+      "severity": "critical",
+      "is_breaking": true,
+      "breaking_reason": "ConsistentRead=true from non-home regions will throw ValidationException. Applications relying on cross-region strong consistency will break.",
+      "affected_endpoints": [
+        "DynamoDB GetItem",
+        "DynamoDB Query",
+        "DynamoDB Scan"
+      ],
+      "action_required": "Audit Global Table reads. If using ConsistentRead=true from non-home regions, either route reads to home region or handle eventual consistency. Deadline: May 1, 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Significant breaking change for distributed applications"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "The documentation clarifies that ConsistentRead=true is only supported for reads from the table's home region, and it specifies that using it from a non-home region will result in a ValidationException starting May 1, 2026.",
+      "is_breaking": true,
+      "breaking_reason": "Existing code that relies on strongly consistent reads from cross-region requests will fail and throw a ValidationException after the specified date.",
+      "affected_endpoints": [
+        "GET /global-tables/{tableName}/read"
+      ],
+      "action_required": "Developers need to modify their code to ensure that ConsistentRead=true is only used when reading from the home region of the table.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00013455000000000002,
+    "latency": 3.1432816982269287,
+    "tokens": {
+      "in": 257,
+      "out": 160
+    }
+  },
+  {
+    "file": "cloudflare-01.json",
+    "title": "Dynamic Workers now in open beta",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Workers API"
+      ],
+      "action_required": "No action required. New feature available for dynamically creating Workers at runtime.",
+      "cosmetic_only": false,
+      "confidence_notes": "New additive feature in beta"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "Introduced a new feature allowing Workers to create other Workers at runtime using the LOADER binding.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "/client/v4/accounts/{account_id}/workers/scripts/{script_name}"
+      ],
+      "action_required": "Developers should review the new dynamic Workers feature and determine how it can enhance their existing implementations.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 9.705e-05,
+    "latency": 2.1157305240631104,
+    "tokens": {
+      "in": 215,
+      "out": 108
+    }
+  },
+  {
+    "file": "cloudflare-02.json",
+    "title": "OIDC Claims filtering in Gateway policies",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Gateway Firewall",
+        "Gateway Resolver",
+        "Gateway Egress"
+      ],
+      "action_required": "No action required. New OIDC Claims selector available for identity-based policies.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive new selector"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "An additional OIDC Claims row has been added to the API documentation.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "Review the updated documentation for the new OIDC Claims addition.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 7.319999999999999e-05,
+    "latency": 1.9946327209472656,
+    "tokens": {
+      "in": 176,
+      "out": 78
+    }
+  },
+  {
+    "file": "cloudflare-03.json",
+    "title": "Containers now support Docker Hub images",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Containers API",
+        "Wrangler config"
+      ],
+      "action_required": "No action required. Docker Hub images now available as alternative to Cloudflare Registry.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive feature, expands image source options"
+    },
+    "llm_output": {
+      "severity": "low",
+      "what_changed": "Containers now support images from both Cloudflare Registry and Docker Hub, not just Cloudflare Registry.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No action required; developers can use images from Docker Hub in addition to Cloudflare Registry.",
+      "confidence": 0.9
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 8.519999999999998e-05,
+    "latency": 2.105072498321533,
+    "tokens": {
+      "in": 212,
+      "out": 89
+    }
+  },
+  {
+    "file": "github-01.json",
+    "title": "REST API: Deprecation of the team discussions API",
+    "ground_truth": {
+      "severity": "high",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "GET /orgs/{org}/teams/{team_slug}/discussions"
+      ],
+      "action_required": "Plan migration from Team Discussions API to GitHub Discussions before March 1, 2027 deadline.",
+      "cosmetic_only": false,
+      "confidence_notes": "Deprecation notice with clear removal date"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "The Team Discussions API has been marked as deprecated and will be removed on March 1, 2027.",
+      "is_breaking": true,
+      "breaking_reason": "The API will no longer be available after the deprecation date, requiring migration to a different API.",
+      "affected_endpoints": [
+        "Team Discussions API"
+      ],
+      "action_required": "Developers must migrate to GitHub Discussions before the API removal date.",
+      "confidence": 1.0
+    },
+    "severity_match": false,
+    "breaking_match": false,
+    "hallucination": true,
+    "cost": 9.719999999999999e-05,
+    "latency": 2.8963680267333984,
+    "tokens": {
+      "in": 204,
+      "out": 111
+    }
+  },
+  {
+    "file": "github-02.json",
+    "title": "New required permissions for GitHub App fine-grained tokens",
+    "ground_truth": {
+      "severity": "critical",
+      "is_breaking": true,
+      "breaking_reason": "Permission requirement changed from read to write. Existing tokens with only read permission will fail.",
+      "affected_endpoints": [
+        "POST /repos/{owner}/{repo}/git/refs"
+      ],
+      "action_required": "Update fine-grained tokens to include contents:write permission before April 15, 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Breaking permission change with deadline"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "The permission required for fine-grained tokens has changed from 'contents:read' to 'contents:write'.",
+      "is_breaking": true,
+      "breaking_reason": "Existing code that relies on 'contents:read' permissions will fail after the change as it will no longer have the required permissions for API access.",
+      "affected_endpoints": [],
+      "action_required": "Developers must update their permission scopes to include 'contents:write' instead of 'contents:read' in their API calls.",
+      "confidence": 1.0
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00010485,
+    "latency": 2.5154800415039062,
+    "tokens": {
+      "in": 183,
+      "out": 129
+    }
+  },
+  {
+    "file": "github-03.json",
+    "title": "Code scanning API now returns severity field",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "GET /repos/{owner}/{repo}/code-scanning/alerts"
+      ],
+      "action_required": "No action required. New severity field available for enhanced filtering.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive field in response"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "The 'severity' field was added to both the root and rule objects in the API response.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "N/A"
+      ],
+      "action_required": "No action required as this is a non-breaking change.",
+      "confidence": 1.0
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 8.07e-05,
+    "latency": 2.317204236984253,
+    "tokens": {
+      "in": 198,
+      "out": 85
+    }
+  },
+  {
+    "file": "github-04.json",
+    "title": "Repository rename changes the API URL",
+    "ground_truth": {
+      "severity": "critical",
+      "is_breaking": true,
+      "breaking_reason": "HTTP status code changed from 200 to 301. Clients not handling redirects will break.",
+      "affected_endpoints": [
+        "All REST API endpoints using repository names"
+      ],
+      "action_required": "Ensure HTTP clients follow 301 redirects. Update any hardcoded repository URLs. Deadline: April 1, 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Clear breaking change - HTTP status code change"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "API calls using the old repository name will now return a 301 Moved Permanently response instead of continuing to resolve to the new name automatically.",
+      "is_breaking": true,
+      "breaking_reason": "Existing code that relies on receiving a 200 OK response with data for the old name will fail to work correctly as it will now need to handle redirects.",
+      "affected_endpoints": [
+        "/repos/{old_owner}/{old_name}"
+      ],
+      "action_required": "Developers must update their integrations to handle 301 redirects and follow the Location header to get the new repository URL.",
+      "confidence": 1.0
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00013364999999999997,
+    "latency": 2.642703056335449,
+    "tokens": {
+      "in": 315,
+      "out": 144
+    }
+  },
+  {
+    "file": "github-05.json",
+    "title": "Copilot usage metrics API now available",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "GET /orgs/{org}/copilot/usage",
+        "GET /orgs/{org}/copilot/usage/seats"
+      ],
+      "action_required": "No action required. New endpoints available for Copilot usage tracking.",
+      "cosmetic_only": false,
+      "confidence_notes": "New endpoints added, purely additive"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "Two new endpoints were added for fetching Copilot usage metrics and seat assignment details.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No immediate action is required, but developers may want to review the new endpoints and integrate them if needed.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 9e-05,
+    "latency": 1.804208755493164,
+    "tokens": {
+      "in": 244,
+      "out": 89
+    }
+  },
+  {
+    "file": "linear-01.json",
+    "title": "GraphQL API rate limit structure changed",
+    "ground_truth": {
+      "severity": "high",
+      "is_breaking": true,
+      "breaking_reason": "Rate limit headers changed. Code parsing old headers will break. Complex queries may hit limits sooner.",
+      "affected_endpoints": [
+        "GraphQL API"
+      ],
+      "action_required": "Update rate limit handling code to use new complexity-based headers. Review complex queries that may consume many points.",
+      "cosmetic_only": false,
+      "confidence_notes": "Breaking change in rate limit mechanism and headers"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "The rate limiting mechanism was changed from requests per hour/minute to complexity points per hour/minute, with new headers introduced to reflect this change.",
+      "is_breaking": true,
+      "breaking_reason": "Existing code that relies on the old request-count headers and rate limiting mechanism will no longer function correctly, as they are replaced by complexity points and new headers.",
+      "affected_endpoints": [],
+      "action_required": "Update code to handle complexity points for rate limiting and use the new headers X-RateLimit-Complexity-Remaining and X-RateLimit-Complexity-Reset.",
+      "confidence": 0.9
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.0001263,
+    "latency": 3.4436514377593994,
+    "tokens": {
+      "in": 262,
+      "out": 145
+    }
+  },
+  {
+    "file": "openai-01.json",
+    "title": "Structured Outputs now support recursive schemas",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "POST /v1/chat/completions"
+      ],
+      "action_required": "No action required. Structured Outputs now support more complex schemas.",
+      "cosmetic_only": false,
+      "confidence_notes": "Relaxation of constraints, non-breaking"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "Increased maximum schema depth from 5 to 10 levels, added support for recursive types, and allowed `$ref` to self with recursion limit. Maximum properties per schema increased from 100 to 200.",
+      "is_breaking": true,
+      "breaking_reason": "Existing schemas that exceeded the previous limits or relied on the previous behavior of no recursion or self-referencing may not function as expected after the change.",
+      "affected_endpoints": [],
+      "action_required": "Review and update any schemas to accommodate the new limits and check for issues arising from the allowance of recursive types and self-references.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": false,
+    "hallucination": true,
+    "cost": 0.00012194999999999998,
+    "latency": 3.0400044918060303,
+    "tokens": {
+      "in": 221,
+      "out": 148
+    }
+  },
+  {
+    "file": "plaid-01.json",
+    "title": "Transactions sync endpoint pagination change",
+    "ground_truth": {
+      "severity": "medium",
+      "is_breaking": true,
+      "breaking_reason": "Page size reduced 5x. Code that assumes all transactions fit in one page may miss data.",
+      "affected_endpoints": [
+        "POST /transactions/sync"
+      ],
+      "action_required": "Ensure pagination logic properly handles has_more flag and continues fetching. Test with accounts that have >100 recent transactions.",
+      "cosmetic_only": false,
+      "confidence_notes": "Subtle breaking change in pagination behavior"
+    },
+    "llm_output": {
+      "severity": "PARSE_ERROR",
+      "is_breaking": null
+    },
+    "severity_match": false,
+    "breaking_match": false,
+    "hallucination": false,
+    "cost": 0.00011475,
+    "latency": 3.1205387115478516,
+    "tokens": {
+      "in": 201,
+      "out": 141
+    }
+  },
+  {
+    "file": "sendgrid-01.json",
+    "title": "Removal of legacy v2 Mail Send endpoint",
+    "ground_truth": {
+      "severity": "critical",
+      "is_breaking": true,
+      "breaking_reason": "v2 endpoint being removed entirely. All v2 users will get 410 Gone responses.",
+      "affected_endpoints": [
+        "POST /api/mail.send.json"
+      ],
+      "action_required": "Migrate from v2 to v3 Mail Send endpoint before June 1, 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Clear removal of deprecated endpoint"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "The v3 endpoint is now marked as 'Required' instead of 'Recommended', and the v2 endpoint has been marked as 'DEPRECATED - Removed June 1, 2026', indicating that it will no longer be supported after this date.",
+      "is_breaking": true,
+      "breaking_reason": "The v2 endpoint will be removed and is no longer usable; all users must transition to v3.",
+      "affected_endpoints": [
+        "/api/mail.send.json"
+      ],
+      "action_required": "Developers must migrate their implementations from the v2 endpoint to the v3 endpoint before June 1, 2026.",
+      "confidence": 1.0
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.0001275,
+    "latency": 3.5182604789733887,
+    "tokens": {
+      "in": 238,
+      "out": 153
+    }
+  },
+  {
+    "file": "stripe-01.json",
+    "title": "Adds Pay by Bank to the Billing API",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "POST /v1/subscriptions"
+      ],
+      "action_required": "No immediate action required. New payment method option available for US customers.",
+      "cosmetic_only": false,
+      "confidence_notes": "Clear additive change, new payment method type added to supported list"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "Added a new payment method 'Pay by Bank (US)' to the documentation and included 'us_bank_account_pay_by_bank' in the 'payment_method_types' array.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "Developers using the API should review the new payment method and consider implementing it in their applications if applicable.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 9.96e-05,
+    "latency": 1.9656181335449219,
+    "tokens": {
+      "in": 236,
+      "out": 107
+    }
+  },
+  {
+    "file": "stripe-02.json",
+    "title": "Makes Boleto tax ID nullable in payment method details for Payment Records",
+    "ground_truth": {
+      "severity": "medium",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Payment Records API"
+      ],
+      "action_required": "Review code that reads Boleto tax_id field - it can now be null. Add null checks if not already present.",
+      "cosmetic_only": false,
+      "confidence_notes": "Field changed from required to optional/nullable. Not breaking for request, but consumers parsing responses should handle null."
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "The 'tax_id' field's data type was changed from 'string (required)' to 'string or null', indicating that it can now accept a null value.",
+      "is_breaking": true,
+      "breaking_reason": "Existing code that expects 'tax_id' to always be a string will fail to handle cases where 'tax_id' is null.",
+      "affected_endpoints": [
+        "<endpoint_containing_tax_id>"
+      ],
+      "action_required": "Developers must update their code to handle cases where 'tax_id' can be null, ensuring proper validation and null checks are implemented.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": false,
+    "hallucination": true,
+    "cost": 0.0001215,
+    "latency": 3.072739362716675,
+    "tokens": {
+      "in": 230,
+      "out": 145
+    }
+  },
+  {
+    "file": "stripe-03.json",
+    "title": "Adds payment behavior control for subscription item deletion",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "DELETE /v1/subscription_items/{id}"
+      ],
+      "action_required": "No action required. New optional parameter available for finer control over payment behavior when deleting subscription items.",
+      "cosmetic_only": false,
+      "confidence_notes": "New optional parameter addition"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "A new parameter 'payment_behavior' was added to the API documentation for an existing endpoint.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "Developers should review the new 'payment_behavior' parameter to understand its usage and implications.",
+      "confidence": 0.8
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 8.264999999999999e-05,
+    "latency": 1.446657419204712,
+    "tokens": {
+      "in": 199,
+      "out": 88
+    }
+  },
+  {
+    "file": "stripe-04.json",
+    "title": "Adds Terminal reader and location to payment method details",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Payment Method Details"
+      ],
+      "action_required": "No action required. New fields available in card_present payment method details for Terminal payments.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive change, new fields in response"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "Two new fields 'reader' and 'location' were added to the API response.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "example_endpoint"
+      ],
+      "action_required": "Update your code to accommodate the new fields in the API response if used.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 8.205e-05,
+    "latency": 2.7914769649505615,
+    "tokens": {
+      "in": 195,
+      "out": 88
+    }
+  },
+  {
+    "file": "stripe-05.json",
+    "title": "Adds settlement type to Application Fee objects",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Application Fee API"
+      ],
+      "action_required": "No action required. New settlement_type field available on Application Fee objects.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive response field"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "An additional field 'settlement_type' was added to the response structure.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No immediate action required unless the developer needs to utilize the new 'settlement_type' field.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 7.92e-05,
+    "latency": 1.6956429481506348,
+    "tokens": {
+      "in": 184,
+      "out": 86
+    }
+  },
+  {
+    "file": "supabase-01.json",
+    "title": "PostgREST default row limit changed from 1000 to 100",
+    "ground_truth": {
+      "severity": "high",
+      "is_breaking": true,
+      "breaking_reason": "Default row limit reduced 10x. Queries that relied on getting up to 1000 rows will now silently return fewer rows.",
+      "affected_endpoints": [
+        "PostgREST API",
+        "Supabase client queries"
+      ],
+      "action_required": "Add explicit .limit() to queries that need more than 100 rows, or increase db-max-rows in your project configuration.",
+      "cosmetic_only": false,
+      "confidence_notes": "Silent breaking change - queries return fewer rows without error"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "The default maximum number of rows returned by the API has been changed from 1000 to 100.",
+      "is_breaking": true,
+      "breaking_reason": "Existing queries expecting more than 100 rows will return fewer results, potentially causing application errors or mismatches.",
+      "affected_endpoints": [
+        "all endpoints that return rows"
+      ],
+      "action_required": "Developers need to either add explicit .limit() to their queries or update the db-max-rows configuration to accommodate the desired number of rows.",
+      "confidence": 1.0
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00011235,
+    "latency": 3.2081191539764404,
+    "tokens": {
+      "in": 221,
+      "out": 132
+    }
+  },
+  {
+    "file": "twilio-01.json",
+    "title": "Unified Opt-Outs across RCS, SMS, and MMS channels",
+    "ground_truth": {
+      "severity": "high",
+      "is_breaking": true,
+      "breaking_reason": "Behavior change: opt-outs now cascade across channels. Messages that previously succeeded may now fail with Error 21610.",
+      "affected_endpoints": [
+        "POST /Messages",
+        "Programmable Messaging API"
+      ],
+      "action_required": "Review messaging logic. If you rely on channel-specific opt-outs, users who opt out of SMS will now also be blocked on RCS/MMS. Update opt-out recovery flows.",
+      "cosmetic_only": false,
+      "confidence_notes": "Significant behavior change, active by default"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "Opt-out management is now unified across SMS, MMS, and RCS channels, meaning opting out on one channel blocks all channels.",
+      "is_breaking": true,
+      "breaking_reason": "Existing implementation that relies on separate opt-out management per channel will no longer function correctly, as messages to opted-out users will be blocked across all channels.",
+      "affected_endpoints": [],
+      "action_required": "Review and update the opt-out handling logic to account for unified opt-out across all channels. Ensure you implement checks for the new error code 21610 when attempting to message opted-out users.",
+      "confidence": 1.0
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00013035,
+    "latency": 3.0035600662231445,
+    "tokens": {
+      "in": 289,
+      "out": 145
+    }
+  },
+  {
+    "file": "twilio-02.json",
+    "title": "Increased MMS rate limits for A2P 10DLC Phone Numbers",
+    "ground_truth": {
+      "severity": "medium",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "MMS messaging via 10DLC numbers"
+      ],
+      "action_required": "Review your Brand Trust Score. High-trust brands benefit from higher limits. Low-trust brands retain 1 MPS.",
+      "cosmetic_only": false,
+      "confidence_notes": "Rate limit structure changed but default remains same for low-trust"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "The MMS rate limits have changed from a fixed rate of 1 MPS for all A2P 10DLC numbers to variable limits based on Brand Trust Score (10 MPS for High, 5 MPS for Medium, and 1 MPS for Low).",
+      "is_breaking": true,
+      "breaking_reason": "Existing implementations expecting a fixed rate limit of 1 MPS for all A2P 10DLC numbers will no longer function correctly as they need to handle multiple rate limits based on Brand Trust Score.",
+      "affected_endpoints": [],
+      "action_required": "Update the application logic to account for variable MMS rate limits based on the Brand Trust Score and campaign use case.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": false,
+    "hallucination": true,
+    "cost": 0.00014445,
+    "latency": 3.3086788654327393,
+    "tokens": {
+      "in": 283,
+      "out": 170
+    }
+  },
+  {
+    "file": "twilio-03.json",
+    "title": "Certificate rotation for all REST API endpoints",
+    "ground_truth": {
+      "severity": "high",
+      "is_breaking": true,
+      "breaking_reason": "Certificate rotation will break clients that pin TLS certificates",
+      "affected_endpoints": [
+        "All Twilio REST API endpoints"
+      ],
+      "action_required": "If you pin certificates, update pinned certs before April 8, 2026. If you don't pin, no action needed.",
+      "cosmetic_only": false,
+      "confidence_notes": "Breaking only for certificate-pinning clients"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "A new TLS certificate will become effective on April 8, 2026, requiring updates to pinned certificates.",
+      "is_breaking": true,
+      "breaking_reason": "Existing integrations that pin certificates may fail to validate after the current certificate expires on April 8, 2026, if not updated.",
+      "affected_endpoints": [],
+      "action_required": "Update your pinned certificates to include the new certificate effective April 8, 2026, prior to that date.",
+      "confidence": 0.9
+    },
+    "severity_match": true,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.0001131,
+    "latency": 3.3584964275360107,
+    "tokens": {
+      "in": 262,
+      "out": 123
+    }
+  },
+  {
+    "file": "twilio-04.json",
+    "title": "Cipher suite list update for all REST API endpoints",
+    "ground_truth": {
+      "severity": "high",
+      "is_breaking": true,
+      "breaking_reason": "Legacy cipher suites being removed. Clients using only legacy ciphers will fail to connect.",
+      "affected_endpoints": [
+        "All Twilio REST API endpoints"
+      ],
+      "action_required": "Verify your TLS client supports modern cipher suites (TLS 1.3 AES-GCM or ChaCha20). Update before June 3, 2026.",
+      "cosmetic_only": false,
+      "confidence_notes": "Breaking for clients using only legacy ciphers"
+    },
+    "llm_output": {
+      "severity": "critical",
+      "what_changed": "Removal of legacy TLS cipher suites from the supported list.",
+      "is_breaking": true,
+      "breaking_reason": "The removed cipher suites may still be in use by existing clients, which will cause them to fail to connect to the API after the effective date.",
+      "affected_endpoints": [],
+      "action_required": "Ensure your TLS client supports at least one of the retained cipher suites listed in the documentation.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 0.00011144999999999998,
+    "latency": 2.0275561809539795,
+    "tokens": {
+      "in": 307,
+      "out": 109
+    }
+  },
+  {
+    "file": "twilio-05.json",
+    "title": "ConversationRelay widget now available in Studio",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Twilio Studio"
+      ],
+      "action_required": "No action required. New widget available for connecting voice calls to WebSocket servers.",
+      "cosmetic_only": false,
+      "confidence_notes": "Purely additive new feature"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "Added new functionality for ConversationRelay, which connects voice calls to WebSocket servers and includes support for custom parameters and voice controls.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "Review the new ConversationRelay functionality to integrate it into your application if desired.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 8.384999999999999e-05,
+    "latency": 2.1824586391448975,
+    "tokens": {
+      "in": 191,
+      "out": 92
+    }
+  },
+  {
+    "file": "vercel-01.json",
+    "title": "End-to-end encryption for Vercel Workflow",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Vercel Workflow"
+      ],
+      "action_required": "No action required. Data is now automatically encrypted. Previously restricted sensitive data can now be passed through Workflow.",
+      "cosmetic_only": false,
+      "confidence_notes": "Security improvement, no breaking changes"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "Workflow data, including inputs, step arguments, return values, hook payloads, and stream data, are now automatically encrypted end-to-end.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [],
+      "action_required": "No code changes required. It is now safe to pass sensitive data through Workflow steps.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 9.585e-05,
+    "latency": 2.075472593307495,
+    "tokens": {
+      "in": 251,
+      "out": 97
+    }
+  },
+  {
+    "file": "vercel-02.json",
+    "title": "Sandbox SDK adds file permission control",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Sandbox SDK writeFiles"
+      ],
+      "action_required": "No action required. New optional mode property available for setting file permissions.",
+      "cosmetic_only": false,
+      "confidence_notes": "Additive optional parameter"
+    },
+    "llm_output": {
+      "severity": "medium",
+      "what_changed": "The API now allows setting file permissions directly using the optional `mode` property when writing files.",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "sandbox.writeFiles"
+      ],
+      "action_required": "Developers can now set file permissions directly in the API call; no immediate action is required unless they want to utilize this new feature.",
+      "confidence": 0.9
+    },
+    "severity_match": false,
+    "breaking_match": true,
+    "hallucination": false,
+    "cost": 9.554999999999999e-05,
+    "latency": 2.49521803855896,
+    "tokens": {
+      "in": 229,
+      "out": 102
+    }
+  },
+  {
+    "file": "vercel-03.json",
+    "title": "Elastic build machines available in Beta",
+    "ground_truth": {
+      "severity": "low",
+      "is_breaking": false,
+      "breaking_reason": null,
+      "affected_endpoints": [
+        "Build Configuration"
+      ],
+      "action_required": "No action required. New elastic build machine option available in beta.",
+      "cosmetic_only": false,
+      "confidence_notes": "New optional feature"
+    },
+    "llm_output": {
+      "severity": "high",
+      "what_changed": "The build machine options were changed from only Standard machines to include Fixed and Elastic machines, with Elastic being a beta feature that automatically assigns machines.",
+      "is_breaking": true,
+      "breaking_reason": "Existing projects may rely on the previous machine type specifications; depending on the project settings, code that assumes 'Standard' build machines may no longer function as expected with the new 'Fixed' and 'Elastic' options.",
+      "affected_endpoints": [],
+      "action_required": "Review and update project settings to specify the appropriate build machine type (Standard, Enhanced, Turbo, or Elastic).",
+      "confidence": 0.8
+    },
+    "severity_match": false,
+    "breaking_match": false,
+    "hallucination": true,
+    "cost": 0.00012419999999999998,
+    "latency": 2.9333996772766113,
+    "tokens": {
+      "in": 248,
+      "out": 145
+    }
+  }
+]

@@ -1,0 +1,973 @@
+{
+  "results": [
+    {
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-01",
+      "raw_output": "This change is purely cosmetic, involving only formatting and whitespace adjustments. No functional changes were made to the API. No action is needed by developers.",
+      "parsed_output": null,
+      "latency_ms": 512,
+      "input_tokens": 100,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.00048,
+      "timestamp": "2026-03-24T21:59:35.094Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-01",
+      "raw_output": "This change is purely cosmetic, involving only formatting and whitespace adjustments. No functional changes were made to the API. No action is needed by developers.",
+      "parsed_output": null,
+      "latency_ms": 970,
+      "input_tokens": 100,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.0018,
+      "timestamp": "2026-03-24T21:59:35.295Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-01",
+      "raw_output": "1. What changed: No action needed. Whitespace and table formatting changes only.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of this API\n4. Action: No action needed. Whitespace and table formatting changes only.",
+      "parsed_output": null,
+      "latency_ms": 472,
+      "input_tokens": 100,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.00128,
+      "timestamp": "2026-03-24T21:59:35.496Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-01",
+      "raw_output": "1. What changed: No action needed. Whitespace and table formatting changes only.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of this API\n4. Action: No action needed. Whitespace and table formatting changes only.",
+      "parsed_output": null,
+      "latency_ms": 1536,
+      "input_tokens": 100,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.0048,
+      "timestamp": "2026-03-24T21:59:35.697Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-01",
+      "raw_output": "{\n  \"severity\": \"low\",\n  \"what_changed\": \"No action needed. Whitespace and table formatting changes only.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [],\n  \"action_required\": \"No action needed. Whitespace and table formatting changes only.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.95,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "low",
+        "what_changed": "No action needed. Whitespace and table formatting changes only.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [],
+        "action_required": "No action needed. Whitespace and table formatting changes only.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.95,
+        "deadline": null
+      },
+      "latency_ms": 392,
+      "input_tokens": 100,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.00088,
+      "timestamp": "2026-03-24T21:59:35.897Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-01",
+      "raw_output": "{\n  \"severity\": \"low\",\n  \"what_changed\": \"No action needed. Whitespace and table formatting changes only.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [],\n  \"action_required\": \"No action needed. Whitespace and table formatting changes only.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.95,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "low",
+        "what_changed": "No action needed. Whitespace and table formatting changes only.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [],
+        "action_required": "No action needed. Whitespace and table formatting changes only.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.95,
+        "deadline": null
+      },
+      "latency_ms": 1524,
+      "input_tokens": 100,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.0033,
+      "timestamp": "2026-03-24T21:59:36.098Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-02",
+      "raw_output": "This change is purely cosmetic, involving only formatting and whitespace adjustments. No functional changes were made to the API. No action is needed by developers.",
+      "parsed_output": null,
+      "latency_ms": 684,
+      "input_tokens": 54,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.0004432,
+      "timestamp": "2026-03-24T21:59:36.298Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-02",
+      "raw_output": "This change is purely cosmetic, involving only formatting and whitespace adjustments. No functional changes were made to the API. No action is needed by developers.",
+      "parsed_output": null,
+      "latency_ms": 1992,
+      "input_tokens": 54,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.001662,
+      "timestamp": "2026-03-24T21:59:36.499Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-02",
+      "raw_output": "1. What changed: No action needed. Copyright year and timestamp update only.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of this API\n4. Action: No action needed. Copyright year and timestamp update only.",
+      "parsed_output": null,
+      "latency_ms": 329,
+      "input_tokens": 54,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.0012432,
+      "timestamp": "2026-03-24T21:59:36.699Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-02",
+      "raw_output": "1. What changed: No action needed. Copyright year and timestamp update only.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of this API\n4. Action: No action needed. Copyright year and timestamp update only.",
+      "parsed_output": null,
+      "latency_ms": 1877,
+      "input_tokens": 54,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.004662,
+      "timestamp": "2026-03-24T21:59:36.900Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-02",
+      "raw_output": "{\n  \"severity\": \"low\",\n  \"what_changed\": \"No action needed. Copyright year and timestamp update only.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [],\n  \"action_required\": \"No action needed. Copyright year and timestamp update only.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.95,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "low",
+        "what_changed": "No action needed. Copyright year and timestamp update only.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [],
+        "action_required": "No action needed. Copyright year and timestamp update only.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.95,
+        "deadline": null
+      },
+      "latency_ms": 709,
+      "input_tokens": 54,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.0008432,
+      "timestamp": "2026-03-24T21:59:37.101Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-02",
+      "raw_output": "{\n  \"severity\": \"low\",\n  \"what_changed\": \"No action needed. Copyright year and timestamp update only.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [],\n  \"action_required\": \"No action needed. Copyright year and timestamp update only.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.95,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "low",
+        "what_changed": "No action needed. Copyright year and timestamp update only.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [],
+        "action_required": "No action needed. Copyright year and timestamp update only.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.95,
+        "deadline": null
+      },
+      "latency_ms": 1263,
+      "input_tokens": 54,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.003162,
+      "timestamp": "2026-03-24T21:59:37.301Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-03",
+      "raw_output": "A new feature or minor update was added. No action required. New optional metadata field in response. This is a non-breaking change with low severity.",
+      "parsed_output": null,
+      "latency_ms": 727,
+      "input_tokens": 55,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.000444,
+      "timestamp": "2026-03-24T21:59:37.502Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-03",
+      "raw_output": "A new feature or minor update was added. No action required. New optional metadata field in response. This is a non-breaking change with low severity.",
+      "parsed_output": null,
+      "latency_ms": 1809,
+      "input_tokens": 55,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.001665,
+      "timestamp": "2026-03-24T21:59:37.702Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-03",
+      "raw_output": "1. What changed: No action required. New optional metadata field in response.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of GET /v1/users/{id}\n4. Action: No action required. New optional metadata field in response.",
+      "parsed_output": null,
+      "latency_ms": 728,
+      "input_tokens": 55,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.001244,
+      "timestamp": "2026-03-24T21:59:37.902Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-03",
+      "raw_output": "1. What changed: No action required. New optional metadata field in response.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of GET /v1/users/{id}\n4. Action: No action required. New optional metadata field in response.",
+      "parsed_output": null,
+      "latency_ms": 1738,
+      "input_tokens": 55,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.004665,
+      "timestamp": "2026-03-24T21:59:38.102Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-03",
+      "raw_output": "{\n  \"severity\": \"low\",\n  \"what_changed\": \"No action required. New optional metadata field in response.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [\n    \"GET /v1/users/{id}\"\n  ],\n  \"action_required\": \"No action required. New optional metadata field in response.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.85,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "low",
+        "what_changed": "No action required. New optional metadata field in response.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [
+          "GET /v1/users/{id}"
+        ],
+        "action_required": "No action required. New optional metadata field in response.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.85,
+        "deadline": null
+      },
+      "latency_ms": 665,
+      "input_tokens": 55,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.000844,
+      "timestamp": "2026-03-24T21:59:38.303Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-03",
+      "raw_output": "{\n  \"severity\": \"low\",\n  \"what_changed\": \"No action required. New optional metadata field in response.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [\n    \"GET /v1/users/{id}\"\n  ],\n  \"action_required\": \"No action required. New optional metadata field in response.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.85,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "low",
+        "what_changed": "No action required. New optional metadata field in response.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [
+          "GET /v1/users/{id}"
+        ],
+        "action_required": "No action required. New optional metadata field in response.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.85,
+        "deadline": null
+      },
+      "latency_ms": 1628,
+      "input_tokens": 55,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.003165,
+      "timestamp": "2026-03-24T21:59:38.503Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-04",
+      "raw_output": "This is a breaking change. Authentication method changed from query parameter to header. Also default limit changed from 50 to 25. Developers using this API should Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+      "parsed_output": null,
+      "latency_ms": 737,
+      "input_tokens": 142,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.0005136,
+      "timestamp": "2026-03-24T21:59:38.704Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-04",
+      "raw_output": "This is a breaking change. Authentication method changed from query parameter to header. Also default limit changed from 50 to 25. Developers using this API should Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+      "parsed_output": null,
+      "latency_ms": 1621,
+      "input_tokens": 142,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.001926,
+      "timestamp": "2026-03-24T21:59:38.904Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-04",
+      "raw_output": "1. What changed: Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.\n2. Is this a breaking change? Yes - Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.\n3. Who is affected: Consumers of GET /v1/items\n4. Action: Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+      "parsed_output": null,
+      "latency_ms": 479,
+      "input_tokens": 142,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.0013135999999999998,
+      "timestamp": "2026-03-24T21:59:39.105Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-04",
+      "raw_output": "1. What changed: Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.\n2. Is this a breaking change? Yes - Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.\n3. Who is affected: Consumers of GET /v1/items\n4. Action: Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+      "parsed_output": null,
+      "latency_ms": 1340,
+      "input_tokens": 142,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.004926,
+      "timestamp": "2026-03-24T21:59:39.305Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-04",
+      "raw_output": "{\n  \"severity\": \"critical\",\n  \"what_changed\": \"Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.\",\n  \"is_breaking\": true,\n  \"breaking_reason\": \"Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.\",\n  \"affected_endpoints\": [\n    \"GET /v1/items\"\n  ],\n  \"action_required\": \"Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.85,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "critical",
+        "what_changed": "Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+        "is_breaking": true,
+        "breaking_reason": "Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.",
+        "affected_endpoints": [
+          "GET /v1/items"
+        ],
+        "action_required": "Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.85,
+        "deadline": null
+      },
+      "latency_ms": 730,
+      "input_tokens": 142,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.0009136,
+      "timestamp": "2026-03-24T21:59:39.506Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-04",
+      "raw_output": "{\n  \"severity\": \"critical\",\n  \"what_changed\": \"Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.\",\n  \"is_breaking\": true,\n  \"breaking_reason\": \"Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.\",\n  \"affected_endpoints\": [\n    \"GET /v1/items\"\n  ],\n  \"action_required\": \"Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.85,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "critical",
+        "what_changed": "Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+        "is_breaking": true,
+        "breaking_reason": "Authentication method changed from query parameter to header. Also default limit changed from 50 to 25.",
+        "affected_endpoints": [
+          "GET /v1/items"
+        ],
+        "action_required": "Update authentication to use Authorization header instead of query parameter. Also check pagination - default limit reduced from 50 to 25.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.85,
+        "deadline": null
+      },
+      "latency_ms": 2069,
+      "input_tokens": 142,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.003426,
+      "timestamp": "2026-03-24T21:59:39.706Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-05",
+      "raw_output": "A new feature or minor update was added. Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change. This is a non-breaking change with medium severity.",
+      "parsed_output": null,
+      "latency_ms": 304,
+      "input_tokens": 96,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.0004768,
+      "timestamp": "2026-03-24T21:59:39.907Z"
+    },
+    {
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-05",
+      "raw_output": "A new feature or minor update was added. Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change. This is a non-breaking change with medium severity.",
+      "parsed_output": null,
+      "latency_ms": 1176,
+      "input_tokens": 96,
+      "output_tokens": 100,
+      "estimated_cost_usd": 0.001788,
+      "timestamp": "2026-03-24T21:59:40.107Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-05",
+      "raw_output": "1. What changed: Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of POST /v1/query\n4. Action: Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+      "parsed_output": null,
+      "latency_ms": 406,
+      "input_tokens": 96,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.0012768,
+      "timestamp": "2026-03-24T21:59:40.308Z"
+    },
+    {
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-05",
+      "raw_output": "1. What changed: Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.\n2. Is this a breaking change? No\n3. Who is affected: Consumers of POST /v1/query\n4. Action: Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+      "parsed_output": null,
+      "latency_ms": 2088,
+      "input_tokens": 96,
+      "output_tokens": 300,
+      "estimated_cost_usd": 0.004788,
+      "timestamp": "2026-03-24T21:59:40.508Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "entry_id": "adversarial-05",
+      "raw_output": "{\n  \"severity\": \"medium\",\n  \"what_changed\": \"Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [\n    \"POST /v1/query\"\n  ],\n  \"action_required\": \"Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.85,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "medium",
+        "what_changed": "Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [
+          "POST /v1/query"
+        ],
+        "action_required": "Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.85,
+        "deadline": null
+      },
+      "latency_ms": 407,
+      "input_tokens": 96,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.0008768,
+      "timestamp": "2026-03-24T21:59:40.709Z"
+    },
+    {
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "entry_id": "adversarial-05",
+      "raw_output": "{\n  \"severity\": \"medium\",\n  \"what_changed\": \"Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.\",\n  \"is_breaking\": false,\n  \"breaking_reason\": null,\n  \"affected_endpoints\": [\n    \"POST /v1/query\"\n  ],\n  \"action_required\": \"Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.\",\n  \"code_before\": null,\n  \"code_after\": null,\n  \"confidence\": 0.85,\n  \"deadline\": null\n}",
+      "parsed_output": {
+        "severity": "medium",
+        "what_changed": "Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+        "is_breaking": false,
+        "breaking_reason": null,
+        "affected_endpoints": [
+          "POST /v1/query"
+        ],
+        "action_required": "Review timeout handling. The rewording suggests queries 'may be cancelled' (not 'will be terminated') and results aren't guaranteed. This could indicate a behavior change.",
+        "code_before": null,
+        "code_after": null,
+        "confidence": 0.85,
+        "deadline": null
+      },
+      "latency_ms": 2005,
+      "input_tokens": 96,
+      "output_tokens": 200,
+      "estimated_cost_usd": 0.003288,
+      "timestamp": "2026-03-24T21:59:40.909Z"
+    }
+  ],
+  "scores": [
+    {
+      "entry_id": "adversarial-01",
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.95,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-01",
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.95,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-01",
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.7,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-01",
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.7,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-01",
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-01",
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-02",
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.95,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-02",
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.95,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-02",
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.7,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-02",
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.7,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-02",
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-02",
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": true,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-03",
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.9375,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-03",
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.9375,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-03",
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.625,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-03",
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.625,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-03",
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-03",
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-04",
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.9375,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-04",
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.9375,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-04",
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-04",
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-04",
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-04",
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-05",
+      "strategy": "basic",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.9375,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-05",
+      "strategy": "basic",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "partial",
+      "json_valid": null,
+      "overall_score": 0.9375,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-05",
+      "strategy": "structured",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.625,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-05",
+      "strategy": "structured",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": false,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": null,
+      "overall_score": 0.625,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-05",
+      "strategy": "json",
+      "model": "claude-3-5-haiku-20241022",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    },
+    {
+      "entry_id": "adversarial-05",
+      "strategy": "json",
+      "model": "claude-sonnet-4-5-20250514",
+      "severity_correct": true,
+      "breaking_correct": true,
+      "hallucination_detected": false,
+      "cosmetic_correct": null,
+      "action_quality": "good",
+      "json_valid": true,
+      "overall_score": 1,
+      "notes": ""
+    }
+  ],
+  "report": {
+    "total_tests": 30,
+    "by_model": {
+      "claude-3-5-haiku-20241022": {
+        "total": 15,
+        "avg_score": 0.8908333333333334,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 0.7333333333333333,
+        "hallucination_rate": 0,
+        "avg_latency_ms": 552.0666666666667,
+        "avg_cost_usd": 0.0008715200000000001
+      },
+      "claude-sonnet-4-5-20250514": {
+        "total": 15,
+        "avg_score": 0.8908333333333334,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 0.7333333333333333,
+        "hallucination_rate": 0,
+        "avg_latency_ms": 1642.4,
+        "avg_cost_usd": 0.0032681999999999998
+      }
+    },
+    "by_strategy": {
+      "basic": {
+        "total": 10,
+        "avg_score": 0.9425000000000001,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 1
+      },
+      "structured": {
+        "total": 10,
+        "avg_score": 0.73,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 0.2
+      },
+      "json": {
+        "total": 10,
+        "avg_score": 1,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 1,
+        "json_validity": 1
+      }
+    },
+    "by_model_strategy": {
+      "claude-3-5-haiku-20241022:basic": {
+        "total": 5,
+        "avg_score": 0.9425000000000001,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 1
+      },
+      "claude-3-5-haiku-20241022:structured": {
+        "total": 5,
+        "avg_score": 0.73,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 0.2
+      },
+      "claude-3-5-haiku-20241022:json": {
+        "total": 5,
+        "avg_score": 1,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 1,
+        "json_validity": 1
+      },
+      "claude-sonnet-4-5-20250514:basic": {
+        "total": 5,
+        "avg_score": 0.9425000000000001,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 1
+      },
+      "claude-sonnet-4-5-20250514:structured": {
+        "total": 5,
+        "avg_score": 0.73,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 0.2
+      },
+      "claude-sonnet-4-5-20250514:json": {
+        "total": 5,
+        "avg_score": 1,
+        "severity_accuracy": 1,
+        "breaking_accuracy": 1,
+        "json_validity": 1
+      }
+    },
+    "adversarial_results": {
+      "total": 12,
+      "cosmetic_correct": 12,
+      "cosmetic_accuracy": 1
+    },
+    "cost_summary": {
+      "total_cost_usd": 0.062095799999999986,
+      "total_input_tokens": 2682,
+      "total_output_tokens": 6000,
+      "avg_cost_per_analysis": 0.0020698599999999993
+    }
+  }
+}

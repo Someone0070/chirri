@@ -1,0 +1,9 @@
+<svg width="40" height="48" viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 4C26 14 34 26 28 36C22 46 14 44 12 36C10 28 12 14 18 6C19 4 19.5 4 20 4Z" fill="url(#g)"/>
+  <path d="M19 10L18 36" stroke="#FFBFCC" stroke-width="0.6" opacity="0.5"/>
+  <path d="M19 18L14 28" stroke="#FFBFCC" stroke-width="0.4" opacity="0.4"/>
+  <path d="M19 18L24 30" stroke="#FFBFCC" stroke-width="0.4" opacity="0.4"/>
+  <path d="M19 24L12 32" stroke="#FFBFCC" stroke-width="0.3" opacity="0.3"/>
+  <path d="M19 24L26 34" stroke="#FFBFCC" stroke-width="0.3" opacity="0.3"/>
+  <defs><radialGradient id="g" cx="38%" cy="30%" r="58%"><stop offset="0%" stop-color="#FFDCE4"/><stop offset="100%" stop-color="#FFB0BE"/></radialGradient></defs>
+</svg>

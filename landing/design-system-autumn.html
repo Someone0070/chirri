@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chirri Design System — Autumn Garden (秋の庭)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gofun: '#FAF6F0',
+            kinari: '#F3ECE2',
+            torinoko: '#E8DFD2',
+            kurocha: '#2A2320',
+            'kuri-nezumi': '#6B5E54',
+            'cha-nezumi': '#9B8E82',
+            bengara: '#8B3A2A',
+            tobi: '#6C3524',
+            'bengara-light': '#F5E8E4',
+            'aka-cha': '#A0584A',
+            kitsune: '#C78550',
+            kuri: '#A06830',
+            'kitsune-light': '#F8F0E5',
+            enji: '#B94047',
+            'enji-light': '#FDF0F0',
+            sakura: '#D4A0A7',
+            usuzakura: '#F0E0E3',
+            'sakura-deep': '#C47080',
+            'sev-critical': '#B94047',
+            'sev-high': '#D47A3D',
+            'sev-medium': '#C4A43D',
+            'sev-low': '#5B8A5B',
+            'sev-info': '#5B7B94',
+            'sev-critical-bg': '#FDF0F0',
+            'sev-high-bg': '#FDF5EE',
+            'sev-medium-bg': '#FDF9EE',
+            'sev-low-bg': '#F0F5F0',
+            'sev-info-bg': '#EFF3F7',
+            'border-subtle': '#E8DDD0',
+            'border-default': '#D4C8BA',
+            'border-strong': '#A0937F',
+            urushi: '#1E1A17',
+            'urushi-mid': '#262220',
+            'urushi-card': '#302B28',
+            'urushi-border': '#403830',
+          },
+          fontFamily: {
+            ui: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"Noto Serif JP"', '"Noto Serif"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', '"Fira Code"', '"SF Mono"', 'monospace'],
+          },
+          borderRadius: {
+            chirri: '3px',
+            'chirri-md': '6px',
+            'chirri-lg': '10px',
+          },
+          boxShadow: {
+            'warm-sm': '0 1px 2px rgba(42, 35, 32, 0.06)',
+            'warm-md': '0 2px 8px rgba(42, 35, 32, 0.08)',
+            'warm-lg': '0 4px 16px rgba(42, 35, 32, 0.10)',
+            'warm-xl': '0 8px 32px rgba(42, 35, 32, 0.12)',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --autumn-bg-primary: #FAF6F0;
+      --autumn-bg-secondary: #F3ECE2;
+      --autumn-bg-tertiary: #E8DFD2;
+      --autumn-bg-elevated: #FFFDF9;
+      --autumn-text-primary: #2A2320;
+      --autumn-text-secondary: #6B5E54;
+      --autumn-text-tertiary: #9B8E82;
+      --autumn-primary: #8B3A2A;
+      --autumn-primary-hover: #6C3524;
+      --autumn-primary-subtle: #F5E8E4;
+      --autumn-secondary: #C78550;
+      --autumn-secondary-hover: #A06830;
+      --autumn-danger: #B94047;
+      --autumn-danger-subtle: #FDF0F0;
+      --autumn-sakura: #D4A0A7;
+      --autumn-sakura-soft: #F0E0E3;
+      --autumn-shadow-sm: 0 1px 2px rgba(42, 35, 32, 0.06);
+      --autumn-shadow-md: 0 2px 8px rgba(42, 35, 32, 0.08);
+      --autumn-shadow-lg: 0 4px 16px rgba(42, 35, 32, 0.10);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--autumn-bg-primary);
+      color: var(--autumn-text-primary);
+    }
+
+    /* Washi paper texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #D4C8BA; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #A0937F; }
+
+    /* Custom checkbox */
+    .chirri-checkbox {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 2px solid #D4C8BA;
+      border-radius: 3px;
+      background: #FFFDF9;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .chirri-checkbox:checked {
+      background: #8B3A2A;
+      border-color: #8B3A2A;
+    }
+    .chirri-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px; top: 2px;
+      width: 5px; height: 9px;
+      border: solid #FFFDF9;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .chirri-checkbox:focus-visible {
+      outline: 3px solid rgba(139, 58, 42, 0.3);
+      outline-offset: 2px;
+    }
+    .chirri-checkbox:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      background: #E8DFD2;
+    }
+    .chirri-checkbox.indeterminate {
+      background: #8B3A2A;
+      border-color: #8B3A2A;
+    }
+    .chirri-checkbox.indeterminate::after {
+      content: '';
+      position: absolute;
+      left: 3px; top: 6px;
+      width: 8px; height: 2px;
+      background: #FFFDF9;
+    }
+
+    /* Custom radio */
+    .chirri-radio {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 2px solid #D4C8BA;
+      border-radius: 50%;
+      background: #FFFDF9;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .chirri-radio:checked {
+      border-color: #8B3A2A;
+    }
+    .chirri-radio:checked::after {
+      content: '';
+      position: absolute;
+      left: 3.5px; top: 3.5px;
+      width: 7px; height: 7px;
+      background: #8B3A2A;
+      border-radius: 50%;
+    }
+    .chirri-radio:focus-visible {
+      outline: 3px solid rgba(139, 58, 42, 0.3);
+      outline-offset: 2px;
+    }
+
+    /* Toggle switch */
+    .chirri-toggle {
+      position: relative;
+      width: 36px; height: 20px;
+      background: #C4BAA8;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      flex-shrink: 0;
+    }
+    .chirri-toggle::after {
+      content: '';
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 16px; height: 16px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .chirri-toggle.active {
+      background: #8B3A2A;
+    }
+    .chirri-toggle.active::after {
+      transform: translateX(16px);
+    }
+    .chirri-toggle.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Custom dropdown */
+    .chirri-dropdown { position: relative; }
+    .chirri-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 14px;
+      background: #FFFDF9;
+      border: 1px solid #D4C8BA;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.9375rem;
+      color: #2A2320;
+      transition: border-color 0.15s ease;
+    }
+    .chirri-dropdown-trigger:hover { border-color: #A0937F; }
+    .chirri-dropdown-trigger:focus {
+      outline: none;
+      border-color: #8B3A2A;
+      box-shadow: 0 0 0 3px rgba(139, 58, 42, 0.15);
+    }
+    .chirri-dropdown-trigger .placeholder { color: #9B8E82; }
+    .chirri-dropdown-trigger svg {
+      width: 16px; height: 16px;
+      color: #9B8E82;
+      transition: transform 0.2s ease;
+    }
+    .chirri-dropdown.open .chirri-dropdown-trigger svg { transform: rotate(180deg); }
+    .chirri-dropdown-panel {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: #FFFDF9;
+      border: 1px solid #E8DDD0;
+      border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(42, 35, 32, 0.10);
+      z-index: 50;
+      display: none;
+      overflow: hidden;
+    }
+    .chirri-dropdown.open .chirri-dropdown-panel { display: block; }
+    .chirri-dropdown-option {
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.1s ease;
+      font-size: 0.9375rem;
+    }
+    .chirri-dropdown-option:hover { background: #F5EDE4; }
+    .chirri-dropdown-option.selected { background: #F5E8E4; }
+    .chirri-dropdown-option.selected::after {
+      content: '✓';
+      color: #8B3A2A;
+      font-weight: 600;
+    }
+
+    /* Tab styles */
+    .chirri-tab {
+      padding: 10px 0;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #9B8E82;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chirri-tab:hover { color: #6B5E54; }
+    .chirri-tab.active {
+      color: #2A2320;
+      border-bottom-color: #8B3A2A;
+    }
+
+    /* Underline input */
+    .chirri-input-underline {
+      width: 100%;
+      padding: 10px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #D4C8BA;
+      font-size: 0.9375rem;
+      color: #2A2320;
+      transition: border-color 0.15s ease;
+    }
+    .chirri-input-underline::placeholder { color: #9B8E82; }
+    .chirri-input-underline:focus {
+      outline: none;
+      border-bottom-color: #8B3A2A;
+    }
+
+    /* Boxed input */
+    .chirri-input-boxed {
+      width: 100%;
+      padding: 10px 14px;
+      background: #FFFDF9;
+      border: 1px solid #D4C8BA;
+      border-radius: 3px;
+      font-size: 0.9375rem;
+      color: #2A2320;
+      transition: all 0.15s ease;
+    }
+    .chirri-input-boxed::placeholder { color: #9B8E82; }
+    .chirri-input-boxed:focus {
+      outline: none;
+      border-color: #8B3A2A;
+      box-shadow: 0 0 0 3px rgba(139, 58, 42, 0.15);
+    }
+    .chirri-input-boxed.error {
+      border-color: #B94047;
+    }
+    .chirri-input-boxed:disabled {
+      background: #E8DFD2;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Sakura petal keyframes */
+    @keyframes petal-pulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+    .sakura-pulse { animation: petal-pulse 3s ease-in-out infinite; }
+
+    @keyframes petal-fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(40px) rotate(45deg); opacity: 0; }
+    }
+    .petal-fall { animation: petal-fall 4s ease-in-out infinite; }
+
+    /* Section divider */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #D4C8BA, transparent);
+      margin: 48px 0;
+    }
+
+    /* Focus ring utility */
+    .focus-bengara:focus-visible {
+      outline: 3px solid rgba(139, 58, 42, 0.3);
+      outline-offset: 2px;
+    }
+
+    /* Sidebar nav */
+    .nav-item {
+      padding: 8px 16px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border-left: 3px solid transparent;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      color: #9B8E82;
+    }
+    .nav-item:hover { color: #6B5E54; }
+    .nav-item.active {
+      color: #8B3A2A;
+      border-left-color: #8B3A2A;
+      background: #F5E8E4;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header -->
+  <header class="border-b border-border-subtle bg-[#FFFDF9]/80 backdrop-blur-sm sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <h1 class="font-display text-[1.25rem] font-light tracking-wide text-kurocha">Chirri</h1>
+        <span class="text-cha-nezumi text-xs font-mono">秋の庭</span>
+        <!-- Sakura signal: tiny petal next to logo -->
+        <svg class="sakura-pulse" width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <ellipse cx="5" cy="5" rx="4" ry="3.5" fill="#D4A0A7" opacity="0.8" transform="rotate(-15 5 5)"/>
+        </svg>
+      </div>
+      <span class="text-xs text-cha-nezumi font-mono">Design System — Autumn Garden</span>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-8 py-12">
+
+    <!-- Hero -->
+    <section class="mb-16 text-center">
+      <h2 class="font-display text-[2.25rem] font-light text-kurocha leading-tight mb-3">秋の庭 — Autumn Garden</h2>
+      <p class="text-kuri-nezumi text-[1.0625rem] max-w-2xl mx-auto leading-relaxed">
+        Warm browns, iron oxide reds, and the last sakura blossom. A design system inspired by Japanese autumn — lacquerware, aged wood, and temple architecture.
+      </p>
+      <p class="text-cha-nezumi text-sm mt-3 font-display italic">"The autumn garden does not mourn the fallen leaves — it wears them."</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- COLOR PALETTE -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="colors">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Color Palette</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Every color has a Japanese name and natural origin.</p>
+
+      <!-- Foundation -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Foundation — Warm Creams & Whites</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#FAF6F0"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Gofun-iro</p>
+          <p class="text-xs text-cha-nezumi">胡粉色 — shell white</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#FAF6F0</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#F3ECE2"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Kinari</p>
+          <p class="text-xs text-cha-nezumi">生成 — raw silk</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#F3ECE2</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#E8DFD2"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Torinoko</p>
+          <p class="text-xs text-cha-nezumi">鳥の子 — eggshell</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#E8DFD2</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#FFFDF9"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Shiro</p>
+          <p class="text-xs text-cha-nezumi">白 — white</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#FFFDF9</p>
+        </div>
+      </div>
+
+      <!-- Text Colors -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Text Colors</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#2A2320"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Kuro-cha</p>
+          <p class="text-xs text-cha-nezumi">黒茶 — black tea</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#2A2320</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#6B5E54"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Kuri-nezumi</p>
+          <p class="text-xs text-cha-nezumi">栗鼠 — chestnut mouse</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#6B5E54</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#9B8E82"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Cha-nezumi</p>
+          <p class="text-xs text-cha-nezumi">茶鼠 — tea grey</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#9B8E82</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#FAF6F0"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Gofun (inverse)</p>
+          <p class="text-xs text-cha-nezumi">胡粉 — shell white</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#FAF6F0</p>
+        </div>
+      </div>
+
+      <!-- Primary — Bengara Spectrum -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Primary — Bengara Spectrum (Action & Emphasis)</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#8B3A2A"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Bengara</p>
+          <p class="text-xs text-cha-nezumi">弁柄 — iron oxide red</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#8B3A2A</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#6C3524"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Tobi-iro</p>
+          <p class="text-xs text-cha-nezumi">鳶色 — kite bird brown</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#6C3524</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#F5E8E4"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Bengara-usui</p>
+          <p class="text-xs text-cha-nezumi">弁柄薄 — pale bengara</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#F5E8E4</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#A0584A"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Aka-cha</p>
+          <p class="text-xs text-cha-nezumi">赤茶 — red tea</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#A0584A</p>
+        </div>
+      </div>
+
+      <!-- Secondary — Kitsune -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Secondary — Kitsune (Warm Navigation)</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#C78550"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Kitsune-iro</p>
+          <p class="text-xs text-cha-nezumi">狐色 — fox color</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#C78550</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#A06830"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Kuri-iro</p>
+          <p class="text-xs text-cha-nezumi">栗色 — chestnut</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#A06830</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#F8F0E5"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Kitsune-usui</p>
+          <p class="text-xs text-cha-nezumi">狐色薄 — pale fox</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#F8F0E5</p>
+        </div>
+      </div>
+
+      <!-- Severity -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Semantic — Severity from Nature</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-chirri-md flex items-end p-3" style="background:#B94047">
+            <span class="text-xs font-medium text-white/90">Critical</span>
+          </div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Enji</p>
+          <p class="text-xs text-cha-nezumi">臙脂 — cochineal crimson</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#B94047</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md flex items-end p-3" style="background:#D47A3D">
+            <span class="text-xs font-medium text-white/90">High</span>
+          </div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Kaki-iro</p>
+          <p class="text-xs text-cha-nezumi">柿色 — persimmon</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#D47A3D</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md flex items-end p-3" style="background:#C4A43D">
+            <span class="text-xs font-medium text-white/90">Medium</span>
+          </div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Karashi</p>
+          <p class="text-xs text-cha-nezumi">芥子 — mustard</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#C4A43D</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md flex items-end p-3" style="background:#5B8A5B">
+            <span class="text-xs font-medium text-white/90">Low</span>
+          </div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Matsu</p>
+          <p class="text-xs text-cha-nezumi">松 — pine green</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#5B8A5B</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md flex items-end p-3" style="background:#5B7B94">
+            <span class="text-xs font-medium text-white/90">Info</span>
+          </div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Hanada</p>
+          <p class="text-xs text-cha-nezumi">縹 — light indigo</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#5B7B94</p>
+        </div>
+      </div>
+
+      <!-- Sakura Signal -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Sakura Signal — The Last Blossom (1-2%)</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-chirri-md relative overflow-hidden" style="background:#D4A0A7">
+            <svg class="absolute right-3 top-3 sakura-pulse" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <ellipse cx="8" cy="8" rx="6" ry="5" fill="#fff" opacity="0.5" transform="rotate(-20 8 8)"/>
+            </svg>
+          </div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Sakura-nezumi</p>
+          <p class="text-xs text-cha-nezumi">桜鼠 — cherry grey</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#D4A0A7</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md border border-border-subtle" style="background:#F0E0E3"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Usuzakura</p>
+          <p class="text-xs text-cha-nezumi">薄桜 — pale cherry</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#F0E0E3</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md" style="background:#C47080"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Sakura-enji</p>
+          <p class="text-xs text-cha-nezumi">桜臙脂 — deep sakura</p>
+          <p class="text-xs font-mono text-kuri-nezumi mt-0.5">#C47080</p>
+        </div>
+      </div>
+
+      <!-- Borders -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Borders</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div>
+          <div class="h-20 rounded-chirri-md bg-gofun border-2" style="border-color:#E8DDD0"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Subtle</p>
+          <p class="text-xs font-mono text-kuri-nezumi">#E8DDD0</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md bg-gofun border-2" style="border-color:#D4C8BA"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Default</p>
+          <p class="text-xs font-mono text-kuri-nezumi">#D4C8BA</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md bg-gofun border-2" style="border-color:#A0937F"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Strong</p>
+          <p class="text-xs font-mono text-kuri-nezumi">#A0937F</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-chirri-md bg-gofun border-2" style="border-color:#8B3A2A"></div>
+          <p class="mt-2 text-sm font-medium text-kurocha">Focus (Bengara)</p>
+          <p class="text-xs font-mono text-kuri-nezumi">#8B3A2A</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- TYPOGRAPHY -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="typography">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Typography</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Three families, one voice.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+        <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-3">UI — Inter</p>
+          <p class="font-ui text-[0.75rem] text-kuri-nezumi mb-1">xs · 12px</p>
+          <p class="font-ui text-[0.8125rem] text-kuri-nezumi mb-1">sm · 13px</p>
+          <p class="font-ui text-[0.9375rem] text-kurocha mb-1">base · 15px — Body default</p>
+          <p class="font-ui text-[1.0625rem] font-medium text-kurocha mb-1">md · 17px</p>
+          <p class="font-ui text-[1.25rem] font-semibold text-kurocha">lg · 20px</p>
+        </div>
+        <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-3">Display — Noto Serif JP</p>
+          <p class="font-display text-[1.0625rem] font-light text-kuri-nezumi mb-1">md · 17px light</p>
+          <p class="font-display text-[1.25rem] text-kurocha mb-1">lg · 20px</p>
+          <p class="font-display text-[1.625rem] font-light text-kurocha mb-1">xl · 26px</p>
+          <p class="font-display text-[2.25rem] font-light text-kurocha leading-tight">2xl · 36px</p>
+        </div>
+        <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-3">Mono — JetBrains Mono</p>
+          <p class="font-mono text-[0.75rem] text-kuri-nezumi mb-1">xs · API_KEY=***</p>
+          <p class="font-mono text-[0.8125rem] text-kuri-nezumi mb-1">sm · git diff +14 -3</p>
+          <p class="font-mono text-[0.9375rem] text-kurocha mb-1">base · const chirri = 🐦</p>
+          <p class="font-mono text-[1.0625rem] font-medium text-kurocha">md · v2.1.0-beta</p>
+        </div>
+      </div>
+
+      <!-- Scale demo -->
+      <div class="bg-[#FFFDF9] p-8 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+        <p class="font-display text-[3.25rem] font-light text-kurocha leading-tight mb-2">3xl — 紅葉狩り</p>
+        <p class="font-display text-[2.25rem] font-light text-kurocha leading-tight mb-2">2xl — Momijigari</p>
+        <p class="font-display text-[1.625rem] font-light text-kuri-nezumi leading-tight mb-2">xl — Autumn leaf viewing</p>
+        <p class="font-ui text-[1.0625rem] text-kuri-nezumi leading-normal mb-1">md — The practice of going to visit scenic areas where leaves have turned red in autumn.</p>
+        <p class="font-ui text-[0.9375rem] text-cha-nezumi leading-normal">base — A tradition dating to the Heian period, celebrated in poetry and art.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- BUTTONS -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="buttons">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Buttons</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Bengara for action, Enji for danger. The torii gate vs the temple curtain.</p>
+
+      <div class="bg-[#FFFDF9] p-8 rounded-chirri-md border border-border-subtle shadow-warm-sm space-y-8">
+        <!-- Variants -->
+        <div>
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Variants</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-bengara text-[#FFFDF9] hover:bg-tobi transition-colors focus-bengara">Save Changes</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri border-2 border-bengara text-bengara hover:bg-bengara-light transition-colors focus-bengara">Cancel</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri text-cha-nezumi hover:text-kuri-nezumi transition-colors focus-bengara">Reset</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-enji text-white hover:bg-[#A03840] transition-colors focus-bengara">Delete Provider</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-kitsune text-white hover:bg-kuri transition-colors focus-bengara">Special CTA</button>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div>
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Sizes</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <button class="px-3.5 py-1.5 text-xs font-medium rounded-chirri bg-bengara text-[#FFFDF9] hover:bg-tobi transition-colors">Small</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-bengara text-[#FFFDF9] hover:bg-tobi transition-colors">Default</button>
+            <button class="px-7 py-3 text-base font-medium rounded-chirri bg-bengara text-[#FFFDF9] hover:bg-tobi transition-colors">Large</button>
+          </div>
+        </div>
+
+        <!-- States -->
+        <div>
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">States</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-bengara text-[#FFFDF9]">Normal</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-tobi text-[#FFFDF9]">Hover</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-bengara text-[#FFFDF9] opacity-40 cursor-not-allowed">Disabled</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-bengara text-[#FFFDF9] ring-[3px] ring-bengara/30 ring-offset-2">Focused</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- FORM CONTROLS -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="forms">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Form Controls</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Custom-built controls. No native selects.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Left column -->
+        <div class="space-y-8">
+          <!-- Checkboxes -->
+          <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+            <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Checkboxes</p>
+            <div class="space-y-3">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" class="chirri-checkbox" checked>
+                <span class="text-sm text-kurocha">Monitor all providers</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" class="chirri-checkbox">
+                <span class="text-sm text-kurocha">Send email notifications</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <div class="chirri-checkbox indeterminate"></div>
+                <span class="text-sm text-kurocha">Indeterminate state</span>
+              </label>
+              <label class="flex items-center gap-3">
+                <input type="checkbox" class="chirri-checkbox" disabled>
+                <span class="text-sm text-cha-nezumi">Disabled option</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Radio Buttons -->
+          <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+            <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Radio Buttons</p>
+            <div class="space-y-3">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="frequency" class="chirri-radio" checked>
+                <span class="text-sm text-kurocha">Every 5 minutes</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="frequency" class="chirri-radio">
+                <span class="text-sm text-kurocha">Every 15 minutes</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="frequency" class="chirri-radio">
+                <span class="text-sm text-kurocha">Every hour</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Toggles -->
+          <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+            <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Toggle Switches</p>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-kurocha">Dark mode</span>
+                <div class="chirri-toggle active" onclick="this.classList.toggle('active')"></div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-kurocha">Notifications</span>
+                <div class="chirri-toggle" onclick="this.classList.toggle('active')"></div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-cha-nezumi">Maintenance mode</span>
+                <div class="chirri-toggle disabled"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="space-y-8">
+          <!-- Text Inputs -->
+          <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+            <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Text Inputs</p>
+            <div class="space-y-5">
+              <div>
+                <label class="text-xs font-medium text-kuri-nezumi mb-1 block">Underline style</label>
+                <input type="text" class="chirri-input-underline" placeholder="Enter site name...">
+              </div>
+              <div>
+                <label class="text-xs font-medium text-kuri-nezumi mb-1 block">Boxed style</label>
+                <input type="text" class="chirri-input-boxed" placeholder="https://example.com">
+              </div>
+              <div>
+                <label class="text-xs font-medium text-kuri-nezumi mb-1 block">Error state</label>
+                <input type="text" class="chirri-input-boxed error" value="not-a-valid-url">
+                <p class="text-xs text-enji mt-1">Please enter a valid URL</p>
+              </div>
+              <div>
+                <label class="text-xs font-medium text-cha-nezumi mb-1 block">Disabled</label>
+                <input type="text" class="chirri-input-boxed" disabled value="Read only">
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Dropdowns -->
+          <div class="bg-[#FFFDF9] p-6 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+            <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Custom Dropdowns</p>
+            <div class="space-y-5">
+              <div>
+                <label class="text-xs font-medium text-kuri-nezumi mb-1 block">Check interval</label>
+                <div class="chirri-dropdown" data-dropdown>
+                  <button class="chirri-dropdown-trigger" type="button">
+                    <span class="placeholder">Select interval...</span>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="chirri-dropdown-panel">
+                    <div class="chirri-dropdown-option" data-value="5">Every 5 minutes</div>
+                    <div class="chirri-dropdown-option" data-value="15">Every 15 minutes</div>
+                    <div class="chirri-dropdown-option" data-value="30">Every 30 minutes</div>
+                    <div class="chirri-dropdown-option" data-value="60">Every hour</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="text-xs font-medium text-kuri-nezumi mb-1 block">Provider type</label>
+                <div class="chirri-dropdown" data-dropdown>
+                  <button class="chirri-dropdown-trigger" type="button">
+                    <span>RSS Feed</span>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="chirri-dropdown-panel">
+                    <div class="chirri-dropdown-option selected" data-value="rss">RSS Feed</div>
+                    <div class="chirri-dropdown-option" data-value="sitemap">Sitemap</div>
+                    <div class="chirri-dropdown-option" data-value="api">REST API</div>
+                    <div class="chirri-dropdown-option" data-value="scrape">Web Scraper</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- TABS -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="tabs">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Tabs</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Simple, text-based navigation with Bengara accent.</p>
+
+      <div class="bg-[#FFFDF9] p-8 rounded-chirri-md border border-border-subtle shadow-warm-sm">
+        <div class="flex gap-6 border-b border-border-subtle pb-0">
+          <button class="chirri-tab active" onclick="switchTab(this)">Overview</button>
+          <button class="chirri-tab" onclick="switchTab(this)">Changes</button>
+          <button class="chirri-tab" onclick="switchTab(this)">Settings</button>
+          <button class="chirri-tab" onclick="switchTab(this)">History</button>
+        </div>
+        <div class="pt-6">
+          <p class="text-sm text-kuri-nezumi">Tab content appears here. Active tab uses Kuro-cha text with a 2px Bengara bottom border.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- BADGES & STATUS DOTS -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="badges">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Badges & Status</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Pill-shaped tags with severity dots.</p>
+
+      <div class="bg-[#FFFDF9] p-8 rounded-chirri-md border border-border-subtle shadow-warm-sm space-y-6">
+        <!-- Default badges -->
+        <div>
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-3">Default Badges</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-kinari text-kurocha border border-border-subtle">RSS Feed</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-kinari text-kurocha border border-border-subtle">Sitemap</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-kinari text-kurocha border border-border-subtle">v2.1.0</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-bengara-light text-bengara">Primary</span>
+          </div>
+        </div>
+
+        <!-- Severity badges -->
+        <div>
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-3">Severity Badges</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-sev-critical-bg text-kurocha">
+              <span class="w-2 h-2 rounded-full bg-sev-critical"></span>Critical
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-sev-high-bg text-kurocha">
+              <span class="w-2 h-2 rounded-full bg-sev-high"></span>High
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-sev-medium-bg text-kurocha">
+              <span class="w-2 h-2 rounded-full bg-sev-medium"></span>Medium
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-sev-low-bg text-kurocha">
+              <span class="w-2 h-2 rounded-full bg-sev-low"></span>Low
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-sev-info-bg text-kurocha">
+              <span class="w-2 h-2 rounded-full bg-sev-info"></span>Info
+            </span>
+          </div>
+        </div>
+
+        <!-- Status dots standalone -->
+        <div>
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-3">Status Dots</p>
+          <div class="flex flex-wrap gap-6">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sev-low"></span>
+              <span class="text-sm text-kurocha">Online</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sev-medium"></span>
+              <span class="text-sm text-kurocha">Degraded</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sev-critical"></span>
+              <span class="text-sm text-kurocha">Down</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-cha-nezumi"></span>
+              <span class="text-sm text-kurocha">Unknown</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <!-- Sakura signal: notification dot -->
+              <span class="w-2.5 h-2.5 rounded-full bg-sakura sakura-pulse"></span>
+              <span class="text-sm text-kurocha">New chirp</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- CARDS -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="cards">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Cards</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Provider cards and change cards with severity indicators.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Provider Card -->
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-md p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-[1.0625rem] font-medium text-kurocha">Cavalline Blog</h4>
+              <p class="text-xs text-cha-nezumi font-mono mt-0.5">cavalline.com/blog/feed.xml</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-sev-low-bg text-kurocha">
+              <span class="w-2 h-2 rounded-full bg-sev-low"></span>Healthy
+            </span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-center border-t border-border-subtle pt-4">
+            <div>
+              <p class="text-[1.25rem] font-semibold text-kurocha">142</p>
+              <p class="text-xs text-cha-nezumi">Pages tracked</p>
+            </div>
+            <div>
+              <p class="text-[1.25rem] font-semibold text-bengara">7</p>
+              <p class="text-xs text-cha-nezumi">Changes today</p>
+            </div>
+            <div>
+              <p class="text-[1.25rem] font-semibold text-kurocha">2m</p>
+              <p class="text-xs text-cha-nezumi">Last check</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Provider Card 2 -->
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-md p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-[1.0625rem] font-medium text-kurocha">Competitor API</h4>
+              <p class="text-xs text-cha-nezumi font-mono mt-0.5">api.competitor.io/v2/status</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-sev-medium-bg text-kurocha">
+              <span class="w-2 h-2 rounded-full bg-sev-medium"></span>Degraded
+            </span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-center border-t border-border-subtle pt-4">
+            <div>
+              <p class="text-[1.25rem] font-semibold text-kurocha">38</p>
+              <p class="text-xs text-cha-nezumi">Endpoints</p>
+            </div>
+            <div>
+              <p class="text-[1.25rem] font-semibold text-sev-medium">3</p>
+              <p class="text-xs text-cha-nezumi">Warnings</p>
+            </div>
+            <div>
+              <p class="text-[1.25rem] font-semibold text-kurocha">5m</p>
+              <p class="text-xs text-cha-nezumi">Last check</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Change Cards with severity borders -->
+      <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Change Cards (Severity Borders)</h4>
+      <div class="space-y-3">
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-sm p-5 border-l-[6px] border-l-sev-critical">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium rounded-full bg-sev-critical-bg text-sev-critical">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sev-critical"></span>Critical
+                </span>
+                <h5 class="text-sm font-medium text-kurocha">Pricing page removed</h5>
+              </div>
+              <p class="text-xs text-cha-nezumi">cavalline.com/pricing — Page returned 404, previously 200</p>
+            </div>
+            <span class="text-xs font-mono text-cha-nezumi">2m ago</span>
+          </div>
+        </div>
+
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-sm p-5 border-l-[5px] border-l-sev-high">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium rounded-full bg-sev-high-bg text-sev-high">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sev-high"></span>High
+                </span>
+                <h5 class="text-sm font-medium text-kurocha">New feature announced</h5>
+              </div>
+              <p class="text-xs text-cha-nezumi">competitor.io/blog — New post: "Introducing AI-powered monitoring"</p>
+            </div>
+            <span class="text-xs font-mono text-cha-nezumi">15m ago</span>
+          </div>
+        </div>
+
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-sm p-5 border-l-[4px] border-l-sev-medium">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium rounded-full bg-sev-medium-bg text-sev-medium">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sev-medium"></span>Medium
+                </span>
+                <h5 class="text-sm font-medium text-kurocha">Content updated</h5>
+              </div>
+              <p class="text-xs text-cha-nezumi">docs.example.com/api — 14 lines changed in API reference</p>
+            </div>
+            <span class="text-xs font-mono text-cha-nezumi">1h ago</span>
+          </div>
+        </div>
+
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-sm p-5 border-l-[3px] border-l-sev-low">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium rounded-full bg-sev-low-bg text-sev-low">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sev-low"></span>Low
+                </span>
+                <h5 class="text-sm font-medium text-kurocha">Minor text change</h5>
+              </div>
+              <p class="text-xs text-cha-nezumi">example.com/about — Footer copyright year updated</p>
+            </div>
+            <span class="text-xs font-mono text-cha-nezumi">3h ago</span>
+          </div>
+        </div>
+
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-sm p-5 border-l-[3px] border-l-sev-info">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium rounded-full bg-sev-info-bg text-sev-info">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sev-info"></span>Info
+                </span>
+                <h5 class="text-sm font-medium text-kurocha">New page discovered</h5>
+              </div>
+              <p class="text-xs text-cha-nezumi">blog.example.com — New post detected via RSS feed</p>
+            </div>
+            <span class="text-xs font-mono text-cha-nezumi">5h ago</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- NAVIGATION SIDEBAR -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="navigation">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Navigation Sidebar</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">200px wide, Kinari background, generous ma (空間).</p>
+
+      <div class="flex gap-6">
+        <div class="w-[200px] bg-kinari rounded-chirri-md border border-border-subtle shadow-warm-sm flex-shrink-0 flex flex-col">
+          <div class="p-5 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="font-display text-[1.0625rem] font-light text-kurocha">Chirri</span>
+              <svg class="sakura-pulse" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                <ellipse cx="4" cy="4" rx="3" ry="2.5" fill="#D4A0A7" opacity="0.8" transform="rotate(-15 4 4)"/>
+              </svg>
+            </div>
+          </div>
+          <nav class="flex-1 py-2 space-y-0.5">
+            <div class="nav-item active">
+              <span>Dashboard</span>
+            </div>
+            <div class="nav-item">
+              <span>Providers</span>
+            </div>
+            <div class="nav-item">
+              <span>Changes</span>
+            </div>
+            <div class="nav-item">
+              <span>Alerts</span>
+            </div>
+            <div class="nav-item">
+              <span>Settings</span>
+            </div>
+          </nav>
+          <!-- Ma (empty space) + version -->
+          <div class="p-5 pt-8">
+            <p class="text-[11px] font-mono text-cha-nezumi">v2.1.0-beta</p>
+          </div>
+        </div>
+
+        <!-- Preview content next to sidebar -->
+        <div class="flex-1 bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-sm p-6">
+          <p class="text-sm text-kuri-nezumi">The sidebar uses text-only navigation items with Inter Medium, wide tracking. Active item gets a Bengara left border and tinted background. The generous empty space (ma) at the bottom is intentional — it breathes.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- SAMPLE: ADD URL FORM -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="add-url">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Sample — Add URL Form</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">A complete form using the Autumn Garden controls.</p>
+
+      <div class="max-w-lg bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-lg p-8">
+        <h4 class="font-display text-[1.25rem] font-light text-kurocha mb-6">Add New URL</h4>
+        <div class="space-y-5">
+          <div>
+            <label class="text-xs font-medium text-kuri-nezumi mb-1.5 block">URL to monitor</label>
+            <input type="text" class="chirri-input-boxed" placeholder="https://example.com/page">
+          </div>
+          <div>
+            <label class="text-xs font-medium text-kuri-nezumi mb-1.5 block">Display name</label>
+            <input type="text" class="chirri-input-underline" placeholder="My Website Homepage">
+          </div>
+          <div>
+            <label class="text-xs font-medium text-kuri-nezumi mb-1.5 block">Provider type</label>
+            <div class="chirri-dropdown" data-dropdown>
+              <button class="chirri-dropdown-trigger" type="button">
+                <span class="placeholder">Select type...</span>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="chirri-dropdown-panel">
+                <div class="chirri-dropdown-option" data-value="html">HTML Page</div>
+                <div class="chirri-dropdown-option" data-value="rss">RSS Feed</div>
+                <div class="chirri-dropdown-option" data-value="sitemap">Sitemap</div>
+                <div class="chirri-dropdown-option" data-value="api">API Endpoint</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-medium text-kuri-nezumi mb-1.5 block">Check interval</label>
+            <div class="chirri-dropdown" data-dropdown>
+              <button class="chirri-dropdown-trigger" type="button">
+                <span class="placeholder">Select interval...</span>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="chirri-dropdown-panel">
+                <div class="chirri-dropdown-option" data-value="5">Every 5 minutes</div>
+                <div class="chirri-dropdown-option" data-value="15">Every 15 minutes</div>
+                <div class="chirri-dropdown-option" data-value="60">Every hour</div>
+                <div class="chirri-dropdown-option" data-value="1440">Daily</div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="chirri-checkbox" checked>
+            <span class="text-sm text-kurocha">Enable email notifications for changes</span>
+          </div>
+          <div class="flex gap-3 pt-2">
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri bg-bengara text-[#FFFDF9] hover:bg-tobi transition-colors">Add URL</button>
+            <button class="px-5 py-2.5 text-sm font-medium rounded-chirri border-2 border-bengara text-bengara hover:bg-bengara-light transition-colors">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- MINI DASHBOARD -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="dashboard">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Mini Dashboard</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">A taste of the full Chirri experience.</p>
+
+      <div class="flex gap-0 rounded-chirri-lg border border-border-subtle shadow-warm-lg overflow-hidden">
+        <!-- Sidebar -->
+        <div class="w-[200px] bg-kinari flex-shrink-0 flex flex-col border-r border-border-subtle">
+          <div class="p-5 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="font-display text-[1.0625rem] font-light text-kurocha">Chirri</span>
+              <svg class="sakura-pulse" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                <ellipse cx="4" cy="4" rx="3" ry="2.5" fill="#D4A0A7" opacity="0.8" transform="rotate(-15 4 4)"/>
+              </svg>
+            </div>
+          </div>
+          <nav class="flex-1 py-2 space-y-0.5">
+            <div class="nav-item active">Dashboard</div>
+            <div class="nav-item">Providers</div>
+            <div class="nav-item">Changes</div>
+            <div class="nav-item">Alerts</div>
+            <div class="nav-item">Settings</div>
+          </nav>
+          <div class="p-5 pt-8">
+            <p class="text-[11px] font-mono text-cha-nezumi">v2.1.0</p>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-1 bg-gofun p-6 min-h-[480px]">
+          <!-- Dashboard header -->
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h4 class="text-[1.25rem] font-medium text-kurocha">Dashboard</h4>
+              <p class="text-xs text-cha-nezumi">Last updated: 2 minutes ago</p>
+            </div>
+            <button class="px-4 py-2 text-sm font-medium rounded-chirri bg-bengara text-[#FFFDF9] hover:bg-tobi transition-colors">+ Add URL</button>
+          </div>
+
+          <!-- Stats row -->
+          <div class="grid grid-cols-4 gap-4 mb-6">
+            <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle p-4 shadow-warm-sm">
+              <p class="text-xs text-cha-nezumi mb-1">Total Providers</p>
+              <p class="text-[1.625rem] font-semibold text-kurocha">12</p>
+            </div>
+            <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle p-4 shadow-warm-sm">
+              <p class="text-xs text-cha-nezumi mb-1">Pages Tracked</p>
+              <p class="text-[1.625rem] font-semibold text-kurocha">847</p>
+            </div>
+            <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle p-4 shadow-warm-sm">
+              <p class="text-xs text-cha-nezumi mb-1">Changes Today</p>
+              <p class="text-[1.625rem] font-semibold text-bengara">23</p>
+            </div>
+            <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle p-4 shadow-warm-sm relative">
+              <p class="text-xs text-cha-nezumi mb-1">Alerts</p>
+              <p class="text-[1.625rem] font-semibold text-sev-critical">3</p>
+              <!-- Sakura notification pulse -->
+              <span class="absolute top-3 right-3 w-2 h-2 rounded-full bg-sakura sakura-pulse"></span>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="flex gap-6 border-b border-border-subtle mb-4">
+            <button class="chirri-tab active" style="pointer-events:none">Recent Changes</button>
+            <button class="chirri-tab" style="pointer-events:none">Providers</button>
+          </div>
+
+          <!-- Recent changes list -->
+          <div class="space-y-2">
+            <div class="bg-[#FFFDF9] rounded-chirri border border-border-subtle p-4 border-l-[5px] border-l-sev-critical flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-sev-critical flex-shrink-0"></span>
+                <div>
+                  <p class="text-sm font-medium text-kurocha">Pricing page removed</p>
+                  <p class="text-xs text-cha-nezumi">cavalline.com/pricing</p>
+                </div>
+              </div>
+              <span class="text-xs font-mono text-cha-nezumi">2m</span>
+            </div>
+            <div class="bg-[#FFFDF9] rounded-chirri border border-border-subtle p-4 border-l-[4px] border-l-sev-high flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-sev-high flex-shrink-0"></span>
+                <div>
+                  <p class="text-sm font-medium text-kurocha">New feature announced</p>
+                  <p class="text-xs text-cha-nezumi">competitor.io/blog</p>
+                </div>
+              </div>
+              <span class="text-xs font-mono text-cha-nezumi">15m</span>
+            </div>
+            <div class="bg-[#FFFDF9] rounded-chirri border border-border-subtle p-4 border-l-[3px] border-l-sev-low flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-sev-low flex-shrink-0"></span>
+                <div>
+                  <p class="text-sm font-medium text-kurocha">Footer text updated</p>
+                  <p class="text-xs text-cha-nezumi">example.com/about</p>
+                </div>
+              </div>
+              <span class="text-xs font-mono text-cha-nezumi">3h</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- DARK MODE — URUSHI -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="dark-mode">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Dark Mode — 漆 Urushi (Lacquerware)</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Deep warm blacks with red-brown undertones. Not space-black — lacquer-dark.</p>
+
+      <div class="rounded-chirri-lg overflow-hidden shadow-warm-xl" style="background:#1E1A17">
+        <div class="flex">
+          <!-- Dark sidebar -->
+          <div class="w-[200px] flex-shrink-0 flex flex-col border-r" style="background:#262220; border-color:#403830">
+            <div class="p-5 pb-3">
+              <div class="flex items-center gap-2">
+                <span class="font-display text-[1.0625rem] font-light" style="color:#E8E0D8">Chirri</span>
+                <svg class="sakura-pulse" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                  <ellipse cx="4" cy="4" rx="3" ry="2.5" fill="#D4A0A7" opacity="0.8" transform="rotate(-15 4 4)"/>
+                </svg>
+              </div>
+            </div>
+            <nav class="flex-1 py-2 space-y-0.5">
+              <div class="px-4 py-2 text-[0.8125rem] font-medium tracking-wide border-l-[3px] cursor-pointer" style="color:#C06B5A; border-left-color:#C06B5A; background:rgba(192,107,90,0.12)">Dashboard</div>
+              <div class="px-4 py-2 text-[0.8125rem] font-medium tracking-wide border-l-[3px] border-transparent cursor-pointer" style="color:#7A6E62">Providers</div>
+              <div class="px-4 py-2 text-[0.8125rem] font-medium tracking-wide border-l-[3px] border-transparent cursor-pointer" style="color:#7A6E62">Changes</div>
+              <div class="px-4 py-2 text-[0.8125rem] font-medium tracking-wide border-l-[3px] border-transparent cursor-pointer" style="color:#7A6E62">Alerts</div>
+              <div class="px-4 py-2 text-[0.8125rem] font-medium tracking-wide border-l-[3px] border-transparent cursor-pointer" style="color:#7A6E62">Settings</div>
+            </nav>
+            <div class="p-5 pt-8">
+              <p class="text-[11px] font-mono" style="color:#7A6E62">v2.1.0</p>
+            </div>
+          </div>
+
+          <!-- Dark main content -->
+          <div class="flex-1 p-6 min-h-[460px]" style="background:#1E1A17">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h4 class="text-[1.25rem] font-medium" style="color:#E8E0D8">Dashboard</h4>
+                <p class="text-xs" style="color:#7A6E62">Last updated: 2 minutes ago</p>
+              </div>
+              <button class="px-4 py-2 text-sm font-medium rounded-chirri text-white" style="background:#C06B5A">+ Add URL</button>
+            </div>
+
+            <!-- Dark stats -->
+            <div class="grid grid-cols-4 gap-4 mb-6">
+              <div class="rounded-chirri-md p-4 border" style="background:#302B28; border-color:#403830">
+                <p class="text-xs mb-1" style="color:#7A6E62">Total Providers</p>
+                <p class="text-[1.625rem] font-semibold" style="color:#E8E0D8">12</p>
+              </div>
+              <div class="rounded-chirri-md p-4 border" style="background:#302B28; border-color:#403830">
+                <p class="text-xs mb-1" style="color:#7A6E62">Pages Tracked</p>
+                <p class="text-[1.625rem] font-semibold" style="color:#E8E0D8">847</p>
+              </div>
+              <div class="rounded-chirri-md p-4 border" style="background:#302B28; border-color:#403830">
+                <p class="text-xs mb-1" style="color:#7A6E62">Changes Today</p>
+                <p class="text-[1.625rem] font-semibold" style="color:#C06B5A">23</p>
+              </div>
+              <div class="rounded-chirri-md p-4 border relative" style="background:#302B28; border-color:#403830">
+                <p class="text-xs mb-1" style="color:#7A6E62">Alerts</p>
+                <p class="text-[1.625rem] font-semibold" style="color:#D46068">3</p>
+                <span class="absolute top-3 right-3 w-2 h-2 rounded-full bg-sakura sakura-pulse"></span>
+              </div>
+            </div>
+
+            <!-- Dark tabs -->
+            <div class="flex gap-6 border-b mb-4" style="border-color:#403830">
+              <span class="pb-2 text-sm font-medium border-b-2" style="color:#E8E0D8; border-bottom-color:#C06B5A">Recent Changes</span>
+              <span class="pb-2 text-sm font-medium border-b-2 border-transparent" style="color:#7A6E62">Providers</span>
+            </div>
+
+            <!-- Dark change cards -->
+            <div class="space-y-2">
+              <div class="rounded-chirri p-4 border border-l-[5px] flex items-center justify-between" style="background:#302B28; border-color:#403830; border-left-color:#B94047">
+                <div class="flex items-center gap-3">
+                  <span class="w-2 h-2 rounded-full bg-sev-critical flex-shrink-0"></span>
+                  <div>
+                    <p class="text-sm font-medium" style="color:#E8E0D8">Pricing page removed</p>
+                    <p class="text-xs" style="color:#7A6E62">cavalline.com/pricing</p>
+                  </div>
+                </div>
+                <span class="text-xs font-mono" style="color:#7A6E62">2m</span>
+              </div>
+              <div class="rounded-chirri p-4 border border-l-[4px] flex items-center justify-between" style="background:#302B28; border-color:#403830; border-left-color:#D47A3D">
+                <div class="flex items-center gap-3">
+                  <span class="w-2 h-2 rounded-full bg-sev-high flex-shrink-0"></span>
+                  <div>
+                    <p class="text-sm font-medium" style="color:#E8E0D8">New feature announced</p>
+                    <p class="text-xs" style="color:#7A6E62">competitor.io/blog</p>
+                  </div>
+                </div>
+                <span class="text-xs font-mono" style="color:#7A6E62">15m</span>
+              </div>
+              <div class="rounded-chirri p-4 border border-l-[3px] flex items-center justify-between" style="background:#302B28; border-color:#403830; border-left-color:#5B8A5B">
+                <div class="flex items-center gap-3">
+                  <span class="w-2 h-2 rounded-full bg-sev-low flex-shrink-0"></span>
+                  <div>
+                    <p class="text-sm font-medium" style="color:#E8E0D8">Footer text updated</p>
+                    <p class="text-xs" style="color:#7A6E62">example.com/about</p>
+                  </div>
+                </div>
+                <span class="text-xs font-mono" style="color:#7A6E62">3h</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark mode color tokens -->
+      <div class="mt-8">
+        <h4 class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Dark Mode Token Swatches</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div>
+            <div class="h-16 rounded-chirri-md" style="background:#1E1A17"></div>
+            <p class="mt-2 text-sm font-medium text-kurocha">Urushi bg</p>
+            <p class="text-xs font-mono text-kuri-nezumi">#1E1A17</p>
+          </div>
+          <div>
+            <div class="h-16 rounded-chirri-md" style="background:#262220"></div>
+            <p class="mt-2 text-sm font-medium text-kurocha">Urushi sidebar</p>
+            <p class="text-xs font-mono text-kuri-nezumi">#262220</p>
+          </div>
+          <div>
+            <div class="h-16 rounded-chirri-md" style="background:#302B28"></div>
+            <p class="mt-2 text-sm font-medium text-kurocha">Urushi card</p>
+            <p class="text-xs font-mono text-kuri-nezumi">#302B28</p>
+          </div>
+          <div>
+            <div class="h-16 rounded-chirri-md" style="background:#C06B5A"></div>
+            <p class="mt-2 text-sm font-medium text-kurocha">Bengara (dark)</p>
+            <p class="text-xs font-mono text-kuri-nezumi">#C06B5A</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- SHADOWS -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="shadows">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Shadows</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">Warm-tinted shadows — brown undertone, never blue-grey.</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        <div class="bg-[#FFFDF9] rounded-chirri-md p-6 shadow-warm-sm border border-border-subtle">
+          <p class="text-sm font-medium text-kurocha">warm-sm</p>
+          <p class="text-xs text-cha-nezumi mt-1">Subtle lift</p>
+        </div>
+        <div class="bg-[#FFFDF9] rounded-chirri-md p-6 shadow-warm-md border border-border-subtle">
+          <p class="text-sm font-medium text-kurocha">warm-md</p>
+          <p class="text-xs text-cha-nezumi mt-1">Cards, panels</p>
+        </div>
+        <div class="bg-[#FFFDF9] rounded-chirri-md p-6 shadow-warm-lg border border-border-subtle">
+          <p class="text-sm font-medium text-kurocha">warm-lg</p>
+          <p class="text-xs text-cha-nezumi mt-1">Dropdowns, popovers</p>
+        </div>
+        <div class="bg-[#FFFDF9] rounded-chirri-md p-6 shadow-warm-xl border border-border-subtle">
+          <p class="text-sm font-medium text-kurocha">warm-xl</p>
+          <p class="text-xs text-cha-nezumi mt-1">Modals</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================ -->
+    <!-- SAKURA SIGNAL MOMENTS -->
+    <!-- ============================================ -->
+    <section class="mb-16" id="sakura">
+      <h3 class="font-display text-[1.625rem] font-light text-kurocha mb-2">Sakura Signal Moments 🌸</h3>
+      <p class="text-kuri-nezumi text-sm mb-8">The one blossom still holding on in autumn. Appears in only 1-2% of the UI.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Chirp notification -->
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-md p-6 text-center">
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Chirp Notification</p>
+          <div class="inline-flex items-center gap-2 px-4 py-2.5 rounded-chirri-md border shadow-warm-md" style="background:#FFFDF9; border-color:#E8DDD0">
+            <svg class="sakura-pulse" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <ellipse cx="7" cy="7" rx="5.5" ry="4.5" fill="#D4A0A7" opacity="0.85" transform="rotate(-20 7 7)"/>
+              <ellipse cx="7" cy="7" rx="3" ry="2.5" fill="#C47080" opacity="0.4" transform="rotate(20 7 7)"/>
+            </svg>
+            <span class="text-sm font-medium text-kurocha">New change detected</span>
+          </div>
+          <p class="text-xs text-cha-nezumi mt-3">Petal icon pulses gently</p>
+        </div>
+
+        <!-- Empty state -->
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-md p-6 text-center">
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Empty State</p>
+          <div class="py-6 relative">
+            <svg class="mx-auto petal-fall" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <ellipse cx="12" cy="12" rx="9" ry="7" fill="#D4A0A7" opacity="0.6" transform="rotate(-30 12 12)"/>
+              <ellipse cx="12" cy="12" rx="5" ry="4" fill="#F0E0E3" opacity="0.5" transform="rotate(15 12 12)"/>
+            </svg>
+            <p class="text-sm text-cha-nezumi mt-4 font-display italic">No changes yet</p>
+            <p class="text-xs text-cha-nezumi mt-1">The garden is quiet</p>
+          </div>
+        </div>
+
+        <!-- Logo accent -->
+        <div class="bg-[#FFFDF9] rounded-chirri-md border border-border-subtle shadow-warm-md p-6 text-center">
+          <p class="text-xs font-semibold tracking-widest uppercase text-cha-nezumi mb-4">Logo Accent</p>
+          <div class="py-6">
+            <div class="inline-flex items-center gap-2">
+              <span class="font-display text-[2.25rem] font-light text-kurocha">Chirri</span>
+              <svg class="sakura-pulse" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <ellipse cx="6" cy="6" rx="5" ry="4" fill="#D4A0A7" opacity="0.85" transform="rotate(-15 6 6)"/>
+              </svg>
+            </div>
+            <p class="text-xs text-cha-nezumi mt-3">Tiny petal beside the brand</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-12">
+      <p class="font-display text-sm text-cha-nezumi italic">"The autumn garden does not mourn the fallen leaves — it wears them."</p>
+      <p class="text-xs text-cha-nezumi mt-3 font-mono">Chirri Design System · Autumn Garden (秋の庭) · 2026</p>
+    </footer>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT -->
+  <!-- ============================================ -->
+  <script>
+    // Custom dropdown functionality
+    document.querySelectorAll('[data-dropdown]').forEach(dropdown => {
+      const trigger = dropdown.querySelector('.chirri-dropdown-trigger');
+      const panel = dropdown.querySelector('.chirri-dropdown-panel');
+      const options = dropdown.querySelectorAll('.chirri-dropdown-option');
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Close all other dropdowns
+        document.querySelectorAll('[data-dropdown]').forEach(d => {
+          if (d !== dropdown) d.classList.remove('open');
+        });
+        dropdown.classList.toggle('open');
+      });
+
+      options.forEach(option => {
+        option.addEventListener('click', () => {
+          // Update selection
+          options.forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+          // Update trigger text
+          const span = trigger.querySelector('span');
+          span.textContent = option.textContent;
+          span.classList.remove('placeholder');
+          // Close
+          dropdown.classList.remove('open');
+        });
+      });
+
+      // Keyboard support
+      trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          trigger.click();
+        }
+        if (e.key === 'Escape') {
+          dropdown.classList.remove('open');
+        }
+      });
+
+      panel.addEventListener('keydown', (e) => {
+        const items = [...options];
+        const current = items.findIndex(i => i === document.activeElement || i.classList.contains('selected'));
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = current < items.length - 1 ? current + 1 : 0;
+          items[next].focus();
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = current > 0 ? current - 1 : items.length - 1;
+          items[prev].focus();
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (document.activeElement.classList.contains('chirri-dropdown-option')) {
+            document.activeElement.click();
+          }
+        }
+        if (e.key === 'Escape') {
+          dropdown.classList.remove('open');
+          trigger.focus();
+        }
+      });
+
+      // Make options focusable
+      options.forEach(o => o.setAttribute('tabindex', '0'));
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', () => {
+      document.querySelectorAll('[data-dropdown]').forEach(d => d.classList.remove('open'));
+    });
+
+    // Tab switching
+    function switchTab(el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.chirri-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chirri — Pink Diet Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    .sakura { color: #FFB7C5; }
+    .bg-sakura { background-color: #FFB7C5; }
+    .border-sakura { border-color: #FFB7C5; }
+    .bg-blossom { background-color: #FFD4DE; }
+    .bg-ink { background-color: #1A1A1A; }
+    .text-ink { color: #1A1A1A; }
+
+    /* Custom checkbox styling */
+    .cb-pink:checked { accent-color: #FFB7C5; }
+
+    /* Custom checkboxes */
+    .custom-cb {
+      width: 20px; height: 20px; border-radius: 4px;
+      border: 2px solid #D1D5DB; display: inline-flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .custom-cb.checked-pink { background: #FFB7C5; border-color: #FFB7C5; }
+    .custom-cb.checked-dark { background: #374151; border-color: #374151; }
+    .custom-cb.disabled { background: #F3F4F6; border-color: #E5E7EB; opacity: 0.5; }
+    .custom-cb svg { width: 14px; height: 14px; }
+
+    /* Custom radio */
+    .custom-radio {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid #D1D5DB; display: inline-flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .custom-radio.selected-pink { border-color: #FFB7C5; }
+    .custom-radio.selected-pink .dot { width: 10px; height: 10px; border-radius: 50%; background: #FFB7C5; }
+    .custom-radio.selected-dark { border-color: #374151; }
+    .custom-radio.selected-dark .dot { width: 10px; height: 10px; border-radius: 50%; background: #374151; }
+    .custom-radio.disabled { opacity: 0.5; }
+
+    /* Toggle */
+    .toggle-track {
+      width: 44px; height: 24px; border-radius: 12px;
+      position: relative; cursor: pointer; transition: background 0.2s;
+    }
+    .toggle-track .toggle-thumb {
+      width: 20px; height: 20px; border-radius: 50%; background: white;
+      position: absolute; top: 2px; transition: left 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle-off { background: #D1D5DB; }
+    .toggle-off .toggle-thumb { left: 2px; }
+    .toggle-on-pink { background: #FFB7C5; }
+    .toggle-on-pink .toggle-thumb { left: 22px; }
+    .toggle-on-dark { background: #374151; }
+    .toggle-on-dark .toggle-thumb { left: 22px; }
+
+    /* Nav */
+    .nav-item { padding: 8px 16px; border-radius: 6px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #6B7280; cursor: pointer; }
+    .nav-item.active-pink { color: #FFB7C5; border-left: 3px solid #FFB7C5; background: rgba(255,183,197,0.08); }
+    .nav-item.active-dark { color: #1A1A1A; font-weight: 600; background: #F5F5F5; border-left: none; }
+
+    /* Tabs */
+    .tab { padding: 8px 16px; font-size: 14px; color: #6B7280; border-bottom: 2px solid transparent; cursor: pointer; }
+    .tab.active-pink { color: #FFB7C5; border-bottom-color: #FFB7C5; }
+    .tab.active-dark { color: #1A1A1A; border-bottom-color: #1A1A1A; font-weight: 500; }
+
+    /* Cards */
+    .demo-card {
+      border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px;
+      background: white; transition: all 0.2s; font-size: 13px; color: #374151;
+    }
+    .demo-card.hover-pink { border-color: #FFB7C5; background: rgba(255,183,197,0.05); }
+    .demo-card.selected-pink { border-color: #FFB7C5; border-width: 2px; }
+    .demo-card.hover-after { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .demo-card.selected-after { border-color: #9CA3AF; border-width: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+    /* Comparison row */
+    .comparison-row { border-bottom: 1px solid #F3F4F6; padding: 32px 0; }
+    .comparison-row:last-child { border-bottom: none; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Header -->
+  <div class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-ink">🌸 Pink Diet Preview</h1>
+        <p class="text-sm text-gray-500 mt-1">Side-by-side comparison: current pink-heavy vs. pink-diet applied</p>
+      </div>
+      <span class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">CHIRRI DESIGN SYSTEM</span>
+    </div>
+  </div>
+
+  <!-- Column headers -->
+  <div class="max-w-7xl mx-auto px-6 pt-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-center">
+        <span class="text-sm font-bold text-red-700">❌ BEFORE</span>
+        <span class="text-xs text-red-500 block">Current — Pink Everywhere</span>
+      </div>
+      <div class="bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-center">
+        <span class="text-sm font-bold text-green-700">✅ AFTER</span>
+        <span class="text-xs text-green-500 block">Pink Diet Applied</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparisons -->
+  <div class="max-w-7xl mx-auto px-6 pb-16">
+
+    <!-- 1. Buttons -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">1. Primary Button</h2>
+        <p class="text-xs text-gray-400 mt-1">No change — primary CTA keeps pink. This is an approved use.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-lg border border-gray-200 p-6 flex items-center justify-center">
+          <button class="bg-sakura text-ink font-medium px-6 py-2.5 rounded-lg text-sm">Get Started</button>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-6 flex items-center justify-center">
+          <button class="bg-sakura text-ink font-medium px-6 py-2.5 rounded-lg text-sm">Get Started</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Checkboxes -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">2. Checkboxes</h2>
+        <p class="text-xs text-gray-400 mt-1">Checked state moves from sakura pink → dark grey (#374151). Checkboxes are utilitarian, not brand expression.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-cb"></span> Unchecked
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-cb checked-pink">
+                <svg fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </span> Checked
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-400">
+              <span class="custom-cb disabled"></span> Disabled
+            </label>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-cb"></span> Unchecked
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-cb checked-dark">
+                <svg fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </span> Checked
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-400">
+              <span class="custom-cb disabled"></span> Disabled
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Radio Buttons -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">3. Radio Buttons</h2>
+        <p class="text-xs text-gray-400 mt-1">Selected state moves from sakura pink → dark grey (#374151). Radios are infrastructure, not brand expression.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-radio"></span> Unselected
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-radio selected-pink"><span class="dot"></span></span> Selected
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-400">
+              <span class="custom-radio disabled"></span> Disabled
+            </label>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-radio"></span> Unselected
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <span class="custom-radio selected-dark"><span class="dot"></span></span> Selected
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-400">
+              <span class="custom-radio disabled"></span> Disabled
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Toggle Switch -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">4. Toggle Switch</h2>
+        <p class="text-xs text-gray-400 mt-1">On-state moves from sakura pink → dark grey (#374151). Settings pages with 5-10 toggles shouldn't look like a candy store.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+              <div class="toggle-track toggle-off"><div class="toggle-thumb"></div></div>
+              <span class="text-xs text-gray-500">Off</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="toggle-track toggle-on-pink"><div class="toggle-thumb"></div></div>
+              <span class="text-xs text-gray-500">On</span>
+            </div>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+              <div class="toggle-track toggle-off"><div class="toggle-thumb"></div></div>
+              <span class="text-xs text-gray-500">Off</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="toggle-track toggle-on-dark"><div class="toggle-thumb"></div></div>
+              <span class="text-xs text-gray-500">On</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Navigation Sidebar -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">5. Navigation Sidebar</h2>
+        <p class="text-xs text-gray-400 mt-1">Active item loses pink accent bar → bold text + subtle grey background. Sidebar is persistent UI chrome; pink there means permanent pink on screen.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="w-56 space-y-1">
+            <div class="nav-item active-pink">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+              Dashboard
+            </div>
+            <div class="nav-item">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+              Changes
+            </div>
+            <div class="nav-item">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+              Settings
+            </div>
+            <div class="nav-item">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+              Help
+            </div>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="w-56 space-y-1">
+            <div class="nav-item active-dark">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+              Dashboard
+            </div>
+            <div class="nav-item">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/></svg>
+              Changes
+            </div>
+            <div class="nav-item">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+              Settings
+            </div>
+            <div class="nav-item">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+              Help
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Tabs -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">6. Tabs</h2>
+        <p class="text-xs text-gray-400 mt-1">Active underline moves from sakura pink → dark (#1A1A1A). Tabs are navigation infrastructure. Dark underline doesn't compete with the primary CTA.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="flex border-b border-gray-200">
+            <div class="tab active-pink">Overview</div>
+            <div class="tab">Activity</div>
+            <div class="tab">Settings</div>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="flex border-b border-gray-200">
+            <div class="tab active-dark">Overview</div>
+            <div class="tab">Activity</div>
+            <div class="tab">Settings</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Card Hover/Selected -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">7. Card Hover / Selected States</h2>
+        <p class="text-xs text-gray-400 mt-1">Cards lose pink border/tint → shadow elevation for hover, subtle grey border for selected. Cards get selected constantly in triage workflows.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="space-y-3">
+            <div class="demo-card">
+              <p class="font-medium text-sm mb-1">Default Card</p>
+              <p class="text-xs text-gray-400">Normal state</p>
+            </div>
+            <div class="demo-card hover-pink">
+              <p class="font-medium text-sm mb-1">Hover Card</p>
+              <p class="text-xs text-gray-400">Pink border + tint on hover</p>
+            </div>
+            <div class="demo-card selected-pink">
+              <p class="font-medium text-sm mb-1">Selected Card</p>
+              <p class="text-xs text-gray-400">Pink border when selected</p>
+            </div>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="space-y-3">
+            <div class="demo-card">
+              <p class="font-medium text-sm mb-1">Default Card</p>
+              <p class="text-xs text-gray-400">Normal state</p>
+            </div>
+            <div class="demo-card hover-after">
+              <p class="font-medium text-sm mb-1">Hover Card</p>
+              <p class="text-xs text-gray-400">Shadow elevation only</p>
+            </div>
+            <div class="demo-card selected-after">
+              <p class="font-medium text-sm mb-1">Selected Card</p>
+              <p class="text-xs text-gray-400">Grey border + subtle shadow</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Links -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">8. Text Links</h2>
+        <p class="text-xs text-gray-400 mt-1">Links move from pink text → dark text with underline on hover. Blue (#3B82F6) is the universal "clickable" signal — pink links create confusion.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Your subscription renews on March 30. 
+            <a href="#" class="sakura hover:underline">View billing details</a> 
+            or <a href="#" class="sakura hover:underline">change your plan</a>.
+          </p>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <p class="text-sm text-gray-700 leading-relaxed">
+            Your subscription renews on March 30. 
+            <a href="#" class="text-gray-900 underline decoration-gray-300 hover:decoration-gray-900 transition-colors">View billing details</a> 
+            or <a href="#" class="text-gray-900 underline decoration-gray-300 hover:decoration-gray-900 transition-colors">change your plan</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Current Plan Badge -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">9. Current Plan Badge</h2>
+        <p class="text-xs text-gray-400 mt-1">Badge loses pink tint → bold text on subtle grey. The "Most Popular" badge on pricing already uses pink — plan badge should be neutral to avoid dilution.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6 flex items-center gap-3">
+          <span class="text-sm text-gray-700">Current plan:</span>
+          <span class="text-xs font-medium px-3 py-1 rounded-full" style="background: rgba(255,183,197,0.2); color: #D4627A;">Personal</span>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6 flex items-center gap-3">
+          <span class="text-sm text-gray-700">Current plan:</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-800">Personal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Pricing Card Highlight -->
+    <div class="comparison-row">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-ink">10. Pricing Card Highlight</h2>
+        <p class="text-xs text-gray-400 mt-1">Card itself loses pink border → shadow elevation. The "Most Popular" badge stays pink (approved use #7). One badge, not an entire card border.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="border-2 border-sakura rounded-xl p-6 relative">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-sakura text-white text-xs font-medium px-3 py-1 rounded-full">Most Popular</span>
+            <h3 class="text-lg font-bold mt-2">Pro</h3>
+            <p class="text-2xl font-bold mt-1">$29<span class="text-sm text-gray-400 font-normal">/mo</span></p>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600">
+              <li>✓ Unlimited changes</li>
+              <li>✓ Priority support</li>
+              <li>✓ Advanced analytics</li>
+            </ul>
+            <button class="w-full mt-4 bg-sakura text-ink font-medium py-2 rounded-lg text-sm">Choose Pro</button>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <div class="border border-gray-200 rounded-xl p-6 relative shadow-lg">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-sakura text-white text-xs font-medium px-3 py-1 rounded-full">Most Popular</span>
+            <h3 class="text-lg font-bold mt-2">Pro</h3>
+            <p class="text-2xl font-bold mt-1">$29<span class="text-sm text-gray-400 font-normal">/mo</span></p>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600">
+              <li>✓ Unlimited changes</li>
+              <li>✓ Priority support</li>
+              <li>✓ Advanced analytics</li>
+            </ul>
+            <button class="w-full mt-4 bg-sakura text-ink font-medium py-2 rounded-lg text-sm">Choose Pro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Summary Section -->
+  <div class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+      <h2 class="text-2xl font-bold mb-2">The 7 Approved Pink Uses</h2>
+      <p class="text-gray-400 text-sm mb-8">Everything else is neutral.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-sakura"></span>
+            <span class="text-sm font-semibold">1. Primary CTA Button</span>
+          </div>
+          <p class="text-xs text-gray-400">The single most important action on any screen. One pink button per view.</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-sakura"></span>
+            <span class="text-sm font-semibold">2. Landing Glassmorphic CTA</span>
+          </div>
+          <p class="text-xs text-gray-400">Brand hero moment. The user's first impression.</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-sakura"></span>
+            <span class="text-sm font-semibold">3. Floating Petals</span>
+          </div>
+          <p class="text-xs text-gray-400">Landing page + Garden View chirps only. Chirri's visual identity.</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-sakura"></span>
+            <span class="text-sm font-semibold">4. Logo / Wordmark</span>
+          </div>
+          <p class="text-xs text-gray-400">Brand identity. The chirri logo carries pink. Always.</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-sakura"></span>
+            <span class="text-sm font-semibold">5. Garden Chirp Petals (V2)</span>
+          </div>
+          <p class="text-xs text-gray-400">Celebratory, rare, meaningful — pink earned through event significance.</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-sakura"></span>
+            <span class="text-sm font-semibold">6. Empty State Accent</span>
+          </div>
+          <p class="text-xs text-gray-400">A whisper of pink at 15% opacity in the onboarding illustration.</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-sakura"></span>
+            <span class="text-sm font-semibold">7. "Most Popular" Badge</span>
+          </div>
+          <p class="text-xs text-gray-400">One badge on one pricing card. Small surface area, high intent.</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 text-center">
+        <p class="text-lg font-medium" style="color: #FFB7C5;">
+          "Pink is reserved for primary actions, the brand mark, and one celebratory moment.<br>
+          <span class="text-white">Everything else is neutral."</span>
+        </p>
+        <p class="text-xs text-gray-500 mt-3">— HANA, Lead Designer &nbsp;·&nbsp; 23 elements → 7 approved uses</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="bg-gray-950 text-center py-4">
+    <p class="text-xs text-gray-600">Pink Diet Preview — Chirri Design System · March 2026</p>
+  </div>
+
+</body>
+</html>

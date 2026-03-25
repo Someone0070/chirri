@@ -1,0 +1,22 @@
+{
+  "id": "supabase-01",
+  "source": "Supabase Changelog",
+  "title": "PostgREST default row limit changed from 1000 to 100",
+  "date": "2026-02-05",
+  "raw_changelog": "The default max rows returned by PostgREST queries changed from 1000 to 100.",
+  "before_text": "## PostgREST Configuration\n\n### Row Limits\n- Default max rows: 1000\n- Configurable via `db-max-rows` setting\n- Use `Range` header for pagination",
+  "after_text": "## PostgREST Configuration\n\n### Row Limits\n- Default max rows: 100 (changed from 1000)\n- Configurable via `db-max-rows` setting\n- Use `Range` header for pagination\n\n**Migration Note:** If your queries expect more than 100 rows, add explicit `.limit()` or update `db-max-rows`.",
+  "diff_text": "--- before\n+++ after\n@@ -3,3 +3,5 @@\n ### Row Limits\n-- Default max rows: 1000\n+- Default max rows: 100 (changed from 1000)\n - Configurable via `db-max-rows` setting\n - Use `Range` header for pagination\n+\n+**Migration Note:** If your queries expect more than 100 rows, add explicit .limit() or update db-max-rows.",
+  "ground_truth": {
+    "severity": "high",
+    "is_breaking": true,
+    "breaking_reason": "Default row limit reduced 10x. Queries that relied on getting up to 1000 rows will now silently return fewer rows.",
+    "affected_endpoints": [
+      "PostgREST API",
+      "Supabase client queries"
+    ],
+    "action_required": "Add explicit .limit() to queries that need more than 100 rows, or increase db-max-rows in your project configuration.",
+    "cosmetic_only": false,
+    "confidence_notes": "Silent breaking change - queries return fewer rows without error"
+  }
+}

@@ -1,0 +1,562 @@
+[
+  {
+    "url": "https://docs.lemonsqueezy.com",
+    "company": "lemonsqueezy",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.lemonsqueezy.com/api",
+    "company": "lemonsqueezy",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.lemonsqueezy.com/help",
+    "company": "lemonsqueezy",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.lemonsqueezy.com/guides",
+    "company": "lemonsqueezy",
+    "type": "docs"
+  },
+  {
+    "url": "https://lemonsqueezy.com/changelog",
+    "company": "lemonsqueezy",
+    "type": "changelog"
+  },
+  {
+    "url": "http://www.lemonsqueezy.com/changelog",
+    "company": "lemonsqueezy",
+    "type": "changelog"
+  },
+  {
+    "url": "https://status.lemonsqueezy.com",
+    "company": "lemonsqueezy",
+    "type": "status"
+  },
+  {
+    "url": "https://docs.buttondown.com",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/comparison-guides",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/blog/2026-03-16-legal-docs-refresh",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/blog/developer-marketing-is-show-and-tell",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/blog/docs-v2",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/comparison-guides/email-verification-apis",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/comparison-guides/zapier-alternatives",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://github.com/buttondown/docs",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/docs",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/v1/docs",
+    "company": "buttondown",
+    "type": "docs"
+  },
+  {
+    "url": "https://buttondown.com/blog/2026-02-11-changelog-reborn",
+    "company": "buttondown",
+    "type": "changelog"
+  },
+  {
+    "url": "https://buttondown.com/blog/changelog-newsletter",
+    "company": "buttondown",
+    "type": "changelog"
+  },
+  {
+    "url": "https://buttondown.com/blog/changelog-subscriber-preview",
+    "company": "buttondown",
+    "type": "changelog"
+  },
+  {
+    "url": "https://buttondown.com/changelog",
+    "company": "buttondown",
+    "type": "changelog"
+  },
+  {
+    "url": "https://status.buttondown.com",
+    "company": "buttondown",
+    "type": "status"
+  },
+  {
+    "url": "https://docs.buttondown.com/openapi.json",
+    "company": "buttondown",
+    "type": "openapi"
+  },
+  {
+    "url": "https://buttondown.com/v1/openapi.json",
+    "company": "buttondown",
+    "type": "openapi"
+  },
+  {
+    "url": "https://buttondown.com/blog/2026-01-31-openapi-spec-for-archives",
+    "company": "buttondown",
+    "type": "openapi"
+  },
+  {
+    "url": "https://github.com/buttondown/openapi",
+    "company": "buttondown",
+    "type": "openapi"
+  },
+  {
+    "url": "https://developer.cal.com",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.cal.com",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs/api-reference/v2",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs/atoms/introduction",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs/api-reference/v2/oauth",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs/api-reference/v2/introduction",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs/developing/guides/automation/webhooks",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs/enterprise-features/api",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/docs/introduction/quick-start/self-hosting/docker",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/documentation",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/developers",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://cal.com/developer",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://developer.cal.com/api",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://developer.cal.com/api-reference",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.cal.com/api",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.cal.com/docs",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.cal.com/api-reference",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://developer.cal.com/guides",
+    "company": "cal",
+    "type": "docs"
+  },
+  {
+    "url": "https://status.cal.com",
+    "company": "cal",
+    "type": "status"
+  },
+  {
+    "url": "https://docs.render.com",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/api",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/scaling",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/private-services",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/disks",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/infrastructure-as-code",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/preview-environments",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/deploys#zero-downtime-deploys",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/api",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/static-sites",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/web-services",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/background-workers",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/cronjobs",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/postgresql",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/key-value",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/scaling",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/private-services",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/disks",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/infrastructure-as-code",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/preview-environments",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/deploys#zero-downtime-deploys",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/static-sites",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/web-services",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/background-workers",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/cronjobs",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/workflows",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/docs/service-metrics",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.render.com/docs",
+    "company": "render",
+    "type": "docs"
+  },
+  {
+    "url": "https://render.com/changelog",
+    "company": "render",
+    "type": "changelog"
+  },
+  {
+    "url": "https://status.render.com",
+    "company": "render",
+    "type": "status"
+  },
+  {
+    "url": "https://docs.tinybird.co",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://www.tinybird.co/docs/community",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/forward/get-started/quick-start-coding-agents",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/community",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/forward/support",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/ingest/kafka",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/ingest/confluent",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/ingest/redpanda",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/get-data-in/guides/ingest-from-bigquery-using-google-cloud-storage",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/get-data-in/guides/ingest-from-snowflake-using-aws-s3",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/ingest/postgresql",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/ingest/dynamodb",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/ingest/s3",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/user-facing-dashboards",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/realtime-cdc",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/gaming-analytics",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/web-analytics",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/realtime-personalization",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/ugc-analytics",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/content-recommendation",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/docs/use-cases/vector-search",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.tinybird.co/api-reference",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://tinybird.co/guides",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://docs.tinybird.co/guides",
+    "company": "tinybird",
+    "type": "docs"
+  },
+  {
+    "url": "https://www.tinybird.co/docs/changelog",
+    "company": "tinybird",
+    "type": "changelog"
+  },
+  {
+    "url": "https://tinybird.co/docs/changelog",
+    "company": "tinybird",
+    "type": "changelog"
+  },
+  {
+    "url": "https://tinybird.co/changelog",
+    "company": "tinybird",
+    "type": "changelog"
+  },
+  {
+    "url": "https://tinybird.co/blog/changelog",
+    "company": "tinybird",
+    "type": "changelog"
+  },
+  {
+    "url": "https://docs.tinybird.co/changelog",
+    "company": "tinybird",
+    "type": "changelog"
+  },
+  {
+    "url": "https://status.tinybird.co",
+    "company": "tinybird",
+    "type": "status"
+  }
+]

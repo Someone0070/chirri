@@ -1,0 +1,21 @@
+{
+  "id": "stripe-03",
+  "source": "Stripe API Changelog",
+  "title": "Adds payment behavior control for subscription item deletion",
+  "date": "2026-02-25",
+  "raw_changelog": "Adds payment behavior control for subscription item deletion. When deleting a subscription item, you can now control the payment behavior via the payment_behavior parameter.",
+  "before_text": "## Delete a Subscription Item\n\nDELETE /v1/subscription_items/{id}\n\n### Parameters\n| Parameter | Type | Description |\n|-----------|------|-------------|\n| proration_behavior | enum | Determines proration behavior |\n| clear_usage | boolean | Clears usage data |",
+  "after_text": "## Delete a Subscription Item\n\nDELETE /v1/subscription_items/{id}\n\n### Parameters\n| Parameter | Type | Description |\n|-----------|------|-------------|\n| proration_behavior | enum | Determines proration behavior |\n| clear_usage | boolean | Clears usage data |\n| payment_behavior | enum | Controls payment behavior. One of: default_incomplete, allow_incomplete, error_if_incomplete, pending_if_incomplete |",
+  "diff_text": "--- before\n+++ after\n@@ -7,3 +7,4 @@\n | proration_behavior | enum | Determines proration behavior |\n | clear_usage | boolean | Clears usage data |\n+| payment_behavior | enum | Controls payment behavior. One of: default_incomplete, allow_incomplete, error_if_incomplete, pending_if_incomplete |",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "DELETE /v1/subscription_items/{id}"
+    ],
+    "action_required": "No action required. New optional parameter available for finer control over payment behavior when deleting subscription items.",
+    "cosmetic_only": false,
+    "confidence_notes": "New optional parameter addition"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "github-05",
+  "source": "GitHub API Changelog",
+  "title": "Copilot usage metrics API now available",
+  "date": "2026-02-20",
+  "raw_changelog": "New API endpoints for accessing Copilot usage metrics within your organization.",
+  "before_text": "## Copilot API\n\n### Endpoints\n- GET /orgs/{org}/copilot/billing - Get Copilot billing information",
+  "after_text": "## Copilot API\n\n### Endpoints\n- GET /orgs/{org}/copilot/billing - Get Copilot billing information\n- GET /orgs/{org}/copilot/usage - Get Copilot usage metrics\n- GET /orgs/{org}/copilot/usage/seats - Get seat assignment details\n\n### Usage Metrics Response\n```json\n{\n  \"total_active_users\": 150,\n  \"total_engaged_users\": 120,\n  \"day\": \"2026-02-20\",\n  \"breakdown\": [\n    { \"editor\": \"vscode\", \"active_users\": 100, \"suggestions_accepted\": 5000 }\n  ]\n}\n```",
+  "diff_text": "--- before\n+++ after\n@@ -3,3 +3,16 @@\n ### Endpoints\n - GET /orgs/{org}/copilot/billing - Get Copilot billing information\n+- GET /orgs/{org}/copilot/usage - Get Copilot usage metrics\n+- GET /orgs/{org}/copilot/usage/seats - Get seat assignment details\n+\n+### Usage Metrics Response\n+```json\n+{\n+  \"total_active_users\": 150,\n+  \"total_engaged_users\": 120,\n+  ...",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "GET /orgs/{org}/copilot/usage",
+      "GET /orgs/{org}/copilot/usage/seats"
+    ],
+    "action_required": "No action required. New endpoints available for Copilot usage tracking.",
+    "cosmetic_only": false,
+    "confidence_notes": "New endpoints added, purely additive"
+  }
+}

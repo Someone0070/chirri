@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+<title>Controls Comparison -- Chirri Kyoto Studio</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #FAFAF8;
+  color: #2C2825;
+  padding: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 400;
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #2C2825;
+}
+.subtitle {
+  font-size: 14px;
+  color: #7A756F;
+  margin-bottom: 48px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 56px;
+}
+
+.column {
+  background: #fff;
+  border: 1px solid #E8E6E1;
+  border-radius: 12px;
+  padding: 32px;
+  position: relative;
+}
+.column.recommended {
+  border-color: #3D5167;
+  box-shadow: 0 4px 24px rgba(61,81,103,0.08);
+}
+.column.recommended::after {
+  content: 'RECOMMENDED';
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background: #3D5167;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.col-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.col-desc {
+  font-size: 12px;
+  color: #7A756F;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.control-group {
+  margin-bottom: 28px;
+}
+.control-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #A6A09A;
+  margin-bottom: 12px;
+}
+
+/* ---- CHECKBOXES ---- */
+.checkbox-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+.cb {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.cb svg { width: 12px; height: 12px; }
+.cb-label { font-size: 13px; color: #2C2825; }
+
+/* Dark style */
+.cb-dark { background: #374151; border: 1px solid #374151; }
+.cb-dark svg { stroke: #fff; }
+.cb-dark-unchecked { background: #fff; border: 1.5px solid #C4BEB6; }
+
+/* Indigo style -- outlined, not filled */
+.cb-indigo { background: #fff; border: 2px solid #3D5167; }
+.cb-indigo svg { stroke: #3D5167; stroke-width: 2.5; }
+.cb-indigo-unchecked { background: #fff; border: 1.5px solid #C4BEB6; }
+
+/* Soft warm style */
+.cb-soft { background: #E8E4DE; border: 1px solid #D4D0CA; }
+.cb-soft svg { stroke: #5C5652; }
+.cb-soft-unchecked { background: #fff; border: 1.5px solid #D4D0CA; }
+
+/* Disabled */
+.cb-disabled { background: #F0EDE8; border: 1px solid #E8E6E1; opacity: 0.6; }
+.cb-disabled svg { stroke: #A6A09A; }
+
+/* ---- RADIOS ---- */
+.radio-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+.radio {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.radio-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+
+.radio-dark { border: 1.5px solid #374151; background: #fff; }
+.radio-dark .radio-dot { background: #374151; }
+.radio-dark-unsel { border: 1.5px solid #C4BEB6; background: #fff; }
+
+.radio-indigo { border: 2px solid #3D5167; background: #fff; }
+.radio-indigo .radio-dot { background: #3D5167; width: 6px; height: 6px; }
+.radio-indigo-unsel { border: 1.5px solid #C4BEB6; background: #fff; }
+
+.radio-soft { border: 1.5px solid #B8B2AA; background: #fff; }
+.radio-soft .radio-dot { background: #8A847E; }
+.radio-soft-unsel { border: 1.5px solid #D4D0CA; background: #fff; }
+
+/* ---- TOGGLES ---- */
+.toggle-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+.toggle {
+  width: 36px; height: 20px;
+  border-radius: 10px;
+  position: relative;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.toggle-knob {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  transition: all 0.3s;
+}
+
+.toggle-dark-on { background: #374151; }
+.toggle-dark-on .toggle-knob { left: 19px; }
+.toggle-dark-off { background: #D4D0CA; }
+.toggle-dark-off .toggle-knob { left: 3px; }
+
+.toggle-indigo-on { background: #D4DCE4; }
+.toggle-indigo-on .toggle-knob { left: 19px; background: #fff; box-shadow: 0 1px 3px rgba(61,81,103,0.2); }
+.toggle-indigo-off { background: #D4D0CA; }
+.toggle-indigo-off .toggle-knob { left: 3px; }
+
+.toggle-soft-on { background: #B8B2AA; }
+.toggle-soft-on .toggle-knob { left: 19px; background: #fff; }
+.toggle-soft-off { background: #E8E4DE; }
+.toggle-soft-off .toggle-knob { left: 3px; background: #fff; }
+
+/* ---- INPUTS ---- */
+.input-demo {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  background: transparent;
+  outline: none;
+  margin-bottom: 8px;
+}
+
+.input-dark {
+  border: none;
+  border-bottom: 1.5px solid #374151;
+  color: #2C2825;
+}
+.input-dark:focus { border-bottom-color: #374151; }
+.input-dark::placeholder { color: #A6A09A; }
+
+.input-indigo {
+  border: none;
+  border-bottom: 1.5px solid #C4BEB6;
+  color: #2C2825;
+}
+.input-indigo:focus { border-bottom-color: #3D5167; }
+.input-indigo::placeholder { color: #A6A09A; }
+
+.input-soft {
+  border: none;
+  border-bottom: 1.5px solid #D4D0CA;
+  color: #2C2825;
+}
+.input-soft:focus { border-bottom-color: #B8B2AA; }
+.input-soft::placeholder { color: #B8B2AA; }
+
+/* ---- CUSTOM DROPDOWN ---- */
+.custom-dropdown {
+  position: relative;
+  margin-bottom: 8px;
+}
+.dropdown-trigger {
+  width: 100%;
+  padding: 10px 36px 10px 12px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  transition: border-color 0.2s;
+}
+.dropdown-trigger .chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+  pointer-events: none;
+}
+.custom-dropdown.open .dropdown-trigger .chevron {
+  transform: translateY(-50%) rotate(180deg);
+}
+.dropdown-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #E8E6E1;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.15s, transform 0.15s;
+  overflow: hidden;
+}
+.custom-dropdown.open .dropdown-panel {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+.dropdown-option {
+  padding: 10px 14px 10px 36px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s;
+  color: #2C2825;
+}
+.dropdown-option:hover {
+  background: #F5F3EE;
+}
+.dropdown-option.selected {
+  font-weight: 500;
+}
+.dropdown-option.selected::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-60%) rotate(-45deg);
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+
+/* Dark dropdown */
+.dropdown-dark .dropdown-trigger {
+  background: #fff;
+  border: 1.5px solid #374151;
+  color: #2C2825;
+}
+.dropdown-dark .chevron { color: #374151; }
+.dropdown-dark .dropdown-option.selected::before { color: #374151; }
+
+/* Indigo dropdown */
+.dropdown-indigo .dropdown-trigger {
+  background: #fff;
+  border: 1.5px solid #C4BEB6;
+  color: #2C2825;
+}
+.dropdown-indigo.open .dropdown-trigger,
+.dropdown-indigo .dropdown-trigger:hover {
+  border-color: #3D5167;
+}
+.dropdown-indigo .chevron { color: #7A756F; }
+.dropdown-indigo .dropdown-option.selected::before { color: #3D5167; }
+
+/* Soft dropdown */
+.dropdown-soft .dropdown-trigger {
+  background: #FAFAF8;
+  border: 1.5px solid #E8E6E1;
+  color: #2C2825;
+}
+.dropdown-soft.open .dropdown-trigger,
+.dropdown-soft .dropdown-trigger:hover {
+  border-color: #B8B2AA;
+}
+.dropdown-soft .chevron { color: #B8B2AA; }
+.dropdown-soft .dropdown-option.selected::before { color: #8A847E; }
+
+/* Context form dropdown */
+.dropdown-context .dropdown-trigger {
+  background: #FAFAF8;
+  border: 1px solid #E8E6E1;
+  color: #2C2825;
+}
+.dropdown-context.open .dropdown-trigger,
+.dropdown-context .dropdown-trigger:hover {
+  border-color: #3D5167;
+  box-shadow: 0 0 0 3px rgba(61,81,103,0.08);
+}
+.dropdown-context .chevron { color: #7A756F; }
+.dropdown-context .dropdown-option.selected::before { color: #3D5167; }
+
+/* ---- BUTTONS ---- */
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-dark-primary { background: #374151; color: #fff; }
+.btn-dark-secondary { background: transparent; color: #374151; border: 1.5px solid #374151; }
+.btn-dark-ghost { background: transparent; color: #374151; border: none; text-decoration: underline; }
+
+.btn-indigo-primary { background: #3D5167; color: #fff; }
+.btn-indigo-secondary { background: transparent; color: #3D5167; border: 1.5px solid #C4BEB6; }
+.btn-indigo-ghost { background: transparent; color: #3D5167; border: none; text-decoration: underline; }
+
+.btn-soft-primary { background: #8A847E; color: #fff; }
+.btn-soft-secondary { background: transparent; color: #5C5652; border: 1.5px solid #D4D0CA; }
+.btn-soft-ghost { background: transparent; color: #8A847E; border: none; text-decoration: underline; }
+
+/* ---- TAGS/CHIPS ---- */
+.tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.tag-dark { background: #374151; color: #fff; }
+.tag-dark-outline { background: transparent; color: #374151; border: 1px solid #374151; }
+
+.tag-indigo { background: #3D5167; color: #fff; }
+.tag-indigo-outline { background: #EEF0F3; color: #3D5167; border: 1px solid #C4CDD8; }
+
+.tag-soft { background: #E8E4DE; color: #5C5652; }
+.tag-soft-outline { background: #F5F3EE; color: #7A756F; border: 1px solid #E8E6E1; }
+
+/* ---- CONTEXT CARD ---- */
+.context-card {
+  border: 1px solid #E8E6E1;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  background: #FAFAF8;
+}
+.context-card h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ---- SEVERITY DEMO ---- */
+.severity-row { display: flex; gap: 12px; align-items: center; margin-bottom: 6px; }
+.severity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.severity-text { font-size: 12px; color: #7A756F; }
+
+/* ---- SECTION DIVIDER ---- */
+.section-title {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 400;
+  font-size: 20px;
+  margin: 56px 0 12px;
+  color: #2C2825;
+}
+.section-desc {
+  font-size: 13px;
+  color: #7A756F;
+  margin-bottom: 32px;
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+/* ---- IN CONTEXT DEMO ---- */
+.mock-form {
+  background: #fff;
+  border: 1px solid #E8E6E1;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 480px;
+}
+.mock-form h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.form-field { margin-bottom: 20px; }
+.form-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #5C5652;
+  margin-bottom: 6px;
+}
+.form-field .input-context {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid #E8E6E1;
+  border-radius: 8px;
+  background: #FAFAF8;
+  color: #2C2825;
+  outline: none;
+}
+.form-field .input-context:focus {
+  border-color: #3D5167;
+  box-shadow: 0 0 0 3px rgba(61,81,103,0.08);
+}
+.form-field .input-context::placeholder { color: #B8B2AA; }
+
+.form-row { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
+.form-actions { display: flex; gap: 12px; margin-top: 24px; }
+
+.cb-context {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  background: #fff;
+  border: 2px solid #3D5167;
+}
+.cb-context svg { width: 12px; height: 12px; stroke: #3D5167; stroke-width: 2.5; }
+.cb-context-off {
+  background: #fff;
+  border: 1.5px solid #D4D0CA;
+}
+
+.toggle-context-on {
+  width: 36px; height: 20px;
+  border-radius: 10px;
+  background: #D4DCE4;
+  position: relative;
+  flex-shrink: 0;
+}
+.toggle-context-on .toggle-knob {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 3px; left: 19px;
+  box-shadow: 0 1px 3px rgba(61,81,103,0.2);
+}
+.toggle-context-off {
+  width: 36px; height: 20px;
+  border-radius: 10px;
+  background: #D4D0CA;
+  position: relative;
+  flex-shrink: 0;
+}
+.toggle-context-off .toggle-knob {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 3px; left: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<h1>Form Controls -- Three Approaches</h1>
+<p class="subtitle">The current dark controls feel too heavy against the warm Kyoto Studio palette. Here are three options: Dark (current), Indigo (brand color), and Soft Warm (barely-there). Pick what feels right.</p>
+
+<div class="grid">
+
+<!-- COLUMN 1: DARK -->
+<div class="column">
+<div class="col-title">A. Dark Grey</div>
+<div class="col-desc">Current approach. #374151 for all active states. High contrast but feels heavy and corporate against the warm palette.</div>
+
+<div class="control-group">
+  <div class="control-label">Checkboxes</div>
+  <div class="checkbox-row">
+    <div class="cb cb-dark"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+    <span class="cb-label">Checked</span>
+  </div>
+  <div class="checkbox-row">
+    <div class="cb cb-dark-unchecked"></div>
+    <span class="cb-label">Unchecked</span>
+  </div>
+  <div class="checkbox-row">
+    <div class="cb cb-disabled"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+    <span class="cb-label" style="opacity:0.5">Disabled</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Radios</div>
+  <div class="radio-row">
+    <div class="radio radio-dark"><div class="radio-dot"></div></div>
+    <span class="cb-label">Selected</span>
+  </div>
+  <div class="radio-row">
+    <div class="radio radio-dark-unsel"></div>
+    <span class="cb-label">Unselected</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Toggle</div>
+  <div class="toggle-row">
+    <div class="toggle toggle-dark-on"><div class="toggle-knob"></div></div>
+    <span class="cb-label">On</span>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle toggle-dark-off"><div class="toggle-knob"></div></div>
+    <span class="cb-label">Off</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Text Input</div>
+  <input class="input-demo input-dark" type="text" placeholder="monitoring@example.com" readonly>
+  <input class="input-demo input-dark" type="text" value="chirri.io/api" readonly>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Dropdown</div>
+  <div class="custom-dropdown dropdown-dark" data-value="every-5">
+    <div class="dropdown-trigger" onclick="toggleDropdown(this)">
+      <span>Every 5 minutes</span>
+      <svg class="chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+    </div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" data-value="every-1" onclick="selectOption(this)">Every 1 minute</div>
+      <div class="dropdown-option selected" data-value="every-5" onclick="selectOption(this)">Every 5 minutes</div>
+      <div class="dropdown-option" data-value="every-15" onclick="selectOption(this)">Every 15 minutes</div>
+      <div class="dropdown-option" data-value="every-60" onclick="selectOption(this)">Every hour</div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Buttons</div>
+  <div class="btn-row">
+    <button class="btn btn-dark-primary">Save</button>
+    <button class="btn btn-dark-secondary">Cancel</button>
+    <button class="btn btn-dark-ghost">Reset</button>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Tags</div>
+  <div class="tag-row">
+    <span class="tag tag-dark">Active</span>
+    <span class="tag tag-dark-outline">REST API</span>
+    <span class="tag tag-dark-outline">5 min</span>
+  </div>
+</div>
+</div>
+
+<!-- COLUMN 2: INDIGO -->
+<div class="column recommended">
+<div class="col-title">B. Ai-iro Indigo</div>
+<div class="col-desc">Brand color #3D5167 for active states. Warm, distinctive, ties to the Japanese palette. Lighter border in resting state.</div>
+
+<div class="control-group">
+  <div class="control-label">Checkboxes</div>
+  <div class="checkbox-row">
+    <div class="cb cb-indigo"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+    <span class="cb-label">Checked</span>
+  </div>
+  <div class="checkbox-row">
+    <div class="cb cb-indigo-unchecked"></div>
+    <span class="cb-label">Unchecked</span>
+  </div>
+  <div class="checkbox-row">
+    <div class="cb cb-disabled"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+    <span class="cb-label" style="opacity:0.5">Disabled</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Radios</div>
+  <div class="radio-row">
+    <div class="radio radio-indigo"><div class="radio-dot"></div></div>
+    <span class="cb-label">Selected</span>
+  </div>
+  <div class="radio-row">
+    <div class="radio radio-indigo-unsel"></div>
+    <span class="cb-label">Unselected</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Toggle</div>
+  <div class="toggle-row">
+    <div class="toggle toggle-indigo-on"><div class="toggle-knob"></div></div>
+    <span class="cb-label">On</span>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle toggle-indigo-off"><div class="toggle-knob"></div></div>
+    <span class="cb-label">Off</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Text Input</div>
+  <input class="input-demo input-indigo" type="text" placeholder="monitoring@example.com" readonly>
+  <input class="input-demo input-indigo" type="text" value="chirri.io/api" readonly style="border-bottom-color:#3D5167">
+</div>
+
+<div class="control-group">
+  <div class="control-label">Dropdown</div>
+  <div class="custom-dropdown dropdown-indigo" data-value="every-5">
+    <div class="dropdown-trigger" onclick="toggleDropdown(this)">
+      <span>Every 5 minutes</span>
+      <svg class="chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+    </div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" data-value="every-1" onclick="selectOption(this)">Every 1 minute</div>
+      <div class="dropdown-option selected" data-value="every-5" onclick="selectOption(this)">Every 5 minutes</div>
+      <div class="dropdown-option" data-value="every-15" onclick="selectOption(this)">Every 15 minutes</div>
+      <div class="dropdown-option" data-value="every-60" onclick="selectOption(this)">Every hour</div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Buttons</div>
+  <div class="btn-row">
+    <button class="btn btn-indigo-primary">Save</button>
+    <button class="btn btn-indigo-secondary">Cancel</button>
+    <button class="btn btn-indigo-ghost">Reset</button>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Tags</div>
+  <div class="tag-row">
+    <span class="tag tag-indigo">Active</span>
+    <span class="tag tag-indigo-outline">REST API</span>
+    <span class="tag tag-indigo-outline">5 min</span>
+  </div>
+</div>
+</div>
+
+<!-- COLUMN 3: SOFT WARM -->
+<div class="column">
+<div class="col-title">C. Soft Warm</div>
+<div class="col-desc">Barely-there controls. Warm grey fills, subtle borders. The Japanese "less is more" approach. Quietest option.</div>
+
+<div class="control-group">
+  <div class="control-label">Checkboxes</div>
+  <div class="checkbox-row">
+    <div class="cb cb-soft"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+    <span class="cb-label">Checked</span>
+  </div>
+  <div class="checkbox-row">
+    <div class="cb cb-soft-unchecked"></div>
+    <span class="cb-label">Unchecked</span>
+  </div>
+  <div class="checkbox-row">
+    <div class="cb cb-disabled"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+    <span class="cb-label" style="opacity:0.5">Disabled</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Radios</div>
+  <div class="radio-row">
+    <div class="radio radio-soft"><div class="radio-dot"></div></div>
+    <span class="cb-label">Selected</span>
+  </div>
+  <div class="radio-row">
+    <div class="radio radio-soft-unsel"></div>
+    <span class="cb-label">Unselected</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Toggle</div>
+  <div class="toggle-row">
+    <div class="toggle toggle-soft-on"><div class="toggle-knob"></div></div>
+    <span class="cb-label">On</span>
+  </div>
+  <div class="toggle-row">
+    <div class="toggle toggle-soft-off"><div class="toggle-knob"></div></div>
+    <span class="cb-label">Off</span>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Text Input</div>
+  <input class="input-demo input-soft" type="text" placeholder="monitoring@example.com" readonly>
+  <input class="input-demo input-soft" type="text" value="chirri.io/api" readonly style="border-bottom-color:#B8B2AA">
+</div>
+
+<div class="control-group">
+  <div class="control-label">Dropdown</div>
+  <div class="custom-dropdown dropdown-soft" data-value="every-5">
+    <div class="dropdown-trigger" onclick="toggleDropdown(this)">
+      <span>Every 5 minutes</span>
+      <svg class="chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+    </div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" data-value="every-1" onclick="selectOption(this)">Every 1 minute</div>
+      <div class="dropdown-option selected" data-value="every-5" onclick="selectOption(this)">Every 5 minutes</div>
+      <div class="dropdown-option" data-value="every-15" onclick="selectOption(this)">Every 15 minutes</div>
+      <div class="dropdown-option" data-value="every-60" onclick="selectOption(this)">Every hour</div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Buttons</div>
+  <div class="btn-row">
+    <button class="btn btn-soft-primary">Save</button>
+    <button class="btn btn-soft-secondary">Cancel</button>
+    <button class="btn btn-soft-ghost">Reset</button>
+  </div>
+</div>
+
+<div class="control-group">
+  <div class="control-label">Tags</div>
+  <div class="tag-row">
+    <span class="tag tag-soft">Active</span>
+    <span class="tag tag-soft-outline">REST API</span>
+    <span class="tag tag-soft-outline">5 min</span>
+  </div>
+</div>
+</div>
+
+</div>
+
+<!-- IN CONTEXT -->
+<div class="section-title">In Context -- "Add URL" Form</div>
+<p class="section-desc">Here's what the indigo approach looks like in a real form. Notice how the controls feel present but not heavy -- the indigo appears only on interaction (focus, check, toggle on).</p>
+
+<div class="mock-form">
+<h3>Add URL to Monitor</h3>
+
+<div class="form-field">
+  <label>URL</label>
+  <input class="input-context" type="text" value="https://api.example.com/health" readonly>
+</div>
+
+<div class="form-field">
+  <label>Display Name</label>
+  <input class="input-context" type="text" placeholder="Optional" readonly>
+</div>
+
+<div class="form-field">
+  <label>Check Interval</label>
+  <div class="custom-dropdown dropdown-context" data-value="every-5">
+    <div class="dropdown-trigger" onclick="toggleDropdown(this)">
+      <span>Every 5 minutes</span>
+      <svg class="chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+    </div>
+    <div class="dropdown-panel">
+      <div class="dropdown-option" data-value="every-1" onclick="selectOption(this)">Every 1 minute</div>
+      <div class="dropdown-option selected" data-value="every-5" onclick="selectOption(this)">Every 5 minutes</div>
+      <div class="dropdown-option" data-value="every-15" onclick="selectOption(this)">Every 15 minutes</div>
+      <div class="dropdown-option" data-value="every-60" onclick="selectOption(this)">Every hour</div>
+    </div>
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="cb-context"><svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><path d="M2.5 6L5 8.5L9.5 3.5"/></svg></div>
+  <span class="cb-label">Enable uptime monitoring</span>
+</div>
+
+<div class="form-row">
+  <div class="cb-context-off" style="width:18px;height:18px;border-radius:4px;background:#fff;border:1.5px solid #D4D0CA;display:inline-flex;"></div>
+  <span class="cb-label">Include in status page</span>
+</div>
+
+<div class="form-row">
+  <span class="cb-label" style="flex:1">Active monitoring</span>
+  <div class="toggle-context-on"><div class="toggle-knob"></div></div>
+</div>
+
+<div class="form-row">
+  <span class="cb-label" style="flex:1">Email alerts</span>
+  <div class="toggle-context-off"><div class="toggle-knob"></div></div>
+</div>
+
+<div class="form-actions">
+  <button class="btn" style="background:#FFB7C5; color:#2C2825; font-weight:600; padding:10px 24px;">Add URL</button>
+  <button class="btn btn-indigo-secondary" style="padding:10px 24px;">Cancel</button>
+</div>
+</div>
+
+<script>
+function toggleDropdown(trigger) {
+  var dropdown = trigger.parentElement;
+  var wasOpen = dropdown.classList.contains('open');
+  // Close all dropdowns first
+  document.querySelectorAll('.custom-dropdown.open').forEach(function(d) {
+    d.classList.remove('open');
+  });
+  // Toggle clicked one
+  if (!wasOpen) {
+    dropdown.classList.add('open');
+    // Force reflow for animation
+    var panel = dropdown.querySelector('.dropdown-panel');
+    panel.style.display = 'block';
+    panel.offsetHeight;
+    panel.style.opacity = '1';
+    panel.style.transform = 'translateY(0)';
+  }
+}
+
+function selectOption(option) {
+  var dropdown = option.closest('.custom-dropdown');
+  var trigger = dropdown.querySelector('.dropdown-trigger span');
+  // Remove selected from siblings
+  dropdown.querySelectorAll('.dropdown-option').forEach(function(opt) {
+    opt.classList.remove('selected');
+  });
+  option.classList.add('selected');
+  trigger.textContent = option.textContent;
+  dropdown.dataset.value = option.dataset.value;
+  dropdown.classList.remove('open');
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.custom-dropdown')) {
+    document.querySelectorAll('.custom-dropdown.open').forEach(function(d) {
+      d.classList.remove('open');
+    });
+  }
+});
+</script>
+
+</body>
+</html>

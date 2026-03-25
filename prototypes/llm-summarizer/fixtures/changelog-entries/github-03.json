@@ -1,0 +1,21 @@
+{
+  "id": "github-03",
+  "source": "GitHub API Changelog",
+  "title": "Code scanning API now returns severity field",
+  "date": "2026-03-05",
+  "raw_changelog": "The code scanning alerts API now includes a severity field in alert responses.",
+  "before_text": "## List code scanning alerts\n\nGET /repos/{owner}/{repo}/code-scanning/alerts\n\n### Response\n```json\n{\n  \"number\": 42,\n  \"state\": \"open\",\n  \"rule\": {\n    \"id\": \"js/xss\",\n    \"description\": \"Cross-site scripting\"\n  },\n  \"tool\": { \"name\": \"CodeQL\" }\n}\n```",
+  "after_text": "## List code scanning alerts\n\nGET /repos/{owner}/{repo}/code-scanning/alerts\n\n### Response\n```json\n{\n  \"number\": 42,\n  \"state\": \"open\",\n  \"severity\": \"high\",\n  \"rule\": {\n    \"id\": \"js/xss\",\n    \"severity\": \"high\",\n    \"description\": \"Cross-site scripting\"\n  },\n  \"tool\": { \"name\": \"CodeQL\" }\n}\n```",
+  "diff_text": "--- before\n+++ after\n@@ -7,6 +7,8 @@\n   \"number\": 42,\n   \"state\": \"open\",\n+  \"severity\": \"high\",\n   \"rule\": {\n     \"id\": \"js/xss\",\n+    \"severity\": \"high\",\n     \"description\": \"Cross-site scripting\"",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "GET /repos/{owner}/{repo}/code-scanning/alerts"
+    ],
+    "action_required": "No action required. New severity field available for enhanced filtering.",
+    "cosmetic_only": false,
+    "confidence_notes": "Additive field in response"
+  }
+}

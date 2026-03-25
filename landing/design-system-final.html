@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chirri Design System — Sakura Signal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            kinari: '#FAF7F2',
+            shironeri: '#F3EEE8',
+            torinoko: '#EBE5DC',
+            kurocha: '#2C2825',
+            nibi: '#6B6560',
+            nezumi: '#948E88',
+            hai: '#A6A09A',
+            usuzumi: '#C4BEB8',
+            cha: { DEFAULT: '#A28C73', hover: '#8A7461', active: '#7A6451', subtle: '#F0EBE3', border: '#CFC6B8', text: '#7A6451' },
+            tobi: { DEFAULT: '#6C3524', hover: '#5A2B1D', active: '#4A2318', subtle: '#F5EEEB' },
+            enji: '#B94047',
+            sakura: { DEFAULT: '#D4A0A7', soft: '#F0E0E3', deep: '#C87680' },
+            severity: { critical: '#C43D3D', high: '#C47A3D', medium: '#A89030', low: '#4D7A4D', info: '#527090' },
+            'sev-bg': { critical: '#FDF2F2', high: '#FDF6F0', medium: '#FBF8EE', low: '#F0F5F0', info: '#F0F4F7' },
+            'b-subtle': '#E8E2DA',
+            'b-default': '#D4CEC6',
+            'b-strong': '#9E9890',
+            dark: { bg: '#2D2A26', surface: '#252220', deep: '#1E1C1A', elevated: '#3A3632', border: '#504A44', 'border-subtle': '#3D3935' },
+          },
+          fontFamily: {
+            ui: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"Noto Serif JP"', '"Noto Serif"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', '"Fira Code"', '"SF Mono"', 'monospace'],
+          },
+          fontSize: {
+            'xs': ['0.6875rem', { lineHeight: '1.3' }],
+            'sm': ['0.8125rem', { lineHeight: '1.5' }],
+            'base': ['0.9375rem', { lineHeight: '1.6' }],
+            'md': ['1.0625rem', { lineHeight: '1.5' }],
+            'lg': ['1.25rem', { lineHeight: '1.3' }],
+            'xl': ['1.625rem', { lineHeight: '1.2' }],
+            '2xl': ['2.25rem', { lineHeight: '1.15' }],
+            '3xl': ['3.25rem', { lineHeight: '1.05' }],
+          },
+          borderRadius: { sm: '3px', md: '6px', lg: '10px' },
+          boxShadow: {
+            'warm-sm': '0 1px 2px rgba(44,40,37,0.06)',
+            'warm-md': '0 2px 8px rgba(44,40,37,0.08)',
+            'warm-lg': '0 4px 16px rgba(44,40,37,0.10)',
+            'warm-xl': '0 8px 32px rgba(44,40,37,0.12)',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* Washi paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+    body > * { position: relative; z-index: 1; }
+
+    /* Chirp pulse */
+    @keyframes chirp-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(200,118,128,0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(200,118,128,0); }
+    }
+    .dot-chirp { animation: chirp-pulse 2s ease-in-out infinite; }
+
+
+
+    /* Custom checkbox */
+    .chirri-checkbox { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid #CFC6B8; border-radius: 3px; background: #fff; cursor: pointer; position: relative; flex-shrink: 0; }
+    .chirri-checkbox:checked { background: #A28C73; border-color: #A28C73; }
+    .chirri-checkbox:checked::after { content: ''; position: absolute; left: 5px; top: 2px; width: 5px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    .chirri-checkbox:hover { border-color: #A28C73; }
+    .chirri-checkbox:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(162,140,115,0.3); }
+
+    /* Custom radio */
+    .chirri-radio { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1.5px solid #CFC6B8; border-radius: 50%; background: #fff; cursor: pointer; position: relative; flex-shrink: 0; }
+    .chirri-radio:checked { border-color: #A28C73; }
+    .chirri-radio:checked::after { content: ''; position: absolute; inset: 4px; background: #A28C73; border-radius: 50%; }
+    .chirri-radio:hover { border-color: #A28C73; }
+    .chirri-radio:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(162,140,115,0.3); }
+
+    /* Toggle */
+    .chirri-toggle { width: 36px; height: 20px; border-radius: 10px; background: #D4CEC6; cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0; }
+    .chirri-toggle.active { background: #A28C73; }
+    .chirri-toggle .knob { width: 14px; height: 14px; border-radius: 50%; background: #fff; position: absolute; top: 3px; left: 3px; transition: left 0.2s; box-shadow: 0 1px 3px rgba(44,40,37,0.12); }
+    .chirri-toggle.active .knob { left: 19px; }
+    .chirri-toggle:hover { background: #C4BEB8; }
+    .chirri-toggle.active:hover { background: #8A7461; }
+
+    /* Custom dropdown */
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; background: #fff; border: 1px solid #E8E2DA; border-radius: 6px; box-shadow: 0 4px 16px rgba(44,40,37,0.10); z-index: 50; max-height: 280px; overflow-y: auto; }
+    .dropdown.open .dropdown-menu { display: block; }
+    .dropdown.open .dropdown-trigger { border-color: #A28C73; box-shadow: 0 2px 8px rgba(44,40,37,0.08); }
+    .dropdown-item { padding: 10px 14px; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+    .dropdown-item:hover { background: #F3EEE8; }
+    .dropdown-item.selected { background: #F0EBE3; font-weight: 500; }
+
+    /* Tabs */
+    .chirri-tab { font-size: 15px; font-weight: 500; color: #6B6560; padding: 10px 0; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; }
+    .chirri-tab:hover { color: #2C2825; border-bottom-color: #D4CEC6; }
+    .chirri-tab.active { color: #2C2825; font-weight: 600; border-bottom-color: #A28C73; }
+
+    /* Smooth section scrolling */
+    html { scroll-behavior: smooth; }
+
+    /* Dark section */
+    .dark-section { background: #2D2A26; color: #F3EEE8; }
+    .dark-section .dark-elevated { background: #3A3632; border-color: #504A44; }
+    .dark-section .dark-surface { background: #252220; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .dot-chirp, .sakura-petal { animation: none !important; }
+    }
+
+    /* ======== DARK MODE TOGGLE ======== */
+    .dark-mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+      background: #fff;
+      border: 1.5px solid #E8E2DA;
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      box-shadow: 0 2px 8px rgba(44,40,37,0.08);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+    .dark-mode-toggle:hover {
+      box-shadow: 0 4px 16px rgba(44,40,37,0.12);
+      transform: translateY(-1px);
+    }
+    .dark-mode-toggle .toggle-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #6B6560;
+      font-family: Inter, sans-serif;
+    }
+    html.dark .dark-mode-toggle {
+      background: #3A3632;
+      border-color: #504A44;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    html.dark .dark-mode-toggle:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+    html.dark .dark-mode-toggle .toggle-label {
+      color: #A6A09A;
+    }
+
+    /* ======== DARK MODE OVERRIDES ======== */
+    html.dark body,
+    html.dark { transition: background-color 0.3s ease, color 0.3s ease; }
+    html.dark body { background-color: #2D2A26 !important; color: #E8E4DE; }
+    html.dark body::before { opacity: 0.05; }
+
+    /* Headings */
+    html.dark h1, html.dark h2, html.dark h3,
+    html.dark .font-display,
+    html.dark .text-kurocha { color: #F5F1EA !important; }
+
+    /* Secondary text */
+    html.dark .text-nibi { color: #A6A09A !important; }
+    html.dark .text-nezumi { color: #8A857F !important; }
+    html.dark .text-hai { color: #7A756F !important; }
+    html.dark .text-usuzumi { color: #5A5651 !important; }
+
+    /* Cards and surfaces */
+    html.dark .bg-white { background-color: #36332F !important; }
+    html.dark .bg-kinari { background-color: #2D2A26 !important; }
+    html.dark .bg-shironeri { background-color: #302D29 !important; }
+    html.dark .bg-torinoko\/30 { background-color: rgba(54,51,47,0.5) !important; }
+    html.dark main .bg-white,
+    html.dark .shadow-warm-sm,
+    html.dark .shadow-warm-md { background-color: #36332F !important; }
+
+    /* Borders */
+    html.dark .border-b-subtle { border-color: #46423D !important; }
+    html.dark .border-b-default { border-color: #504A44 !important; }
+    html.dark .border-cha-border { border-color: #504A44 !important; }
+
+    /* Shadows in dark */
+    html.dark .shadow-warm-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; }
+    html.dark .shadow-warm-md { box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important; }
+    html.dark .shadow-warm-lg { box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important; }
+
+    /* Buttons - Cha-nezumi lightens */
+    html.dark button[style*="background:#A28C73"] { background: #B8A48B !important; }
+    html.dark button[style*="background:#A28C73"]:hover { background: #C4B49D !important; }
+
+    /* Danger buttons - muted warm red in dark mode */
+    html.dark button[style*="background:#6C3524"] { background: #7A4A4A !important; }
+    html.dark button[style*="background:#6C3524"]:hover { background: #8B5E5E !important; }
+    html.dark button[style*="color:#6C3524"] { color: #B08080 !important; border-color: #8B6E6E !important; }
+
+    /* Form inputs */
+    html.dark input[type="text"],
+    html.dark input[type="url"],
+    html.dark input[type="email"],
+    html.dark textarea {
+      background-color: #2D2A26 !important;
+      border-color: #504A44 !important;
+      color: #E8E4DE !important;
+    }
+    html.dark input::placeholder { color: #6B6560 !important; }
+    html.dark input:focus { border-color: #C4B49D !important; }
+
+    /* Checkboxes and radios */
+    html.dark .chirri-checkbox { background: #2D2A26; border-color: #504A44; }
+    html.dark .chirri-checkbox:checked { background: #B8A48B; border-color: #B8A48B; }
+    html.dark .chirri-radio { background: #2D2A26; border-color: #504A44; }
+    html.dark .chirri-radio:checked { border-color: #B8A48B; }
+    html.dark .chirri-radio:checked::after { background: #B8A48B; }
+
+    /* Toggles */
+    html.dark .chirri-toggle { background: #504A44; }
+    html.dark .chirri-toggle.active { background: #B8A48B; }
+
+    /* Dropdowns */
+    html.dark .dropdown-menu { background: #36332F; border-color: #504A44; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+    html.dark .dropdown-item:hover { background: #3A3632; }
+    html.dark .dropdown-item.selected { background: #3D3935; }
+    html.dark .dropdown-trigger { background: #2D2A26 !important; border-color: #504A44 !important; color: #E8E4DE !important; }
+
+    /* Tabs */
+    html.dark .chirri-tab { color: #8A857F; }
+    html.dark .chirri-tab:hover { color: #E8E4DE; border-bottom-color: #504A44; }
+    html.dark .chirri-tab.active { color: #F5F1EA; border-bottom-color: #C4B49D; }
+    html.dark .border-b { border-color: #46423D; }
+
+    /* Severity backgrounds - keep vibrant, slightly brighter */
+    html.dark [style*="background:#FDF2F2"] { background: #3D2828 !important; }
+    html.dark [style*="background:#FDF6F0"] { background: #3D3228 !important; }
+
+    /* Sakura signal - MORE striking in dark */
+    html.dark .dot-chirp { box-shadow: 0 0 0 0 rgba(200,118,128,0.6); }
+    html.dark [style*="color:#D4A0A7"] { color: #E0B4BB !important; }
+
+    /* Color swatches - add subtle border in dark */
+    html.dark .h-20.rounded-md,
+    html.dark .h-16.rounded-md { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+
+    /* Footer */
+    html.dark footer { border-color: #46423D !important; }
+
+    /* Sidebar active in dark */
+    html.dark [style*="background:rgba(162,140,115,0.08)"] { background: rgba(184,164,139,0.12) !important; }
+
+    /* Table header */
+    html.dark .bg-shironeri { background-color: #302D29 !important; }
+
+    /* Hover states for table rows */
+    html.dark .hover\:bg-kinari:hover { background-color: #3A3632 !important; }
+
+    /* Severity badge text stays white - no override needed */
+    /* Dark section itself should not double-invert */
+    html.dark .dark-section { background: #2D2A26; }
+
+    /* ======== FALLING SAKURA PETALS ======== */
+    .sakura-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      perspective: 800px;
+    }
+
+    .sakura-petal {
+      position: fixed;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .sakura-petal svg {
+      display: block;
+    }
+
+    @keyframes petal-fall-1 {
+      0% { transform: translateY(-40px) translateX(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); opacity: 0; }
+      5% { opacity: 0.4; }
+      80% { opacity: 0.35; }
+      100% { transform: translateY(100vh) translateX(80px) rotateX(340deg) rotateY(280deg) rotateZ(220deg); opacity: 0; }
+    }
+    @keyframes petal-fall-2 {
+      0% { transform: translateY(-40px) translateX(0px) rotateX(10deg) rotateY(20deg) rotateZ(0deg); opacity: 0; }
+      5% { opacity: 0.5; }
+      80% { opacity: 0.4; }
+      100% { transform: translateY(100vh) translateX(-60px) rotateX(300deg) rotateY(200deg) rotateZ(180deg); opacity: 0; }
+    }
+    @keyframes petal-fall-3 {
+      0% { transform: translateY(-40px) translateX(0px) rotateX(20deg) rotateY(0deg) rotateZ(10deg); opacity: 0; }
+      5% { opacity: 0.35; }
+      80% { opacity: 0.3; }
+      100% { transform: translateY(100vh) translateX(100px) rotateX(280deg) rotateY(360deg) rotateZ(300deg); opacity: 0; }
+    }
+    @keyframes petal-fall-4 {
+      0% { transform: translateY(-40px) translateX(0px) rotateX(0deg) rotateY(10deg) rotateZ(20deg); opacity: 0; }
+      5% { opacity: 0.55; }
+      80% { opacity: 0.45; }
+      100% { transform: translateY(100vh) translateX(-90px) rotateX(320deg) rotateY(240deg) rotateZ(260deg); opacity: 0; }
+    }
+    @keyframes petal-fall-5 {
+      0% { transform: translateY(-40px) translateX(0px) rotateX(5deg) rotateY(15deg) rotateZ(5deg); opacity: 0; }
+      5% { opacity: 0.3; }
+      80% { opacity: 0.25; }
+      100% { transform: translateY(100vh) translateX(70px) rotateX(360deg) rotateY(300deg) rotateZ(200deg); opacity: 0; }
+    }
+
+    .sakura-petal:nth-child(1) { left: 10%; top: -40px; animation: petal-fall-1 10s cubic-bezier(0.37,0,0.63,1) 0s infinite; }
+    .sakura-petal:nth-child(1) svg { width: 20px; height: 20px; }
+
+    .sakura-petal:nth-child(2) { left: 30%; top: -40px; animation: petal-fall-2 12s cubic-bezier(0.37,0,0.63,1) 2s infinite; }
+    .sakura-petal:nth-child(2) svg { width: 16px; height: 16px; }
+
+    .sakura-petal:nth-child(3) { left: 55%; top: -40px; animation: petal-fall-3 14s cubic-bezier(0.37,0,0.63,1) 5s infinite; }
+    .sakura-petal:nth-child(3) svg { width: 24px; height: 24px; }
+
+    .sakura-petal:nth-child(4) { left: 75%; top: -40px; animation: petal-fall-4 9s cubic-bezier(0.37,0,0.63,1) 1s infinite; }
+    .sakura-petal:nth-child(4) svg { width: 18px; height: 18px; }
+
+    .sakura-petal:nth-child(5) { left: 90%; top: -40px; animation: petal-fall-5 11s cubic-bezier(0.37,0,0.63,1) 7s infinite; }
+    .sakura-petal:nth-child(5) svg { width: 28px; height: 28px; }
+
+    /* Petals more visible in dark mode */
+    html.dark .sakura-petal svg { opacity: 1; filter: brightness(1.2); }
+  </style>
+</head>
+<body class="bg-kinari font-ui text-kurocha" style="transition: background-color 0.3s ease, color 0.3s ease;">
+
+  <!-- Dark Mode Toggle -->
+  <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+    <span class="toggle-icon">🌙</span>
+    <span class="toggle-label">Dark</span>
+  </button>
+
+  <!-- Falling Sakura Petals -->
+  <div class="sakura-container" aria-hidden="true">
+    <div class="sakura-petal"><svg viewBox="0 0 40 42" fill="none"><defs><radialGradient id="pg1" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#pg1)" opacity="0.5"/></svg></div>
+    <div class="sakura-petal"><svg viewBox="0 0 40 42" fill="none"><defs><radialGradient id="pg2" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#pg2)" opacity="0.6"/></svg></div>
+    <div class="sakura-petal"><svg viewBox="0 0 40 42" fill="none"><defs><radialGradient id="pg3" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#pg3)" opacity="0.4"/></svg></div>
+    <div class="sakura-petal"><svg viewBox="0 0 40 42" fill="none"><defs><radialGradient id="pg4" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#pg4)" opacity="0.55"/></svg></div>
+    <div class="sakura-petal"><svg viewBox="0 0 40 42" fill="none"><defs><radialGradient id="pg5" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#pg5)" opacity="0.35"/></svg></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- HERO                                                          -->
+  <!-- ============================================================ -->
+  <header class="relative overflow-hidden py-24 px-8 text-center min-h-[50vh] flex flex-col items-center justify-center">
+    <h1 class="font-display text-3xl tracking-tight text-kurocha mb-4" style="letter-spacing:-0.02em;">Chirri Design System</h1>
+    <p class="font-display text-lg text-nibi mb-2">桜信号 — Sakura Signal</p>
+    <p class="text-base text-nezumi max-w-lg">Pink is not a UI color. Pink is a signal color. It means <em>"something alive happened."</em></p>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-8 pb-24">
+
+    <!-- ============================================================ -->
+    <!-- 1. COLOR PALETTE                                            -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">色彩 — Color Palette</h2>
+      <p class="text-sm text-nibi mb-8">Every grey is warm. Every name has meaning.</p>
+
+      <!-- Warm Neutrals -->
+      <h3 class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Warm Neutrals — 暖かい中間色</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle" style="background:#FAF7F2;"></div>
+          <p class="text-sm font-medium mt-2">Kinari · 生成</p>
+          <p class="text-xs text-nezumi">Raw silk · #FAF7F2</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle" style="background:#F3EEE8;"></div>
+          <p class="text-sm font-medium mt-2">Shironeri · 白練</p>
+          <p class="text-xs text-nezumi">Refined white · #F3EEE8</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle" style="background:#EBE5DC;"></div>
+          <p class="text-sm font-medium mt-2">Torinoko · 鳥の子</p>
+          <p class="text-xs text-nezumi">Eggshell · #EBE5DC</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle" style="background:#FFFFFF;"></div>
+          <p class="text-sm font-medium mt-2">Gofun · 胡粉</p>
+          <p class="text-xs text-nezumi">Shell white · #FFFFFF</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md" style="background:#E8E2DA;"></div>
+          <p class="text-sm font-medium mt-2">Border Subtle</p>
+          <p class="text-xs text-nezumi">#E8E2DA</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md" style="background:#D4CEC6;"></div>
+          <p class="text-sm font-medium mt-2">Border Default</p>
+          <p class="text-xs text-nezumi">#D4CEC6</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md" style="background:#9E9890;"></div>
+          <p class="text-sm font-medium mt-2">Border Strong</p>
+          <p class="text-xs text-nezumi">#9E9890</p>
+        </div>
+      </div>
+
+      <!-- Text Colors -->
+      <h3 class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Text Hierarchy — 文字</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#2C2825;"><span class="text-sm" style="color:#FAF7F2;">Aa</span></div>
+          <p class="text-sm font-medium mt-2">Kuro-cha · 黒茶</p>
+          <p class="text-xs text-nezumi">Black tea · #2C2825</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#6B6560;"><span class="text-sm text-white">Aa</span></div>
+          <p class="text-sm font-medium mt-2">Nibi · 鈍</p>
+          <p class="text-xs text-nezumi">Muted · #6B6560</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#948E88;"><span class="text-sm text-white">Aa</span></div>
+          <p class="text-sm font-medium mt-2">Nezumi · 鼠</p>
+          <p class="text-xs text-nezumi">Mouse grey · #948E88</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#A6A09A;"><span class="text-sm text-white">Aa</span></div>
+          <p class="text-sm font-medium mt-2">Hai · 灰</p>
+          <p class="text-xs text-nezumi">Ash · #A6A09A</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#C4BEB8;"><span class="text-sm text-white">Aa</span></div>
+          <p class="text-sm font-medium mt-2">Usuzumi · 薄墨</p>
+          <p class="text-xs text-nezumi">Thin ink · #C4BEB8</p>
+        </div>
+      </div>
+
+      <!-- Brand: Cha-nezumi Path -->
+      <h3 class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Cha-nezumi Path — 茶鼠 (Tea Ceremony)</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#A28C73;"><span class="text-sm text-white">Primary</span></div>
+          <p class="text-sm font-medium mt-2">Cha-nezumi · 茶鼠</p>
+          <p class="text-xs text-nezumi">Tea-grey · #A28C73</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#8A7461;"><span class="text-sm text-white">Hover</span></div>
+          <p class="text-sm font-medium mt-2">Kitsune-cha · 狐茶</p>
+          <p class="text-xs text-nezumi">Fox tea · #8A7461</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#7A6451;"><span class="text-sm text-white">Active</span></div>
+          <p class="text-sm font-medium mt-2">Kobicha · 媚茶</p>
+          <p class="text-xs text-nezumi">Flattery tea · #7A6451</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle" style="background:#F0EBE3;"></div>
+          <p class="text-sm font-medium mt-2">Kinu-nezumi · 絹鼠</p>
+          <p class="text-xs text-nezumi">Silk grey · #F0EBE3</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md" style="background:#CFC6B8;"></div>
+          <p class="text-sm font-medium mt-2">Control Border</p>
+          <p class="text-xs text-nezumi">#CFC6B8</p>
+        </div>
+      </div>
+
+      <!-- Brand: Tobi-iro Path -->
+      <h3 class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Tobi-iro Path — 鳶色 (Temple Gate)</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#6C3524;"><span class="text-sm text-white">Danger</span></div>
+          <p class="text-sm font-medium mt-2">Tobi-iro · 鳶色</p>
+          <p class="text-xs text-nezumi">Kite bird · #6C3524</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#5A2B1D;"><span class="text-sm text-white">Hover</span></div>
+          <p class="text-sm font-medium mt-2">Kuri-ume · 栗梅</p>
+          <p class="text-xs text-nezumi">Chestnut plum · #5A2B1D</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#4A2318;"><span class="text-sm text-white">Active</span></div>
+          <p class="text-sm font-medium mt-2">Kuriiro · 栗色</p>
+          <p class="text-xs text-nezumi">Chestnut · #4A2318</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#B94047;"><span class="text-sm text-white">Emphasis</span></div>
+          <p class="text-sm font-medium mt-2">Enji · 臙脂</p>
+          <p class="text-xs text-nezumi">Cochineal · #B94047</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle" style="background:#F5EEEB;"></div>
+          <p class="text-sm font-medium mt-2">Danger Subtle</p>
+          <p class="text-xs text-nezumi">#F5EEEB</p>
+        </div>
+      </div>
+
+      <!-- Sakura Signal -->
+      <h3 class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Sakura Signal — 桜信号 (The 1-2%)</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#D4A0A7;"><span class="text-sm text-white">Signal</span></div>
+          <p class="text-sm font-medium mt-2">Sakura-nezumi · 桜鼠</p>
+          <p class="text-xs text-nezumi">Cherry grey · #D4A0A7</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle" style="background:#F0E0E3;"></div>
+          <p class="text-sm font-medium mt-2">Usuzakura · 薄桜</p>
+          <p class="text-xs text-nezumi">Pale cherry · #F0E0E3</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#C87680;"><span class="text-sm text-white">Chirp</span></div>
+          <p class="text-sm font-medium mt-2">Enji-sakura · 臙脂桜</p>
+          <p class="text-xs text-nezumi">Chirp dot · #C87680</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md border border-b-subtle flex items-center justify-center" style="background:rgba(212,160,167,0.2);"><span class="text-sm text-nibi">Glow</span></div>
+          <p class="text-sm font-medium mt-2">Signal Glow</p>
+          <p class="text-xs text-nezumi">rgba(212,160,167,0.2)</p>
+        </div>
+      </div>
+
+      <!-- Severity Colors -->
+      <h3 class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Severity — 深刻度 (From Nature)</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#C43D3D;"><span class="text-sm text-white">Critical</span></div>
+          <p class="text-sm font-medium mt-2">Aka · 赤</p>
+          <p class="text-xs text-nezumi">Autumn maple · #C43D3D</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#C47A3D;"><span class="text-sm text-white">High</span></div>
+          <p class="text-sm font-medium mt-2">Kaki · 柿</p>
+          <p class="text-xs text-nezumi">Persimmon · #C47A3D</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#A89030;"><span class="text-sm text-white">Medium</span></div>
+          <p class="text-sm font-medium mt-2">Ukon · 鬱金</p>
+          <p class="text-xs text-nezumi">Turmeric · #A89030</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#4D7A4D;"><span class="text-sm text-white">Low</span></div>
+          <p class="text-sm font-medium mt-2">Matsu · 松</p>
+          <p class="text-xs text-nezumi">Pine · #4D7A4D</p>
+        </div>
+        <div>
+          <div class="h-20 rounded-md flex items-center justify-center" style="background:#527090;"><span class="text-sm text-white">Info</span></div>
+          <p class="text-sm font-medium mt-2">Hanada · 縹</p>
+          <p class="text-xs text-nezumi">Mountain sky · #527090</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 2. TYPOGRAPHY                                                -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">書体 — Typography</h2>
+      <p class="text-sm text-nibi mb-8">Three fonts. Each with a clear role.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+        <!-- Inter -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-3">UI — Inter</p>
+          <p class="text-3xl font-semibold tracking-tight" style="font-family:Inter;">Aa</p>
+          <p class="text-base mt-2">The quick brown fox jumps over the lazy dog. All interface text lives here.</p>
+          <p class="text-xs text-nezumi mt-3">Weights: 400 · 500 · 600</p>
+        </div>
+        <!-- Noto Serif JP -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-3">Display — Noto Serif JP</p>
+          <p class="font-display text-3xl tracking-tight">Aa 花</p>
+          <p class="font-display text-base mt-2">Cherry blossoms are celebrated because they are fleeting.</p>
+          <p class="text-xs text-nezumi mt-3">Weights: 400 · 500</p>
+        </div>
+        <!-- JetBrains Mono -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-3">Code — JetBrains Mono</p>
+          <p class="font-mono text-3xl tracking-tight">Aa</p>
+          <p class="font-mono text-base mt-2">const chirp = await monitor.check();</p>
+          <p class="text-xs text-nezumi mt-3">Weights: 400 · 500</p>
+        </div>
+      </div>
+
+      <!-- Type Scale -->
+      <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+        <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-5">Type Scale</p>
+        <div class="space-y-4">
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">3xl · 52px</span><span class="font-display" style="font-size:3.25rem;line-height:1.05;letter-spacing:-0.02em;">Sakura Signal</span></div>
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">2xl · 36px</span><span class="font-display" style="font-size:2.25rem;line-height:1.15;letter-spacing:-0.02em;">Design System</span></div>
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">xl · 26px</span><span class="font-semibold" style="font-size:1.625rem;line-height:1.2;">Page Title</span></div>
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">lg · 20px</span><span class="font-semibold" style="font-size:1.25rem;line-height:1.3;">Section Header</span></div>
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">md · 17px</span><span class="font-medium" style="font-size:1.0625rem;line-height:1.5;">Card Title</span></div>
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">base · 15px</span><span style="font-size:0.9375rem;line-height:1.6;">Body text — the standard reading size.</span></div>
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">sm · 13px</span><span class="text-nibi" style="font-size:0.8125rem;line-height:1.5;">Secondary info, metadata, table cells</span></div>
+          <div class="flex items-baseline gap-4"><span class="text-xs text-nezumi w-16 shrink-0 text-right">xs · 11px</span><span class="text-nezumi" style="font-size:0.6875rem;line-height:1.3;">Timestamps, fine print, auxiliary</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 3. BUTTONS                                                   -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">釦 — Buttons</h2>
+      <p class="text-sm text-nibi mb-8">Primary = Cha-nezumi. Danger = Tobi-iro. Never pink.</p>
+
+      <div class="bg-white rounded-md border border-b-subtle p-8 shadow-warm-sm">
+        <div class="flex flex-wrap gap-4 items-center mb-8">
+          <!-- Primary -->
+          <button class="px-6 py-2.5 rounded-sm text-white font-semibold text-base transition-colors" style="background:#A28C73;" onmouseover="this.style.background='#8A7461'" onmouseout="this.style.background='#A28C73'" onmousedown="this.style.background='#7A6451'" onmouseup="this.style.background='#8A7461'">Add URL</button>
+          <!-- Secondary -->
+          <button class="px-6 py-2.5 rounded-sm font-medium text-base text-nibi transition-colors border-[1.5px] border-b-default hover:bg-shironeri hover:text-kurocha hover:border-cha">Edit Monitor</button>
+          <!-- Ghost -->
+          <button class="px-4 py-2.5 rounded-sm font-medium text-base text-nibi transition-colors hover:bg-shironeri hover:text-kurocha">Cancel</button>
+          <!-- Danger -->
+          <button class="px-6 py-2.5 rounded-sm text-white font-semibold text-base transition-colors" style="background:#6C3524;" onmouseover="this.style.background='#5A2B1D'" onmouseout="this.style.background='#6C3524'" onmousedown="this.style.background='#4A2318'" onmouseup="this.style.background='#5A2B1D'">Delete Monitor</button>
+          <!-- Danger Secondary -->
+          <button class="px-6 py-2.5 rounded-sm font-medium text-base transition-colors border-[1.5px]" style="color:#6C3524;border-color:#6C3524;">Remove All</button>
+          <!-- Disabled -->
+          <button class="px-6 py-2.5 rounded-sm font-semibold text-base cursor-not-allowed" style="background:#D4CEC6;color:#A6A09A;" disabled>Disabled</button>
+        </div>
+
+        <p class="text-xs text-nezumi uppercase tracking-wider mb-3">Button Sizes</p>
+        <div class="flex flex-wrap gap-4 items-center">
+          <button class="px-4 py-1.5 rounded-sm text-white font-medium text-sm" style="background:#A28C73;">Small</button>
+          <button class="px-6 py-2.5 rounded-sm text-white font-semibold text-base" style="background:#A28C73;">Default</button>
+          <button class="px-8 py-3 rounded-sm text-white font-semibold text-md" style="background:#A28C73;">Large</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 4. FORM CONTROLS                                            -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">制御 — Form Controls</h2>
+      <p class="text-sm text-nibi mb-8">Checkboxes, radios, toggles, inputs, and custom dropdowns.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Checkboxes -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Checkboxes</p>
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="chirri-checkbox" checked><span class="text-base">Monitor HTML changes</span></label>
+            <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="chirri-checkbox"><span class="text-base">Include screenshots</span></label>
+            <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="chirri-checkbox" checked><span class="text-base">Email notifications</span></label>
+            <label class="flex items-center gap-3 cursor-pointer opacity-50"><input type="checkbox" class="chirri-checkbox" disabled><span class="text-base text-usuzumi">Disabled option</span></label>
+          </div>
+        </div>
+
+        <!-- Radios -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Radio Buttons</p>
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="freq" class="chirri-radio" checked><span class="text-base">Every 5 minutes</span></label>
+            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="freq" class="chirri-radio"><span class="text-base">Every 15 minutes</span></label>
+            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="freq" class="chirri-radio"><span class="text-base">Every hour</span></label>
+            <label class="flex items-center gap-3 cursor-pointer opacity-50"><input type="radio" name="freq-dis" class="chirri-radio" disabled><span class="text-base text-usuzumi">Daily (Pro plan)</span></label>
+          </div>
+        </div>
+
+        <!-- Toggles -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Toggles</p>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-base">Active monitoring</span>
+              <div class="chirri-toggle active" onclick="this.classList.toggle('active')"><div class="knob"></div></div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-base">Push notifications</span>
+              <div class="chirri-toggle" onclick="this.classList.toggle('active')"><div class="knob"></div></div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-base">Dark mode</span>
+              <div class="chirri-toggle active" onclick="this.classList.toggle('active')"><div class="knob"></div></div>
+            </div>
+            <div class="flex items-center justify-between opacity-50">
+              <span class="text-base text-usuzumi">Webhooks (Pro)</span>
+              <div class="chirri-toggle" style="pointer-events:none;"><div class="knob"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Inputs -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Text Inputs</p>
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm font-medium text-kurocha mb-1 block">URL to monitor</label>
+              <input type="text" value="https://example.com/pricing" class="w-full h-10 px-3.5 text-base border-[1.5px] border-cha-border rounded-sm bg-white focus:border-cha focus:outline-none transition-colors" style="box-shadow:none;">
+            </div>
+            <div>
+              <label class="text-sm font-medium text-kurocha mb-1 block">Label</label>
+              <input type="text" placeholder="e.g., Competitor pricing page" class="w-full h-10 px-3.5 text-base border-[1.5px] border-cha-border rounded-sm bg-white focus:border-cha focus:outline-none transition-colors placeholder:text-hai" style="box-shadow:none;">
+            </div>
+            <div>
+              <label class="text-sm font-medium text-kurocha mb-1 block">Bottom-border style</label>
+              <input type="text" placeholder="Writing on paper" class="w-full h-10 px-0 text-base border-0 border-b-[1.5px] border-cha-border bg-transparent focus:border-cha focus:outline-none transition-colors placeholder:text-hai" style="box-shadow:none;">
+            </div>
+            <div>
+              <label class="text-sm font-medium text-severity-critical mb-1 block">Error state</label>
+              <input type="text" value="not-a-valid-url" class="w-full h-10 px-3.5 text-base border-[1.5px] border-severity-critical rounded-sm bg-white focus:outline-none" style="box-shadow:none;">
+              <p class="text-xs text-severity-critical mt-1">Please enter a valid URL</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Dropdown -->
+      <div class="mt-8 bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+        <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Custom Dropdown — No native &lt;select&gt;</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <label class="text-sm font-medium text-kurocha mb-1 block">Check frequency</label>
+            <div class="dropdown relative" id="dropdown1">
+              <button type="button" class="dropdown-trigger w-full h-10 px-3.5 text-base border-[1.5px] border-cha-border rounded-sm bg-white flex items-center justify-between text-left transition-all" onclick="toggleDropdown('dropdown1')">
+                <span class="dropdown-value">Every 15 minutes</span>
+                <svg class="w-4 h-4 text-nibi transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </button>
+              <div class="dropdown-menu">
+                <div class="dropdown-item" onclick="selectOption('dropdown1', 'Every 5 minutes')">Every 5 minutes</div>
+                <div class="dropdown-item selected" onclick="selectOption('dropdown1', 'Every 15 minutes')">Every 15 minutes <span class="text-cha">✓</span></div>
+                <div class="dropdown-item" onclick="selectOption('dropdown1', 'Every 30 minutes')">Every 30 minutes</div>
+                <div class="dropdown-item" onclick="selectOption('dropdown1', 'Every hour')">Every hour</div>
+                <div class="dropdown-item" onclick="selectOption('dropdown1', 'Every 6 hours')">Every 6 hours</div>
+                <div class="dropdown-item" style="color:#C4BEB8;pointer-events:none;">Every 24 hours (Pro)</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm font-medium text-kurocha mb-1 block">Notification channel</label>
+            <div class="dropdown relative" id="dropdown2">
+              <button type="button" class="dropdown-trigger w-full h-10 px-3.5 text-base border-[1.5px] border-cha-border rounded-sm bg-white flex items-center justify-between text-left transition-all" onclick="toggleDropdown('dropdown2')">
+                <span class="dropdown-value text-hai">Select channel…</span>
+                <svg class="w-4 h-4 text-nibi transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </button>
+              <div class="dropdown-menu">
+                <div class="dropdown-item" onclick="selectOption('dropdown2', 'Email')">Email</div>
+                <div class="dropdown-item" onclick="selectOption('dropdown2', 'Slack')">Slack</div>
+                <div class="dropdown-item" onclick="selectOption('dropdown2', 'Discord')">Discord</div>
+                <div class="dropdown-item" onclick="selectOption('dropdown2', 'Webhook')">Webhook</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 5. CARDS                                                     -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">札 — Cards</h2>
+      <p class="text-sm text-nibi mb-8">Provider cards & change cards with severity accents.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Provider Card -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm hover:shadow-warm-md hover:border-b-default transition-all cursor-pointer">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <p class="text-md font-medium text-kurocha">api.example.com/pricing</p>
+              <p class="text-sm text-nibi">Competitor pricing page</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="dot-chirp inline-block w-2 h-2 rounded-full" style="background:#C87680;"></span>
+              <span class="text-xs text-nibi">2 chirps</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 text-xs text-nezumi">
+            <span>Every 15 min</span>
+            <span>·</span>
+            <span>Last checked 3m ago</span>
+            <span>·</span>
+            <span class="font-mono">200 OK</span>
+          </div>
+        </div>
+
+        <!-- Provider Card (no chirps) -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm hover:shadow-warm-md hover:border-b-default transition-all cursor-pointer">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <p class="text-md font-medium text-kurocha">docs.example.org</p>
+              <p class="text-sm text-nibi">Documentation site</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-block w-2 h-2 rounded-full" style="background:#4D7A4D;"></span>
+              <span class="text-xs text-nibi">Watching</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 text-xs text-nezumi">
+            <span>Every hour</span>
+            <span>·</span>
+            <span>Last checked 12m ago</span>
+            <span>·</span>
+            <span class="font-mono">200 OK</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Severity Change Cards -->
+      <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Change Cards — Severity Variants</p>
+      <div class="space-y-4">
+        <!-- Critical -->
+        <div class="bg-white rounded-md border border-b-subtle shadow-warm-sm overflow-hidden" style="border-left:6px solid #C43D3D; background:#FDF2F2;">
+          <div class="p-5 flex items-start gap-4">
+            <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#C43D3D; box-shadow:0 0 0 3px rgba(196,61,61,0.15);"></span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold text-white px-2 py-0.5 rounded-sm" style="background:#C43D3D;">Critical</span>
+                <span class="text-xs text-nezumi">2 min ago</span>
+              </div>
+              <p class="text-base font-medium text-kurocha">Pricing section removed entirely</p>
+              <p class="text-sm text-nibi mt-1">api.example.com/pricing — 47 elements changed</p>
+            </div>
+          </div>
+        </div>
+        <!-- High -->
+        <div class="bg-white rounded-md border border-b-subtle shadow-warm-sm overflow-hidden" style="border-left:5px solid #C47A3D; background:#FDF6F0;">
+          <div class="p-5 flex items-start gap-4">
+            <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#C47A3D;"></span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold text-white px-2 py-0.5 rounded-sm" style="background:#C47A3D;">High</span>
+                <span class="text-xs text-nezumi">15 min ago</span>
+              </div>
+              <p class="text-base font-medium text-kurocha">New enterprise tier added</p>
+              <p class="text-sm text-nibi mt-1">api.example.com/pricing — 12 elements changed</p>
+            </div>
+          </div>
+        </div>
+        <!-- Medium -->
+        <div class="bg-white rounded-md border border-b-subtle shadow-warm-sm overflow-hidden" style="border-left:4px solid #A89030;">
+          <div class="p-5 flex items-start gap-4">
+            <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#A89030;"></span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold text-white px-2 py-0.5 rounded-sm" style="background:#A89030;">Medium</span>
+                <span class="text-xs text-nezumi">1 hour ago</span>
+              </div>
+              <p class="text-base font-medium text-kurocha">Footer links updated</p>
+              <p class="text-sm text-nibi mt-1">docs.example.org — 3 elements changed</p>
+            </div>
+          </div>
+        </div>
+        <!-- Low -->
+        <div class="bg-white rounded-md border border-b-subtle shadow-warm-sm overflow-hidden" style="border-left:3px solid #4D7A4D;">
+          <div class="p-5 flex items-start gap-4">
+            <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#4D7A4D;"></span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold text-white px-2 py-0.5 rounded-sm" style="background:#4D7A4D;">Low</span>
+                <span class="text-xs text-nezumi">3 hours ago</span>
+              </div>
+              <p class="text-base font-medium text-kurocha">Copyright year updated</p>
+              <p class="text-sm text-nibi mt-1">docs.example.org — 1 element changed</p>
+            </div>
+          </div>
+        </div>
+        <!-- Info -->
+        <div class="bg-white rounded-md border border-b-subtle shadow-warm-sm overflow-hidden" style="border-left:3px solid #527090;">
+          <div class="p-5 flex items-start gap-4">
+            <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#527090;"></span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold text-white px-2 py-0.5 rounded-sm" style="background:#527090;">Info</span>
+                <span class="text-xs text-nezumi">6 hours ago</span>
+              </div>
+              <p class="text-base font-medium text-kurocha">Meta description changed</p>
+              <p class="text-sm text-nibi mt-1">docs.example.org — 1 element changed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 6. NAVIGATION, TABS, BADGES                                 -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">航行 — Navigation</h2>
+      <p class="text-sm text-nibi mb-8">Sidebar, tabs, badges, and status dots.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Sidebar Mock -->
+        <div class="bg-shironeri rounded-md border border-b-subtle shadow-warm-sm overflow-hidden" style="min-height:420px;">
+          <div class="p-5">
+            <p class="font-display text-lg text-kurocha mb-8">Chirri</p>
+            <div class="space-y-1 mb-7">
+              <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-2 px-4">Monitors</p>
+              <div class="flex items-center gap-2 px-4 py-2.5 rounded-sm text-kurocha font-semibold text-base" style="background:rgba(162,140,115,0.08); border-left:3px solid #A28C73;">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+                Dashboard
+              </div>
+              <div class="flex items-center gap-2 px-4 py-2.5 text-nibi font-medium text-base hover:bg-torinoko/30 rounded-sm cursor-pointer transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                Monitors
+                <span class="ml-auto text-xs font-semibold text-white rounded-full px-1.5 py-0.5" style="background:#A28C73; min-width:20px; text-align:center;">12</span>
+              </div>
+              <div class="flex items-center gap-2 px-4 py-2.5 text-nibi font-medium text-base hover:bg-torinoko/30 rounded-sm cursor-pointer transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-9.33-5.013"/><path d="M9 21h6M13 3a2 2 0 00-4 0"/></svg>
+                Changes
+                <span class="ml-auto text-xs font-semibold text-white rounded-full px-1.5 py-0.5" style="background:#C43D3D; min-width:20px; text-align:center;">5</span>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-2 px-4">Settings</p>
+              <div class="flex items-center gap-2 px-4 py-2.5 text-nibi font-medium text-base hover:bg-torinoko/30 rounded-sm cursor-pointer transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+                Settings
+              </div>
+              <div class="flex items-center gap-2 px-4 py-2.5 text-nibi font-medium text-base hover:bg-torinoko/30 rounded-sm cursor-pointer transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Help
+              </div>
+            </div>
+          </div>
+          <!-- Bottom ma (intentional empty space) -->
+        </div>
+
+        <!-- Tabs + Badges -->
+        <div class="md:col-span-2 space-y-8">
+          <!-- Tabs -->
+          <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+            <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Tabs</p>
+            <div class="flex gap-6 border-b border-b-subtle mb-6" id="tabBar">
+              <button class="chirri-tab active" onclick="switchTab(this)">Overview</button>
+              <button class="chirri-tab" onclick="switchTab(this)">Changes</button>
+              <button class="chirri-tab" onclick="switchTab(this)">Settings</button>
+              <button class="chirri-tab" onclick="switchTab(this)">History</button>
+            </div>
+            <p class="text-base text-nibi">Tab content area — shows context for the selected tab.</p>
+          </div>
+
+          <!-- Badges & Tags -->
+          <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+            <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Badges & Tags</p>
+            <div class="flex flex-wrap gap-3 mb-6">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-sm" style="background:#F0EBE3;color:#7A6451;">Default</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-sm" style="background:#A28C73;color:#fff;">Filled</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-sm text-white" style="background:#C43D3D;">Critical</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-sm text-white" style="background:#C47A3D;">High</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-sm text-white" style="background:#A89030;">Medium</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-sm text-white" style="background:#4D7A4D;">Low</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-sm text-white" style="background:#527090;">Info</span>
+            </div>
+            <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-3">Count Badges (Pill)</p>
+            <div class="flex flex-wrap gap-3">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#C43D3D;">5</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#C47A3D;">12</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#A89030;">8</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#4D7A4D;">23</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#527090;">3</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:#A28C73;">99+</span>
+            </div>
+          </div>
+
+          <!-- Status Dots -->
+          <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm">
+            <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Status Dots</p>
+            <div class="space-y-3">
+              <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-2">Severity</p>
+              <div class="flex flex-wrap gap-6">
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full" style="background:#C43D3D; box-shadow:0 0 0 3px rgba(196,61,61,0.15);"></span><span class="text-sm">Critical</span></div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full" style="background:#C47A3D;"></span><span class="text-sm">High</span></div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full" style="background:#A89030;"></span><span class="text-sm">Medium</span></div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full" style="background:#4D7A4D;"></span><span class="text-sm">Low</span></div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full" style="background:#527090;"></span><span class="text-sm">Info</span></div>
+              </div>
+              <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mt-4 mb-2">Chirp Petal Pulse</p>
+              <div class="flex items-center gap-3">
+                <span class="dot-chirp inline-block w-2 h-2 rounded-full" style="background:#C87680;" aria-label="New change detected"></span>
+                <span class="text-sm">New chirp detected — the only pulsing element</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 7. SAMPLE "ADD URL" FORM                                    -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">追加 — Add URL Form</h2>
+      <p class="text-sm text-nibi mb-8">A complete form using the design system components.</p>
+
+      <div class="bg-white rounded-md border border-b-subtle p-8 shadow-warm-sm max-w-xl">
+        <h3 class="text-xl font-semibold text-kurocha mb-1">Add New Monitor</h3>
+        <p class="text-sm text-nibi mb-6">Start watching a page for changes.</p>
+
+        <div class="space-y-5">
+          <div>
+            <label class="text-sm font-medium text-kurocha mb-1.5 block">URL <span class="text-severity-critical">*</span></label>
+            <input type="text" placeholder="https://example.com/page" class="w-full h-10 px-3.5 text-base border-[1.5px] border-cha-border rounded-sm bg-white focus:border-cha focus:outline-none transition-colors placeholder:text-hai" style="box-shadow:none;">
+          </div>
+          <div>
+            <label class="text-sm font-medium text-kurocha mb-1.5 block">Label</label>
+            <input type="text" placeholder="Give it a friendly name" class="w-full h-10 px-3.5 text-base border-[1.5px] border-cha-border rounded-sm bg-white focus:border-cha focus:outline-none transition-colors placeholder:text-hai" style="box-shadow:none;">
+          </div>
+          <div>
+            <label class="text-sm font-medium text-kurocha mb-1.5 block">Check frequency</label>
+            <div class="dropdown relative" id="dropdown3">
+              <button type="button" class="dropdown-trigger w-full h-10 px-3.5 text-base border-[1.5px] border-cha-border rounded-sm bg-white flex items-center justify-between text-left transition-all" onclick="toggleDropdown('dropdown3')">
+                <span class="dropdown-value text-hai">Select frequency…</span>
+                <svg class="w-4 h-4 text-nibi" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </button>
+              <div class="dropdown-menu">
+                <div class="dropdown-item" onclick="selectOption('dropdown3', 'Every 5 minutes')">Every 5 minutes</div>
+                <div class="dropdown-item" onclick="selectOption('dropdown3', 'Every 15 minutes')">Every 15 minutes</div>
+                <div class="dropdown-item" onclick="selectOption('dropdown3', 'Every hour')">Every hour</div>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <label class="text-sm font-medium text-kurocha block">Options</label>
+            <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="chirri-checkbox" checked><span class="text-base">Track visual changes (screenshots)</span></label>
+            <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="chirri-checkbox"><span class="text-base">Track HTML source changes</span></label>
+            <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" class="chirri-checkbox" checked><span class="text-base">Send email notifications</span></label>
+          </div>
+          <div class="flex items-center justify-between pt-2">
+            <div class="flex items-center gap-2 text-sm text-nibi">
+              <span class="inline-block w-2 h-2 rounded-full" style="background:#4D7A4D;"></span>
+              Monitoring will start immediately
+            </div>
+          </div>
+          <div class="flex gap-3 pt-2">
+            <button class="px-6 py-2.5 rounded-sm text-white font-semibold text-base" style="background:#A28C73;" onmouseover="this.style.background='#8A7461'" onmouseout="this.style.background='#A28C73'">Add Monitor</button>
+            <button class="px-4 py-2.5 rounded-sm font-medium text-base text-nibi hover:bg-shironeri hover:text-kurocha transition-colors">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 8. SAKURA SIGNAL MOMENTS                                    -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">桜の瞬間 — Sakura Signal Moments</h2>
+      <p class="text-sm text-nibi mb-8">The 1-2% where pink appears. Fleeting, meaningful, never decoration.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Chirp Dot -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm text-center">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-6">Chirp Indicator</p>
+          <div class="flex items-center justify-center gap-3 mb-4">
+            <span class="dot-chirp inline-block w-3 h-3 rounded-full" style="background:#C87680;"></span>
+            <span class="text-md font-medium">New change detected</span>
+          </div>
+          <p class="text-sm text-nibi">The only pulsing element in the entire UI. It breathes.</p>
+        </div>
+
+        <!-- Petal Accent -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm text-center">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-6">Petal Accent</p>
+          <div class="flex justify-center mb-4">
+            <svg width="40" height="40" viewBox="0 0 20 20" style="color:#D4A0A7; opacity:0.7; transform:rotate(22deg);" fill="currentColor">
+              <path d="M10 0C10 0 13 6 13 10C13 14 10 17 10 17C10 17 7 14 7 10C7 6 10 0 10 0Z" opacity=".8"/>
+              <path d="M10 3C10 3 15 7 15 10C15 13 10 14 10 14C10 14 5 13 5 10C5 7 10 3 10 3Z" opacity=".5" transform="rotate(45 10 10)"/>
+            </svg>
+          </div>
+          <p class="text-sm text-nibi">A single petal drifts through the hero. Four at most. Never wallpaper.</p>
+        </div>
+
+        <!-- Empty State -->
+        <div class="bg-white rounded-md border border-b-subtle p-6 shadow-warm-sm text-center">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-6">Empty State</p>
+          <div class="flex flex-col items-center mb-4">
+            <p class="font-display text-md text-nibi leading-relaxed">No chirps yet.<br><span class="text-nezumi">The garden is still.</span></p>
+            <svg width="20" height="20" viewBox="0 0 20 20" style="color:#D4A0A7; opacity:0.6; transform:rotate(25deg) translateX(-8px); margin-top:12px;" fill="currentColor">
+              <path d="M10 0C10 0 13 6 13 10C13 14 10 17 10 17C10 17 7 14 7 10C7 6 10 0 10 0Z" opacity=".8"/>
+              <path d="M10 3C10 3 15 7 15 10C15 13 10 14 10 14C10 14 5 13 5 10C5 7 10 3 10 3Z" opacity=".5" transform="rotate(45 10 10)"/>
+            </svg>
+          </div>
+          <button class="mt-2 px-4 py-2 rounded-sm font-medium text-sm text-nibi border-[1.5px] border-b-default hover:bg-shironeri hover:text-kurocha transition-colors">Watch a path to begin</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 9. MINI DASHBOARD — BENTO GRID                              -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">盆栽 — Mini Dashboard</h2>
+      <p class="text-sm text-nibi mb-8">Bento grid layout with asymmetric cells. Fukinsei in action.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4" style="grid-template-rows: auto auto 1fr;">
+        <!-- Stats row - spans 2 cols -->
+        <div class="md:col-span-2 grid grid-cols-3 gap-4">
+          <div class="bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+            <p class="text-xs text-nezumi uppercase tracking-wider mb-1">Monitors</p>
+            <p class="text-2xl font-semibold text-kurocha">12</p>
+            <p class="text-xs text-severity-low mt-1">All active</p>
+          </div>
+          <div class="bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+            <p class="text-xs text-nezumi uppercase tracking-wider mb-1">Changes Today</p>
+            <p class="text-2xl font-semibold text-kurocha">47</p>
+            <div class="flex items-center gap-1 mt-1">
+              <span class="inline-block w-1.5 h-1.5 rounded-full" style="background:#C43D3D;"></span>
+              <span class="text-xs text-severity-critical">5 critical</span>
+            </div>
+          </div>
+          <div class="bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+            <p class="text-xs text-nezumi uppercase tracking-wider mb-1">Uptime</p>
+            <p class="text-2xl font-semibold text-kurocha">99.8%</p>
+            <p class="text-xs text-nibi mt-1">Last 30 days</p>
+          </div>
+        </div>
+
+        <!-- Right sidebar card - spans full height -->
+        <div class="md:row-span-3 bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+          <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-4">Recent Chirps</p>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="dot-chirp inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#C87680;"></span>
+              <div>
+                <p class="text-sm font-medium text-kurocha">Pricing page changed</p>
+                <p class="text-xs text-nezumi">api.example.com · 2m ago</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#C47A3D;"></span>
+              <div>
+                <p class="text-sm font-medium text-kurocha">New feature section</p>
+                <p class="text-xs text-nezumi">competitor.io · 15m ago</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#A89030;"></span>
+              <div>
+                <p class="text-sm font-medium text-kurocha">Footer links updated</p>
+                <p class="text-xs text-nezumi">docs.example.org · 1h ago</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#4D7A4D;"></span>
+              <div>
+                <p class="text-sm font-medium text-kurocha">Copyright updated</p>
+                <p class="text-xs text-nezumi">blog.example.com · 3h ago</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="inline-block w-2 h-2 rounded-full mt-1.5 shrink-0" style="background:#527090;"></span>
+              <div>
+                <p class="text-sm font-medium text-kurocha">Meta tags changed</p>
+                <p class="text-xs text-nezumi">shop.example.com · 6h ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change log - spans 2 cols -->
+        <div class="md:col-span-2 bg-white rounded-md border border-b-subtle shadow-warm-sm overflow-hidden">
+          <div class="p-5 pb-3">
+            <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-1">Latest Changes</p>
+          </div>
+          <div>
+            <!-- Table header -->
+            <div class="grid grid-cols-12 gap-2 px-5 py-2.5 bg-shironeri text-xs font-semibold text-nezumi uppercase tracking-wider">
+              <div class="col-span-1"></div>
+              <div class="col-span-4">Monitor</div>
+              <div class="col-span-3">Change</div>
+              <div class="col-span-2">Severity</div>
+              <div class="col-span-2 text-right">Time</div>
+            </div>
+            <!-- Rows -->
+            <div class="grid grid-cols-12 gap-2 px-5 py-3 border-b border-b-subtle items-center hover:bg-kinari transition-colors">
+              <div class="col-span-1"><span class="inline-block w-2 h-2 rounded-full" style="background:#C43D3D; box-shadow:0 0 0 3px rgba(196,61,61,0.15);"></span></div>
+              <div class="col-span-4 text-sm font-medium truncate">api.example.com</div>
+              <div class="col-span-3 text-sm text-nibi truncate">Pricing removed</div>
+              <div class="col-span-2"><span class="text-xs font-semibold text-white px-1.5 py-0.5 rounded-sm" style="background:#C43D3D;">Critical</span></div>
+              <div class="col-span-2 text-xs text-nezumi text-right">2m ago</div>
+            </div>
+            <div class="grid grid-cols-12 gap-2 px-5 py-3 border-b border-b-subtle items-center hover:bg-kinari transition-colors">
+              <div class="col-span-1"><span class="inline-block w-2 h-2 rounded-full" style="background:#C47A3D;"></span></div>
+              <div class="col-span-4 text-sm font-medium truncate">competitor.io/features</div>
+              <div class="col-span-3 text-sm text-nibi truncate">New tier added</div>
+              <div class="col-span-2"><span class="text-xs font-semibold text-white px-1.5 py-0.5 rounded-sm" style="background:#C47A3D;">High</span></div>
+              <div class="col-span-2 text-xs text-nezumi text-right">15m ago</div>
+            </div>
+            <div class="grid grid-cols-12 gap-2 px-5 py-3 border-b border-b-subtle items-center hover:bg-kinari transition-colors">
+              <div class="col-span-1"><span class="inline-block w-2 h-2 rounded-full" style="background:#A89030;"></span></div>
+              <div class="col-span-4 text-sm font-medium truncate">docs.example.org</div>
+              <div class="col-span-3 text-sm text-nibi truncate">Footer links</div>
+              <div class="col-span-2"><span class="text-xs font-semibold text-white px-1.5 py-0.5 rounded-sm" style="background:#A89030;">Medium</span></div>
+              <div class="col-span-2 text-xs text-nezumi text-right">1h ago</div>
+            </div>
+            <div class="grid grid-cols-12 gap-2 px-5 py-3 items-center hover:bg-kinari transition-colors">
+              <div class="col-span-1"><span class="inline-block w-2 h-2 rounded-full" style="background:#4D7A4D;"></span></div>
+              <div class="col-span-4 text-sm font-medium truncate">blog.example.com</div>
+              <div class="col-span-3 text-sm text-nibi truncate">Copyright year</div>
+              <div class="col-span-2"><span class="text-xs font-semibold text-white px-1.5 py-0.5 rounded-sm" style="background:#4D7A4D;">Low</span></div>
+              <div class="col-span-2 text-xs text-nezumi text-right">3h ago</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom wide card -->
+        <div class="md:col-span-2 bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-nezumi uppercase tracking-wider mb-1">Quick Actions</p>
+              <p class="text-sm text-nibi">Manage your monitors</p>
+            </div>
+            <div class="flex gap-3">
+              <button class="px-4 py-2 rounded-sm text-white font-semibold text-sm" style="background:#A28C73;" onmouseover="this.style.background='#8A7461'" onmouseout="this.style.background='#A28C73'">Add URL</button>
+              <button class="px-4 py-2 rounded-sm font-medium text-sm text-nibi border-[1.5px] border-b-default hover:bg-shironeri transition-colors">Run All Checks</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 10. DARK MODE                                               -->
+    <!-- ============================================================ -->
+    <section class="mb-20">
+      <h2 class="font-display text-2xl text-kurocha mb-2" style="letter-spacing:-0.02em;">暗闇 — Dark Mode</h2>
+      <p class="text-sm text-nibi mb-8">Warm dark, not cold dark. Lacquered wood, not obsidian. Toggle the 🌙 button to see it live.</p>
+
+      <div class="dark-section rounded-lg p-8 shadow-warm-lg" style="background:#2D2A26;">
+        <!-- Dark mode header -->
+        <div class="flex items-center gap-3 mb-8">
+          <span class="font-display text-lg" style="color:#F3EEE8;">Chirri</span>
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-sm" style="background:#C4B49D;color:#2D2A26;">Dark Mode</span>
+        </div>
+
+        <!-- Dark mode color chips -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <div>
+            <div class="h-16 rounded-md border" style="background:#2D2A26;border-color:#504A44;"></div>
+            <p class="text-sm font-medium mt-2" style="color:#F3EEE8;">Kuro-nuri · 黒塗</p>
+            <p class="text-xs" style="color:#7A756F;">Black lacquer · #2D2A26</p>
+          </div>
+          <div>
+            <div class="h-16 rounded-md border" style="background:#252220;border-color:#504A44;"></div>
+            <p class="text-sm font-medium mt-2" style="color:#F3EEE8;">Keshizumi · 消炭</p>
+            <p class="text-xs" style="color:#7A756F;">Spent charcoal · #252220</p>
+          </div>
+          <div>
+            <div class="h-16 rounded-md border" style="background:#3A3632;border-color:#504A44;"></div>
+            <p class="text-sm font-medium mt-2" style="color:#F3EEE8;">Ro · 炉</p>
+            <p class="text-xs" style="color:#7A756F;">Hearth · #3A3632</p>
+          </div>
+          <div>
+            <div class="h-16 rounded-md border" style="background:#1E1C1A;border-color:#504A44;"></div>
+            <p class="text-sm font-medium mt-2" style="color:#F3EEE8;">Sumi · 墨</p>
+            <p class="text-xs" style="color:#7A756F;">Ink · #1E1C1A</p>
+          </div>
+        </div>
+
+        <!-- Dark mode components -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Dark card -->
+          <div class="rounded-md p-6" style="background:#3A3632;border:1px solid #504A44;">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <p class="text-md font-medium" style="color:#F3EEE8;">api.example.com/pricing</p>
+                <p class="text-sm" style="color:#A6A09A;">Competitor pricing page</p>
+              </div>
+              <span class="dot-chirp inline-block w-2 h-2 rounded-full" style="background:#C87680;"></span>
+            </div>
+            <div class="flex gap-3 mt-4">
+              <button class="px-4 py-2 rounded-sm text-sm font-semibold" style="background:#C4B49D;color:#2D2A26;">View Changes</button>
+              <button class="px-4 py-2 rounded-sm text-sm font-medium" style="color:#A6A09A;border:1.5px solid #504A44;">Settings</button>
+            </div>
+          </div>
+
+          <!-- Dark form -->
+          <div class="rounded-md p-6" style="background:#3A3632;border:1px solid #504A44;">
+            <p class="text-sm font-medium mb-3" style="color:#F3EEE8;">Quick Add</p>
+            <input type="text" placeholder="https://example.com" class="w-full h-10 px-3.5 text-base rounded-sm mb-3 focus:outline-none" style="background:#252220;border:1.5px solid #504A44;color:#F3EEE8;" onfocus="this.style.borderColor='#C4B49D'" onblur="this.style.borderColor='#504A44'">
+            <div class="flex items-center gap-3 mb-4">
+              <input type="checkbox" class="chirri-checkbox" checked style="border-color:#504A44;">
+              <span class="text-sm" style="color:#A6A09A;">Notify on changes</span>
+            </div>
+            <button class="px-4 py-2 rounded-sm text-sm font-semibold" style="background:#C4B49D;color:#2D2A26;">Add Monitor</button>
+          </div>
+        </div>
+
+        <!-- Sakura signal in dark = more striking -->
+        <div class="mt-6 rounded-md p-5 text-center" style="background:#3A3632;border:1px solid #504A44;">
+          <p class="text-xs font-semibold uppercase tracking-wider mb-3" style="color:#7A756F;">Sakura signal in dark mode</p>
+          <div class="flex items-center justify-center gap-4">
+            <span class="dot-chirp inline-block w-3 h-3 rounded-full" style="background:#C87680;"></span>
+            <span class="text-sm" style="color:#D4A0A7;">Like lanterns at a night temple — warm glow in the darkness</span>
+          </div>
+          <p class="text-xs mt-3" style="color:#7A756F;">#D4A0A7 on #2D2A26 = 6.38:1 contrast — more striking than light mode</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 11. DESIGN PRINCIPLES FOOTER                                -->
+    <!-- ============================================================ -->
+    <section class="mb-12">
+      <h2 class="font-display text-2xl text-kurocha mb-6" style="letter-spacing:-0.02em;">原則 — Principles</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+          <p class="font-display text-lg text-kurocha mb-1">簡素</p>
+          <p class="text-sm font-medium text-kurocha mb-2">Kanso — Simplicity</p>
+          <p class="text-sm text-nibi">Every element earns its place. No decorative chrome.</p>
+        </div>
+        <div class="bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+          <p class="font-display text-lg text-kurocha mb-1">間</p>
+          <p class="text-sm font-medium text-kurocha mb-2">Ma — Negative Space</p>
+          <p class="text-sm text-nibi">30-40% more whitespace than typical. Space IS content.</p>
+        </div>
+        <div class="bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+          <p class="font-display text-lg text-kurocha mb-1">不均整</p>
+          <p class="text-sm font-medium text-kurocha mb-2">Fukinsei — Asymmetry</p>
+          <p class="text-sm text-nibi">Bento grid, weighted layouts. Never center everything.</p>
+        </div>
+        <div class="bg-white rounded-md border border-b-subtle p-5 shadow-warm-sm">
+          <p class="font-display text-lg text-kurocha mb-1">物の哀れ</p>
+          <p class="text-sm font-medium text-kurocha mb-2">Mono no Aware</p>
+          <p class="text-sm text-nibi">Petals appear and fade. The signal is transient.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-b-subtle py-12 px-8 text-center">
+    <p class="font-display text-md text-nibi mb-2">
+      "The stone garden is complete when there is nothing left to remove."
+    </p>
+    <p class="font-display text-sm text-nezumi">And then one petal falls.</p>
+    <div class="flex justify-center mt-4">
+      <svg width="16" height="16" viewBox="0 0 20 20" style="color:#D4A0A7; opacity:0.5; transform:rotate(30deg);" fill="currentColor">
+        <path d="M10 0C10 0 13 6 13 10C13 14 10 17 10 17C10 17 7 14 7 10C7 6 10 0 10 0Z" opacity=".8"/>
+        <path d="M10 3C10 3 15 7 15 10C15 13 10 14 10 14C10 14 5 13 5 10C5 7 10 3 10 3Z" opacity=".5" transform="rotate(45 10 10)"/>
+      </svg>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- JavaScript — Dropdowns, Tabs, Toggles                        -->
+  <!-- ============================================================ -->
+  <script>
+    // Close all dropdowns
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+    }
+
+    // Toggle dropdown
+    function toggleDropdown(id) {
+      const dd = document.getElementById(id);
+      const wasOpen = dd.classList.contains('open');
+      closeAllDropdowns();
+      if (!wasOpen) dd.classList.add('open');
+    }
+
+    // Select option
+    function selectOption(id, value) {
+      const dd = document.getElementById(id);
+      const valEl = dd.querySelector('.dropdown-value');
+      valEl.textContent = value;
+      valEl.classList.remove('text-hai');
+      // Update selected state
+      dd.querySelectorAll('.dropdown-item').forEach(item => {
+        item.classList.remove('selected');
+        const check = item.querySelector('span');
+        if (check) check.remove();
+        if (item.textContent.trim() === value) {
+          item.classList.add('selected');
+          const checkMark = document.createElement('span');
+          checkMark.className = 'text-cha';
+          checkMark.textContent = '✓';
+          item.appendChild(checkMark);
+        }
+      });
+      closeAllDropdowns();
+    }
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) closeAllDropdowns();
+    });
+
+    // Tab switching
+    function switchTab(el) {
+      const bar = el.parentElement;
+      bar.querySelectorAll('.chirri-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Dark mode toggle
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      localStorage.setItem('chirri-dark-mode', isDark ? 'true' : 'false');
+      updateToggleButton(isDark);
+    }
+
+    function updateToggleButton(isDark) {
+      const btn = document.getElementById('darkModeToggle');
+      if (!btn) return;
+      const icon = btn.querySelector('.toggle-icon');
+      const label = btn.querySelector('.toggle-label');
+      if (isDark) {
+        icon.textContent = '☀️';
+        label.textContent = 'Light';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'Dark';
+      }
+    }
+
+    // Restore dark mode preference on load
+    (function() {
+      const saved = localStorage.getItem('chirri-dark-mode');
+      if (saved === 'true') {
+        document.documentElement.classList.add('dark');
+        updateToggleButton(true);
+      }
+    })();
+  </script>
+</body>
+</html>

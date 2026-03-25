@@ -1,0 +1,21 @@
+{
+  "id": "vercel-01",
+  "source": "Vercel Changelog",
+  "title": "End-to-end encryption for Vercel Workflow",
+  "date": "2026-03-17",
+  "raw_changelog": "Vercel Workflow now encrypts all user data end-to-end. No code changes required.",
+  "before_text": "## Workflow Data Handling\n\nWorkflow inputs, step arguments, and return values are stored in the event log as plaintext.\n\n**Security Note:** Do not pass sensitive data (API keys, tokens) through Workflow steps.",
+  "after_text": "## Workflow Data Handling\n\nWorkflow inputs, step arguments, return values, hook payloads, and stream data are automatically encrypted end-to-end before being written to the event log.\n\nEach deployment receives a unique encryption key. The event log only stores ciphertext.\n\n**It is now safe to pass sensitive data through Workflow steps.** No code changes required.",
+  "diff_text": "--- before\n+++ after\n@@ -1,5 +1,7 @@\n ## Workflow Data Handling\n \n-Workflow inputs, step arguments, and return values are stored in the event log as plaintext.\n+Workflow inputs, step arguments, return values, hook payloads, and stream data are automatically encrypted end-to-end.\n \n-**Security Note:** Do not pass sensitive data (API keys, tokens) through Workflow steps.\n+Each deployment receives a unique encryption key. The event log only stores ciphertext.\n+\n+**It is now safe to pass sensitive data through Workflow steps.** No code changes required.",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Vercel Workflow"
+    ],
+    "action_required": "No action required. Data is now automatically encrypted. Previously restricted sensitive data can now be passed through Workflow.",
+    "cosmetic_only": false,
+    "confidence_notes": "Security improvement, no breaking changes"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "results": [],
+  "scores": [],
+  "report": {
+    "total_tests": 0,
+    "by_model": {},
+    "by_strategy": {},
+    "by_model_strategy": {},
+    "adversarial_results": {
+      "total": 0,
+      "cosmetic_correct": 0,
+      "cosmetic_accuracy": 0
+    },
+    "cost_summary": {
+      "total_cost_usd": 0,
+      "total_input_tokens": 0,
+      "total_output_tokens": 0,
+      "avg_cost_per_analysis": 0
+    }
+  }
+}

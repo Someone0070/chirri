@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { background: #1a1a1a; padding: 40px; font-family: Inter, sans-serif; color: #fff; }
+h1 { font-size: 20px; font-weight: 300; margin-bottom: 8px; }
+p { font-size: 13px; color: #999; margin-bottom: 32px; }
+.row { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
+.row-label { font-size: 13px; color: #777; width: 120px; flex-shrink: 0; }
+.frames { display: flex; gap: 8px; flex-wrap: wrap; }
+.frame { background: #2a2a2a; border-radius: 8px; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; position: relative; }
+.frame-num { position: absolute; bottom: 2px; right: 4px; font-size: 9px; color: #555; }
+h2 { font-size: 15px; font-weight: 400; color: #ccc; margin: 40px 0 16px; }
+.demo-area { background: linear-gradient(180deg, #FAFAF8 0%, #F0EDE8 100%); border-radius: 12px; padding: 60px; position: relative; overflow: hidden; height: 500px; }
+.falling-petal { position: absolute; animation: fall linear infinite; }
+@keyframes fall {
+  0% { transform: translateX(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); opacity: 0.8; }
+  10% { transform: translateX(20px) rotateX(40deg) rotateY(30deg) rotateZ(15deg); }
+  20% { transform: translateX(-10px) rotateX(90deg) rotateY(60deg) rotateZ(-10deg); opacity: 0.7; }
+  30% { transform: translateX(30px) rotateX(140deg) rotateY(90deg) rotateZ(25deg); }
+  40% { transform: translateX(5px) rotateX(180deg) rotateY(130deg) rotateZ(-5deg); }
+  50% { transform: translateX(-20px) rotateX(220deg) rotateY(170deg) rotateZ(30deg); opacity: 0.6; }
+  60% { transform: translateX(15px) rotateX(270deg) rotateY(200deg) rotateZ(-15deg); }
+  70% { transform: translateX(-5px) rotateX(310deg) rotateY(240deg) rotateZ(20deg); opacity: 0.5; }
+  80% { transform: translateX(25px) rotateX(340deg) rotateY(290deg) rotateZ(-20deg); opacity: 0.3; }
+  90% { transform: translateX(-15px) rotateX(350deg) rotateY(330deg) rotateZ(10deg); opacity: 0.15; }
+  100% { transform: translateX(10px) rotateX(360deg) rotateY(360deg) rotateZ(0deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<h1>Sakura Petal #1 -- Rotation Keyframes</h1>
+<p>Each row shows the petal at different 3D rotation angles as it would appear while tumbling in wind. Use these as sprite frames or CSS 3D transform keyframes.</p>
+
+<h2>Y-Axis Rotation (side to side flip)</h2>
+<div class="row">
+<div class="row-label">0° to 180°</div>
+<div class="frames">
+<!-- 0° - full face -->
+<div class="frame">
+<svg width="40" height="48" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#r0)"/><defs><radialGradient id="r0" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">0°</span>
+</div>
+<!-- 20° -->
+<div class="frame">
+<svg width="36" height="48" viewBox="0 0 36 48" fill="none"><path d="M18 2C20 10 27 18 25 28C23 38 18 40 16 36C14 32 12 22 14 14C16 6 17 2 18 2Z" fill="url(#r20)"/><defs><radialGradient id="r20" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">20°</span>
+</div>
+<!-- 40° -->
+<div class="frame">
+<svg width="30" height="48" viewBox="0 0 30 48" fill="none"><path d="M15 2C17 10 22 18 20 28C18 38 14 40 13 36C12 32 10 22 12 14C14 6 14 2 15 2Z" fill="url(#r40)"/><defs><radialGradient id="r40" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">40°</span>
+</div>
+<!-- 60° -->
+<div class="frame">
+<svg width="22" height="48" viewBox="0 0 22 48" fill="none"><path d="M11 2C12 10 16 18 15 28C14 38 11 40 10 36C9 32 8 22 9 14C10 6 10.5 2 11 2Z" fill="url(#r60)"/><defs><radialGradient id="r60" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">60°</span>
+</div>
+<!-- 80° - almost edge -->
+<div class="frame">
+<svg width="12" height="48" viewBox="0 0 12 48" fill="none"><path d="M6 2C6.5 10 9 18 8 28C7 38 6 40 5.5 36C5 32 4 22 5 14C5.5 6 5.8 2 6 2Z" fill="url(#r80)"/><defs><radialGradient id="r80" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">80°</span>
+</div>
+<!-- 90° - edge on -->
+<div class="frame">
+<svg width="6" height="48" viewBox="0 0 6 48" fill="none"><path d="M3 2C3 10 4.5 18 4 28C3.5 38 3 40 2.8 36C2.5 32 2 22 2.5 14C2.8 6 3 2 3 2Z" fill="#FFB7C5"/></svg>
+<span class="frame-num">90°</span>
+</div>
+<!-- 110° - back side emerging -->
+<div class="frame">
+<svg width="12" height="48" viewBox="0 0 12 48" fill="none"><path d="M6 2C6.5 10 9 18 8 28C7 38 6 40 5.5 36C5 32 4 22 5 14C5.5 6 5.8 2 6 2Z" fill="url(#r110)"/><defs><radialGradient id="r110" cx="60%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFCCD6"/><stop offset="100%" stop-color="#FFA8B8"/></radialGradient></defs></svg>
+<span class="frame-num">110°</span>
+</div>
+<!-- 130° -->
+<div class="frame">
+<svg width="22" height="48" viewBox="0 0 22 48" fill="none"><path d="M11 2C12 10 16 18 15 28C14 38 11 40 10 36C9 32 8 22 9 14C10 6 10.5 2 11 2Z" fill="url(#r130)"/><defs><radialGradient id="r130" cx="60%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFCCD6"/><stop offset="100%" stop-color="#FFA8B8"/></radialGradient></defs></svg>
+<span class="frame-num">130°</span>
+</div>
+<!-- 150° -->
+<div class="frame">
+<svg width="30" height="48" viewBox="0 0 30 48" fill="none"><path d="M15 2C17 10 22 18 20 28C18 38 14 40 13 36C12 32 10 22 12 14C14 6 14 2 15 2Z" fill="url(#r150)"/><defs><radialGradient id="r150" cx="60%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFCCD6"/><stop offset="100%" stop-color="#FFA8B8"/></radialGradient></defs></svg>
+<span class="frame-num">150°</span>
+</div>
+<!-- 180° - full back -->
+<div class="frame">
+<svg width="40" height="48" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#r180)"/><defs><radialGradient id="r180" cx="60%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFCCD6"/><stop offset="100%" stop-color="#FFA8B8"/></radialGradient></defs></svg>
+<span class="frame-num">180°</span>
+</div>
+</div>
+</div>
+
+<h2>X-Axis Rotation (forward/backward tilt)</h2>
+<div class="row">
+<div class="row-label">0° to 180°</div>
+<div class="frames">
+<!-- 0° full -->
+<div class="frame">
+<svg width="40" height="48" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rx0)"/><defs><radialGradient id="rx0" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">0°</span>
+</div>
+<!-- 30° - slight foreshorten top -->
+<div class="frame">
+<svg width="40" height="42" viewBox="0 0 40 42" fill="none"><path d="M20 2C22 8 30 14 28 24C26 34 20 36 18 32C16 28 14 18 16 12C18 6 19 2 20 2Z" fill="url(#rx30)"/><defs><radialGradient id="rx30" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">30°</span>
+</div>
+<!-- 60° -->
+<div class="frame">
+<svg width="40" height="28" viewBox="0 0 40 28" fill="none"><path d="M20 2C22 6 30 10 28 16C26 22 20 24 18 22C16 20 14 14 16 8C18 4 19 2 20 2Z" fill="url(#rx60)"/><defs><radialGradient id="rx60" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">60°</span>
+</div>
+<!-- 80° - very flat -->
+<div class="frame">
+<svg width="40" height="14" viewBox="0 0 40 14" fill="none"><path d="M20 2C22 3 30 5 28 8C26 11 20 12 18 11C16 10 14 7 16 4C18 2.5 19 2 20 2Z" fill="url(#rx80)"/><defs><radialGradient id="rx80" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+<span class="frame-num">80°</span>
+</div>
+<!-- 90° - edge -->
+<div class="frame">
+<svg width="40" height="6" viewBox="0 0 40 6" fill="none"><path d="M14 3Q20 1 28 3Q20 5 14 3Z" fill="#FFB7C5"/></svg>
+<span class="frame-num">90°</span>
+</div>
+<!-- 120° - underside -->
+<div class="frame">
+<svg width="40" height="28" viewBox="0 0 40 28" fill="none"><path d="M20 26C22 22 30 18 28 12C26 6 20 4 18 6C16 8 14 14 16 20C18 24 19 26 20 26Z" fill="url(#rx120)"/><defs><radialGradient id="rx120" cx="40%" cy="65%" r="60%"><stop offset="0%" stop-color="#FFCCD6"/><stop offset="100%" stop-color="#FFA8B8"/></radialGradient></defs></svg>
+<span class="frame-num">120°</span>
+</div>
+<!-- 150° -->
+<div class="frame">
+<svg width="40" height="42" viewBox="0 0 40 42" fill="none"><path d="M20 40C22 34 30 28 28 18C26 8 20 6 18 10C16 14 14 24 16 30C18 36 19 40 20 40Z" fill="url(#rx150)"/><defs><radialGradient id="rx150" cx="40%" cy="65%" r="60%"><stop offset="0%" stop-color="#FFCCD6"/><stop offset="100%" stop-color="#FFA8B8"/></radialGradient></defs></svg>
+<span class="frame-num">150°</span>
+</div>
+<!-- 180° - full back, upside down -->
+<div class="frame">
+<svg width="40" height="48" viewBox="0 0 40 48" fill="none"><path d="M20 46C22 38 30 30 28 20C26 10 20 8 18 12C16 16 14 26 16 34C18 42 19 46 20 46Z" fill="url(#rx180)"/><defs><radialGradient id="rx180" cx="40%" cy="65%" r="60%"><stop offset="0%" stop-color="#FFCCD6"/><stop offset="100%" stop-color="#FFA8B8"/></radialGradient></defs></svg>
+<span class="frame-num">180°</span>
+</div>
+</div>
+</div>
+
+<h2>Z-Axis Rotation (spin in place)</h2>
+<div class="row">
+<div class="row-label">0° to 330°</div>
+<div class="frames">
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz0)"/><defs><radialGradient id="rz0" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">0°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(30deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz30)"/><defs><radialGradient id="rz30" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">30°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(60deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz60)"/><defs><radialGradient id="rz60" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">60°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(90deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz90)"/><defs><radialGradient id="rz90" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">90°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(120deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz120)"/><defs><radialGradient id="rz120" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">120°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(150deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz150)"/><defs><radialGradient id="rz150" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">150°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(180deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz180b)"/><defs><radialGradient id="rz180b" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">180°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(210deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz210)"/><defs><radialGradient id="rz210" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">210°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(270deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz270)"/><defs><radialGradient id="rz270" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">270°</span></div>
+<div class="frame"><svg width="40" height="48" viewBox="0 0 40 48" fill="none" style="transform:rotate(330deg)"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#rz330)"/><defs><radialGradient id="rz330" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg><span class="frame-num">330°</span></div>
+</div>
+</div>
+
+<h2>Live 3D CSS Animation Demo</h2>
+<p>These use CSS 3D transforms -- exactly what v0 should generate. Each petal has randomized timing.</p>
+<div class="demo-area">
+<div class="falling-petal" style="left:10%; top:-5%; animation-duration:8s; animation-delay:0s;">
+<svg width="28" height="34" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#fa)"/><defs><radialGradient id="fa" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+</div>
+<div class="falling-petal" style="left:30%; top:-8%; animation-duration:10s; animation-delay:2s;">
+<svg width="22" height="26" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#fb)"/><defs><radialGradient id="fb" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+</div>
+<div class="falling-petal" style="left:55%; top:-3%; animation-duration:12s; animation-delay:1s;">
+<svg width="32" height="38" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#fc)"/><defs><radialGradient id="fc" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+</div>
+<div class="falling-petal" style="left:75%; top:-10%; animation-duration:9s; animation-delay:4s;">
+<svg width="20" height="24" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#fd)"/><defs><radialGradient id="fd" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+</div>
+<div class="falling-petal" style="left:90%; top:-6%; animation-duration:11s; animation-delay:3s;">
+<svg width="25" height="30" viewBox="0 0 40 48" fill="none"><path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill="url(#fe)"/><defs><radialGradient id="fe" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#FFD4DE"/><stop offset="100%" stop-color="#FFB7C5"/></radialGradient></defs></svg>
+</div>
+</div>
+
+<h2 style="margin-top:40px;">v0 Prompt -- Copy This</h2>
+<div style="background:#2a2a2a; border-radius:8px; padding:20px; font-size:13px; line-height:1.6; color:#ddd; max-width:800px;">
+Create a React component called SakuraPetals that renders falling cherry blossom petals. Each petal is this SVG path: &lt;path d="M20 2C22 10 30 18 28 28C26 38 20 40 18 36C16 32 14 22 16 14C18 6 19 2 20 2Z" fill with a radial gradient from #FFD4DE center to #FFB7C5 edge&gt;. The component spawns 3-5 petals. Each petal gets RANDOMIZED values on mount: startX (0-100vw), size (16-32px), fallDuration (6-12s), swayAmplitude (40-120px), rotationSpeed (0.5-2x), startDelay (0-5s), opacity (0.4-0.8). Use CSS 3D transforms: combine rotateX (0-360), rotateY (0-360), rotateZ (0-360) with translateX (sine wave sway) in a single keyframe animation. The petal should look like it's TUMBLING -- not just falling straight. At 80% progress it fades to 0. On animation end, respawn with new random values. No animation libraries, pure CSS keyframes with CSS custom properties for the random values. Add perspective: 800px on the container. The back face should be slightly darker (#FFA8B8). Use backface-visibility: visible.
+</div>
+
+</body>
+</html>

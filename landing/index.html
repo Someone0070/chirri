@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chirri — Know when your APIs change</title>
+  <meta name="description" content="Monitor any URL. Get notified when something changes. Zero false positives.">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            sakura: '#FFB7C5',
+            'sakura-light': '#FFF0F3',
+            'sakura-glow': 'rgba(255, 183, 197, 0.4)',
+            heading: '#1a1a1a',
+            body: '#4a4a4a',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* ===== Base ===== */
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #4a4a4a; }
+
+    /* ===== Fade-in on scroll ===== */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Input pink glow on focus ===== */
+    .url-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 183, 197, 0.45), 0 0 20px rgba(255, 183, 197, 0.2);
+      border-color: #FFB7C5;
+    }
+
+    /* ===== Button hover ===== */
+    .btn-sakura {
+      background-color: #FFB7C5;
+      color: #1a1a1a;
+      transition: all 0.25s ease;
+    }
+    .btn-sakura:hover {
+      background-color: #ffa4b6;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 183, 197, 0.4);
+    }
+
+    .btn-outline {
+      border: 1px solid #e5e7eb;
+      color: #4a4a4a;
+      background: white;
+      transition: all 0.25s ease;
+    }
+    .btn-outline:hover {
+      border-color: #FFB7C5;
+      color: #1a1a1a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 183, 197, 0.15);
+    }
+
+    /* ===== Card hover ===== */
+    .feature-card {
+      transition: all 0.25s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .pricing-card {
+      transition: all 0.25s ease;
+    }
+    .pricing-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ===== Sakura petal icon ===== */
+    .petal-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body class="bg-white">
+
+  <!-- ============================================ -->
+  <!-- HERO                                         -->
+  <!-- ============================================ -->
+  <section class="min-h-screen flex items-center justify-center px-6">
+    <div class="max-w-3xl mx-auto text-center fade-section">
+
+      <!-- Logo -->
+      <div class="flex items-center justify-center mb-16">
+        <span class="text-4xl font-light text-heading tracking-tight">chirri</span>
+        <!-- Sakura petal SVG -->
+        <svg class="petal-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C12 2 8 6 8 10C8 12.5 9.5 14.5 12 16C14.5 14.5 16 12.5 16 10C16 6 12 2 12 2Z" fill="#FFB7C5" opacity="0.8"/>
+          <path d="M12 16C12 16 6 14 4 18C3 20 5 22 8 21C10 20.3 11.5 18.5 12 16Z" fill="#FFB7C5" opacity="0.6"/>
+          <path d="M12 16C12 16 18 14 20 18C21 20 19 22 16 21C14 20.3 12.5 18.5 12 16Z" fill="#FFB7C5" opacity="0.6"/>
+        </svg>
+      </div>
+
+      <!-- Tagline -->
+      <h1 class="text-5xl md:text-6xl font-light text-heading leading-tight mb-8">
+        Know when your APIs change.
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-lg md:text-xl text-body font-normal mb-14 max-w-xl mx-auto leading-relaxed">
+        Monitor any URL. Get notified when something changes. Zero&nbsp;false&nbsp;positives.
+      </p>
+
+      <!-- URL Input -->
+      <div class="flex flex-col sm:flex-row items-center gap-3 max-w-lg mx-auto mb-5">
+        <input
+          type="url"
+          placeholder="https://api.stripe.com/v1/charges"
+          class="url-input w-full px-5 py-3.5 rounded-lg border border-gray-200 text-sm text-heading placeholder-gray-400 bg-white"
+        />
+        <button class="btn-sakura whitespace-nowrap px-6 py-3.5 rounded-lg text-sm font-medium w-full sm:w-auto">
+          Start monitoring →
+        </button>
+      </div>
+
+      <!-- Sub-note -->
+      <p class="text-xs text-gray-400 tracking-wide">
+        Free forever for 3 URLs. No credit card needed.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- HOW IT WORKS                                 -->
+  <!-- ============================================ -->
+  <section class="py-28 md:py-36 px-6">
+    <div class="max-w-4xl mx-auto fade-section">
+
+      <h2 class="text-3xl md:text-4xl font-light text-heading text-center mb-20">
+        How it works
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12">
+
+        <!-- Step 1 -->
+        <div class="text-center">
+          <div class="flex justify-center mb-6">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="23" stroke="#FFB7C5" stroke-width="1.5"/>
+              <text x="24" y="29" text-anchor="middle" fill="#1a1a1a" font-family="Inter" font-size="16" font-weight="300">1</text>
+            </svg>
+          </div>
+          <h3 class="text-lg font-light text-heading mb-3">Paste a URL</h3>
+          <p class="text-sm text-body leading-relaxed">
+            Any API endpoint, documentation page, or schema file.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="text-center">
+          <div class="flex justify-center mb-6">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="23" stroke="#FFB7C5" stroke-width="1.5"/>
+              <text x="24" y="29" text-anchor="middle" fill="#1a1a1a" font-family="Inter" font-size="16" font-weight="300">2</text>
+            </svg>
+          </div>
+          <h3 class="text-lg font-light text-heading mb-3">We learn its behavior</h3>
+          <p class="text-sm text-body leading-relaxed">
+            Our classifier figures out the best way to monitor it.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="text-center">
+          <div class="flex justify-center mb-6">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="23" stroke="#FFB7C5" stroke-width="1.5"/>
+              <text x="24" y="29" text-anchor="middle" fill="#1a1a1a" font-family="Inter" font-size="16" font-weight="300">3</text>
+            </svg>
+          </div>
+          <h3 class="text-lg font-light text-heading mb-3">Get notified</h3>
+          <p class="text-sm text-body leading-relaxed">
+            Webhook, email, or Slack when something changes.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- FEATURES                                     -->
+  <!-- ============================================ -->
+  <section class="py-28 md:py-36 px-6">
+    <div class="max-w-4xl mx-auto fade-section">
+
+      <h2 class="text-3xl md:text-4xl font-light text-heading text-center mb-20">
+        Built for developers
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Smart Diffing -->
+        <div class="feature-card bg-sakura-light/50 border border-sakura/20 rounded-xl p-8">
+          <h3 class="text-lg font-light text-heading mb-3">Smart Diffing</h3>
+          <p class="text-sm text-body leading-relaxed">
+            Ignores volatile fields, timestamps, and noise. Only real changes trigger alerts.
+          </p>
+        </div>
+
+        <!-- Auto-Classification -->
+        <div class="feature-card bg-sakura-light/50 border border-sakura/20 rounded-xl p-8">
+          <h3 class="text-lg font-light text-heading mb-3">Auto-Classification</h3>
+          <p class="text-sm text-body leading-relaxed">
+            We detect if it's REST, GraphQL, RSS, OpenAPI, or HTML and pick the best strategy.
+          </p>
+        </div>
+
+        <!-- Instant Alerts -->
+        <div class="feature-card bg-sakura-light/50 border border-sakura/20 rounded-xl p-8">
+          <h3 class="text-lg font-light text-heading mb-3">Instant Alerts</h3>
+          <p class="text-sm text-body leading-relaxed">
+            Webhook, email, Slack, Discord, Telegram. Your choice.
+          </p>
+        </div>
+
+        <!-- API-First -->
+        <div class="feature-card bg-sakura-light/50 border border-sakura/20 rounded-xl p-8">
+          <h3 class="text-lg font-light text-heading mb-3">API-First</h3>
+          <p class="text-sm text-body leading-relaxed">
+            Stripe-like developer experience. <code class="text-xs bg-white/80 px-1.5 py-0.5 rounded">curl</code> friendly. Full REST API.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- PRICING                                      -->
+  <!-- ============================================ -->
+  <section class="py-28 md:py-36 px-6">
+    <div class="max-w-5xl mx-auto fade-section">
+
+      <h2 class="text-3xl md:text-4xl font-light text-heading text-center mb-20">
+        Simple pricing
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Free -->
+        <div class="pricing-card bg-white border border-gray-200 rounded-xl p-7 flex flex-col">
+          <h3 class="text-lg font-light text-heading mb-1">Free</h3>
+          <div class="mb-6">
+            <span class="text-3xl font-light text-heading">$0</span>
+            <span class="text-sm text-body">/mo</span>
+          </div>
+          <ul class="text-sm text-body space-y-3 mb-8 flex-1">
+            <li>3 URLs</li>
+            <li>Daily checks</li>
+            <li>7-day history</li>
+            <li>Email alerts</li>
+          </ul>
+          <button class="btn-outline w-full py-2.5 rounded-lg text-sm font-medium">
+            Get started
+          </button>
+        </div>
+
+        <!-- Indie -->
+        <div class="pricing-card bg-white border border-gray-200 rounded-xl p-7 flex flex-col">
+          <h3 class="text-lg font-light text-heading mb-1">Indie</h3>
+          <div class="mb-6">
+            <span class="text-3xl font-light text-heading">$9</span>
+            <span class="text-sm text-body">/mo</span>
+          </div>
+          <ul class="text-sm text-body space-y-3 mb-8 flex-1">
+            <li>20 URLs</li>
+            <li>15-min checks</li>
+            <li>30-day history</li>
+            <li>All alert channels</li>
+          </ul>
+          <button class="btn-outline w-full py-2.5 rounded-lg text-sm font-medium">
+            Get started
+          </button>
+        </div>
+
+        <!-- Pro (highlighted) -->
+        <div class="pricing-card bg-sakura-light border-2 border-sakura rounded-xl p-7 flex flex-col relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span class="bg-sakura text-heading text-xs font-medium px-3 py-1 rounded-full">Popular</span>
+          </div>
+          <h3 class="text-lg font-light text-heading mb-1">Pro</h3>
+          <div class="mb-6">
+            <span class="text-3xl font-light text-heading">$29</span>
+            <span class="text-sm text-body">/mo</span>
+          </div>
+          <ul class="text-sm text-body space-y-3 mb-8 flex-1">
+            <li>100 URLs</li>
+            <li>5-min checks</li>
+            <li>90-day history</li>
+            <li>Team features</li>
+          </ul>
+          <button class="btn-sakura w-full py-2.5 rounded-lg text-sm font-medium">
+            Get started
+          </button>
+        </div>
+
+        <!-- Business -->
+        <div class="pricing-card bg-white border border-gray-200 rounded-xl p-7 flex flex-col">
+          <h3 class="text-lg font-light text-heading mb-1">Business</h3>
+          <div class="mb-6">
+            <span class="text-3xl font-light text-heading">$79</span>
+            <span class="text-sm text-body">/mo</span>
+          </div>
+          <ul class="text-sm text-body space-y-3 mb-8 flex-1">
+            <li>500 URLs</li>
+            <li>1-min checks</li>
+            <li>1-year history</li>
+            <li>SSO + SLA</li>
+          </ul>
+          <button class="btn-outline w-full py-2.5 rounded-lg text-sm font-medium">
+            Get started
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- FOOTER                                       -->
+  <!-- ============================================ -->
+  <footer class="py-16 px-6 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-sm text-gray-400">
+        <span class="text-heading font-light">chirri</span>
+        <span>© 2026</span>
+      </div>
+      <nav class="flex items-center gap-6 text-sm text-gray-400">
+        <a href="#" class="hover:text-heading transition-colors">Docs</a>
+        <a href="#" class="hover:text-heading transition-colors">API</a>
+        <a href="#" class="hover:text-heading transition-colors">GitHub</a>
+        <a href="#" class="hover:text-heading transition-colors">Status</a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <!-- ============================================ -->
+  <!-- Intersection Observer for fade-in            -->
+  <!-- ============================================ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.fade-section');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px',
+      });
+
+      sections.forEach((section) => observer.observe(section));
+    });
+  </script>
+
+</body>
+</html>

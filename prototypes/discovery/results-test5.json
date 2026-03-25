@@ -1,0 +1,1894 @@
+[
+  {
+    "domain": "stripe.com",
+    "discovered": {
+      "docs": [
+        {
+          "url": "https://docs.stripe.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://stripe.com/guides",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Guides"
+          }
+        },
+        {
+          "url": "https://docs.stripe.com/api",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "API reference"
+          }
+        },
+        {
+          "url": "https://stripe.com/guides/best-practices-for-launching-and-scaling-platform-payments",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Read the guide"
+          }
+        },
+        {
+          "url": "https://stripe.com/guides/introduction-to-monetizing-payments",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Read the guide"
+          }
+        },
+        {
+          "url": "https://stripe.com/guides/introduction-to-risk-management",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Read the guide"
+          }
+        },
+        {
+          "url": "https://docs.stripe.com/development",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "View developer docs"
+          }
+        },
+        {
+          "url": "https://docs.stripe.com/no-code",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Explore no-code"
+          }
+        },
+        {
+          "url": "https://docs.stripe.com/get-started",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Integration options"
+          }
+        },
+        {
+          "url": "https://stripe.com/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.stripe.com/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/stripe/open-banking-v2-docs",
+          "method": "github",
+          "confidence": 0.7,
+          "type": "docs",
+          "meta": {
+            "repo": "stripe/open-banking-v2-docs",
+            "description": "Open banking docs for V2 APIs"
+          }
+        },
+        {
+          "url": "https://stripe.com/docs/api",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        }
+      ],
+      "changelog": [
+        {
+          "url": "https://docs.stripe.com/changelog",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "changelog",
+          "meta": {
+            "linkText": "API changelog"
+          }
+        },
+        {
+          "url": "https://stripe.com/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://stripe.com/blog/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://github.com/stripe/stripe/releases",
+          "method": "github",
+          "confidence": 0.6,
+          "type": "changelog",
+          "meta": {
+            "repo": "stripe/stripe"
+          }
+        }
+      ],
+      "status": [
+        {
+          "url": "https://status.stripe.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "status"
+        },
+        {
+          "url": "https://stripe.com/status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "status"
+        }
+      ],
+      "openapi": [
+        {
+          "url": "https://github.com/stripe/openapi",
+          "method": "github",
+          "confidence": 0.75,
+          "type": "openapi",
+          "meta": {
+            "repo": "stripe/openapi"
+          }
+        }
+      ]
+    },
+    "platforms": [],
+    "methods_tried": 9,
+    "methods_succeeded": 5,
+    "total_discovered": 26,
+    "duration_ms": 7030,
+    "errors": [
+      "search: BRAVE_API_KEY not set - search method skipped"
+    ]
+  },
+  {
+    "domain": "github.com",
+    "discovered": {
+      "docs": [
+        {
+          "url": "https://developers.github.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.github.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://developer.github.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.github.com/search-github/github-code-search/understanding-github-code-search-syntax",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Search syntax tips"
+          }
+        },
+        {
+          "url": "https://docs.github.com/get-started/exploring-integrations/about-building-integrations",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Developer API"
+          }
+        },
+        {
+          "url": "https://docs.github.com/site-policy/github-terms/github-terms-of-service",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Terms"
+          }
+        },
+        {
+          "url": "https://docs.github.com/site-policy/privacy-policies/github-privacy-statement",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Privacy"
+          }
+        },
+        {
+          "url": "https://github.com/git-guides",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "What is Git?"
+          }
+        },
+        {
+          "url": "https://github.com/github/docs",
+          "method": "github",
+          "confidence": 0.75,
+          "type": "docs",
+          "meta": {
+            "repo": "github/docs"
+          }
+        },
+        {
+          "url": "https://github.com/documentation",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/api-reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/api-docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/developers",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/developer",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/guides",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.github.com/developers",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.github.com/guides",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/github/rest-api-description",
+          "method": "github",
+          "confidence": 0.7,
+          "type": "docs",
+          "meta": {
+            "repo": "github/rest-api-description",
+            "description": "An OpenAPI description for GitHub's REST API"
+          }
+        },
+        {
+          "url": "https://github.com/github/rest-api-docs-md",
+          "method": "github",
+          "confidence": 0.7,
+          "type": "docs",
+          "meta": {
+            "repo": "github/rest-api-docs-md",
+            "description": "Documentation for read-only REST API operations, generated from the OpenAPI schema"
+          }
+        }
+      ],
+      "changelog": [
+        {
+          "url": "https://github.com/changes",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://github.com/whats-new",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://github.com/release-notes",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://developer.github.com/changes",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        }
+      ],
+      "status": [
+        {
+          "url": "https://status.github.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "status"
+        },
+        {
+          "url": "https://github.com/status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "status"
+        }
+      ],
+      "openapi": []
+    },
+    "platforms": [],
+    "methods_tried": 9,
+    "methods_succeeded": 4,
+    "total_discovered": 34,
+    "duration_ms": 5666,
+    "errors": [
+      "search: BRAVE_API_KEY not set - search method skipped"
+    ]
+  },
+  {
+    "domain": "twilio.com",
+    "discovered": {
+      "docs": [
+        {
+          "url": "https://developer.twilio.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://reference.twilio.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.twilio.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://developers.twilio.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://www.twilio.com/en-us/developers",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Developers\n          \n            \n  \n  \n    \n    \n        \n            \n    An icon of a right chev"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Documentation\n          \n            \n  \n  \n    \n    \n        \n            \n    An icon of a right c"
+          }
+        },
+        {
+          "url": "https://twilio.com/en-us/developers",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Developer Hub\n          \n            \n  \n  \n    \n    \n        \n            \n    An icon of a right c"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/en-us/resource-center/guides?asset-type=guide",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Guides"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs#developer-toolkit",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Developer resources"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs#twilio-essentials",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Twilio Essentials"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs/libraries",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "SDKs"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs/sendgrid/for-developers/sending-email/getting-started-smtp",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "SMTP Email API"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs/messaging/api",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "SMS API"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs/whatsapp",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "WhatsApp API"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs/voice",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Voice API"
+          }
+        },
+        {
+          "url": "https://www.twilio.com/docs/segment/connections",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Connections"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://twilio.com/developers",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://twilio.com/api-docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://twilio.com/api-reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://developer.twilio.com/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://developer.twilio.com/api",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://developer.twilio.com/api-docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://developer.twilio.com/api-reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://developer.twilio.com/developers",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://reference.twilio.com/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://reference.twilio.com/api",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://reference.twilio.com/api-reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://reference.twilio.com/api-docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://reference.twilio.com/developers",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.twilio.com/api",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.twilio.com/guides",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/twilio/twilio-oai",
+          "method": "github",
+          "confidence": 0.7,
+          "type": "docs",
+          "meta": {
+            "repo": "twilio/twilio-oai",
+            "description": "The Twilio OpenAPI Specification"
+          }
+        },
+        {
+          "url": "https://github.com/twilio/twilio-oai-generator",
+          "method": "github",
+          "confidence": 0.7,
+          "type": "docs",
+          "meta": {
+            "repo": "twilio/twilio-oai-generator",
+            "description": "Twilio OpenAPI client generator"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-php/index.html",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-node/index.html",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-java/index.html",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-ruby/index.html",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-python/index.html",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-csharp/index.html",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-php/",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-node/",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-java/",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-ruby/",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-python/",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/libraries/reference/twilio-csharp/",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        },
+        {
+          "url": "https://twilio.com/docs/admin/",
+          "method": "robots",
+          "confidence": 0.4,
+          "type": "docs",
+          "meta": {
+            "source": "allow_disallow"
+          }
+        }
+      ],
+      "changelog": [
+        {
+          "url": "https://changelog.twilio.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "changelog"
+        },
+        {
+          "url": "https://twilio.com/en-us/changelog",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "changelog",
+          "meta": {
+            "linkText": "Changelog\n          \n            \n  \n  \n    \n    \n        \n            \n    An icon of a right chevr"
+          }
+        },
+        {
+          "url": "https://twilio.com/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://developer.twilio.com/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://reference.twilio.com/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        }
+      ],
+      "status": [
+        {
+          "url": "https://status.twilio.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "status"
+        },
+        {
+          "url": "https://twilio.com/status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "status"
+        },
+        {
+          "url": "https://developer.twilio.com/status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "status"
+        },
+        {
+          "url": "https://reference.twilio.com/status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "status"
+        }
+      ],
+      "openapi": []
+    },
+    "platforms": [],
+    "methods_tried": 9,
+    "methods_succeeded": 5,
+    "total_discovered": 66,
+    "duration_ms": 14578,
+    "errors": [
+      "search: BRAVE_API_KEY not set - search method skipped"
+    ]
+  },
+  {
+    "domain": "vercel.com",
+    "discovered": {
+      "docs": [
+        {
+          "url": "https://docs.vercel.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/docs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "DocsVercel documentation"
+          }
+        },
+        {
+          "url": "https://vercel.com/docs/frameworks",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Supported frameworks"
+          }
+        },
+        {
+          "url": "https://vercel.com/docs/frameworks/full-stack/nuxt",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Nuxt"
+          }
+        },
+        {
+          "url": "https://vercel.com/docs/frameworks/full-stack/sveltekit",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Svelte"
+          }
+        },
+        {
+          "url": "https://vercel.com/docs/frameworks/backend/nitro",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Nitro"
+          }
+        },
+        {
+          "url": "https://vercel.com/academy/production-monorepos/add-docs-app",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/a-better-developer-experience-makes-building-cruise-critic-more-efficient",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/accelerating-developer-velocity-and-creating-high-impact-web-teams",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/how-chatbase-scaled-rapidly-with-vercels-developer-experience-and-ai-sdk",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/how-fern-delivers-6m-monthly-views-and-80-faster-docs-with-vercel",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/how-hashicorp-developers-iterate-faster-with-isr",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/how-supabase-elevated-their-developer-experience-with-turborepo",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/improving-developer-workflow",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/introducing-new-developer-tools-in-the-vercel-toolbar",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/ios-developers-can-now-offer-commission-free-payments-on-web",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/latency-numbers-every-web-developer-should-know",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/the-developer-experience-of-the-frontend-cloud",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/the-second-wave-of-mcp-building-for-llms-not-developers",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/blog/xai-and-vercel-partner-to-bring-zero-friction-ai-to-developers",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/careers/developer-success-engineer-uk-5530586004",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/careers/senior-developer-ecosystem-manager-5832366004",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/documentation",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/api-docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/api-reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/developers",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/developer",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/v1/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/v2/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://vercel.com/guides",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://github.com/vercel/release",
+          "method": "github",
+          "confidence": 0.7,
+          "type": "docs",
+          "meta": {
+            "repo": "vercel/release",
+            "description": "Generate changelogs with a single command"
+          }
+        }
+      ],
+      "changelog": [
+        {
+          "url": "https://changelog.vercel.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/changelog",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "changelog",
+          "meta": {
+            "linkText": "ChangelogSee what shipped"
+          }
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-april-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-august-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-december-2019",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-february-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-january-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-july-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-june-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-march-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-may-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-november-2019",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-october-2019",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/changelog-september-2020",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/whats-new-in-react-19",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/blog/whats-new-in-svelte-5",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/changelog/16x-larger-environment-variable-storage-up-to-64kb",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/changes",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/whats-new",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/release-notes",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://vercel.com/releases",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://github.com/vercel/vercel/releases",
+          "method": "github",
+          "confidence": 0.6,
+          "type": "changelog",
+          "meta": {
+            "repo": "vercel/vercel"
+          }
+        }
+      ],
+      "status": [
+        {
+          "url": "https://status.vercel.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "status"
+        },
+        {
+          "url": "https://vercel.com/academy/slack-agents/status-communication",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "status"
+        },
+        {
+          "url": "https://vercel.com/status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "status"
+        }
+      ],
+      "openapi": []
+    },
+    "platforms": [],
+    "methods_tried": 9,
+    "methods_succeeded": 6,
+    "total_discovered": 81,
+    "duration_ms": 5567,
+    "errors": [
+      "search: BRAVE_API_KEY not set - search method skipped"
+    ]
+  },
+  {
+    "domain": "supabase.com",
+    "discovered": {
+      "docs": [
+        {
+          "url": "https://docs.supabase.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Docs"
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Data APIsInstant ready-to-use Restful APIs."
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/reactjs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/nextjs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/redwoodjs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/flutter",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/kotlin",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/sveltekit",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/solidjs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/vue",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/nuxtjs",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started/quickstarts/refine",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": ""
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/examples",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "View all examples"
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/database/tables?queryGroups=database-method&database-method=sql&queryGroups=language&language=js",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Full CRUD"
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/database/tables?queryGroups=database-method&database-method=sql&queryGroups=language&language=js#materialized-views",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Materialized Views"
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/database/tables?queryGroups=database-method&database-method=sql&queryGroups=language&language=js#joining-tables-with-foreign-keys",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Foreign Tables"
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/database/partitions",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Partitioned Tables"
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/database/overview#table-view",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Easy as a spreadsheet"
+          }
+        },
+        {
+          "url": "https://supabase.com/solutions/developers",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Developers"
+          }
+        },
+        {
+          "url": "https://supabase.com/solutions/postgres-developers",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "docs",
+          "meta": {
+            "linkText": "Postgres Devs"
+          }
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/auth",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/cli",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/cron",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/deployment",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/functions",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/getting-started",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/integrations",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/local-development",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/platform",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/queues",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/realtime",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/resources",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/security",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/self-hosting",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/storage",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/telemetry",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/automatic-embeddings",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/choosing-compute-addon",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/concepts",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/engineering-for-scale",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/going-to-prod",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/google-colab",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/hugging-face",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/hybrid-search",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/keyword-search",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/langchain",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/python-clients",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/rag-with-permissions",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/semantic-search",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/structured-unstructured",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/vecs-python-client",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/vector-columns",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/ai/vector-indexes",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/api-keys",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/automatic-retries-in-supabase-js",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/creating-routes",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/custom-claims-and-role-based-access-control-rbac",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/hardening-data-api",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/quickstart",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/securing-your-api",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/sql-to-api",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/sql-to-rest",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/api/using-custom-schemas",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/cron/install",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/cron/quickstart",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/auth/architecture",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/auth/audit-logs",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://supabase.com/docs/guides/auth/auth-anonymous",
+          "method": "sitemap",
+          "confidence": 0.75,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/documentation",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/api",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/api-docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/api-reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/reference",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/developers",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/developer",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/dev",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/updates",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/health",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/blog/engineering",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/system-status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/blog/updates",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/v1/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/guides",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        },
+        {
+          "url": "https://docs.supabase.com/v2/docs",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "docs"
+        }
+      ],
+      "changelog": [
+        {
+          "url": "https://supabase.com/changelog",
+          "method": "homepage_link",
+          "confidence": 0.8,
+          "type": "changelog",
+          "meta": {
+            "linkText": "Changelog"
+          }
+        },
+        {
+          "url": "https://supabase.com/blog/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://docs.supabase.com/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://docs.supabase.com/changes",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://docs.supabase.com/release-notes",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://docs.supabase.com/whats-new",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://docs.supabase.com/releases",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://docs.supabase.com/blog/changelog",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "changelog"
+        },
+        {
+          "url": "https://github.com/supabase/supabase/releases",
+          "method": "github",
+          "confidence": 0.6,
+          "type": "changelog",
+          "meta": {
+            "repo": "supabase/supabase"
+          }
+        }
+      ],
+      "status": [
+        {
+          "url": "https://status.supabase.com",
+          "method": "subdomain",
+          "confidence": 0.9,
+          "type": "status"
+        },
+        {
+          "url": "https://docs.supabase.com/status",
+          "method": "path_probe",
+          "confidence": 0.7,
+          "type": "status"
+        }
+      ],
+      "openapi": []
+    },
+    "platforms": [],
+    "methods_tried": 9,
+    "methods_succeeded": 6,
+    "total_discovered": 101,
+    "duration_ms": 4665,
+    "errors": [
+      "search: BRAVE_API_KEY not set - search method skipped"
+    ]
+  }
+]

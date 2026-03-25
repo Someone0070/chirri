@@ -1,0 +1,21 @@
+{
+  "id": "sendgrid-01",
+  "source": "SendGrid Changelog",
+  "title": "Removal of legacy v2 Mail Send endpoint",
+  "date": "2026-02-01",
+  "raw_changelog": "The legacy v2 Mail Send endpoint (POST /api/mail.send.json) will be removed on June 1, 2026.",
+  "before_text": "## Mail Send Endpoints\n\n### v3 (Recommended)\nPOST /v3/mail/send\n\n### v2 (Legacy)\nPOST /api/mail.send.json\n\nBoth endpoints are fully supported.",
+  "after_text": "## Mail Send Endpoints\n\n### v3 (Required)\nPOST /v3/mail/send\n\n### v2 (DEPRECATED - Removed June 1, 2026)\n~~POST /api/mail.send.json~~\n\n**Migration Required:** All users must migrate to v3 before June 1, 2026. The v2 endpoint will return 410 Gone after this date.",
+  "diff_text": "--- before\n+++ after\n@@ -2,7 +2,8 @@\n-### v3 (Recommended)\n+### v3 (Required)\n POST /v3/mail/send\n \n-### v2 (Legacy)\n-POST /api/mail.send.json\n-\n-Both endpoints are fully supported.\n+### v2 (DEPRECATED - Removed June 1, 2026)\n+~~POST /api/mail.send.json~~\n+\n+**Migration Required:** All users must migrate to v3 before June 1, 2026.",
+  "ground_truth": {
+    "severity": "critical",
+    "is_breaking": true,
+    "breaking_reason": "v2 endpoint being removed entirely. All v2 users will get 410 Gone responses.",
+    "affected_endpoints": [
+      "POST /api/mail.send.json"
+    ],
+    "action_required": "Migrate from v2 to v3 Mail Send endpoint before June 1, 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Clear removal of deprecated endpoint"
+  }
+}

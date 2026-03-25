@@ -1,0 +1,19 @@
+{
+  "id": "adversarial-02",
+  "source": "Adversarial Test",
+  "title": "Copyright year update only",
+  "date": "2026-01-02",
+  "raw_changelog": "Updated copyright year.",
+  "before_text": "## API Reference\n\nWelcome to our API documentation.\n\n---\n© 2025 Example Corp. All rights reserved.\nLast updated: December 15, 2025",
+  "after_text": "## API Reference\n\nWelcome to our API documentation.\n\n---\n© 2026 Example Corp. All rights reserved.\nLast updated: January 2, 2026",
+  "diff_text": "--- before\n+++ after\n@@ -5,3 +5,3 @@\n ---\n-© 2025 Example Corp. All rights reserved.\n-Last updated: December 15, 2025\n+© 2026 Example Corp. All rights reserved.\n+Last updated: January 2, 2026",
+  "ground_truth": {
+    "severity": "none",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [],
+    "action_required": "No action needed. Copyright year and timestamp update only.",
+    "cosmetic_only": true,
+    "confidence_notes": "Pure metadata change - copyright year and date"
+  }
+}

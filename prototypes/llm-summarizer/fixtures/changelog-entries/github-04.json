@@ -1,0 +1,21 @@
+{
+  "id": "github-04",
+  "source": "GitHub API Changelog",
+  "title": "Repository rename changes the API URL",
+  "date": "2026-02-28",
+  "raw_changelog": "When a repository is renamed, API calls to the old name will now return 301 redirects instead of 200 responses with the old name. This applies to all REST API endpoints.",
+  "before_text": "## Repository Renames\n\nWhen a repository is renamed, API calls using the old repository name will continue to work. The API transparently resolves the new name and returns the response as if the old name was used.\n\n### Behavior\n- GET /repos/{old_owner}/{old_name} → 200 OK (resolves to new name)\n- Response body contains the old name in the full_name field",
+  "after_text": "## Repository Renames\n\nWhen a repository is renamed, API calls using the old repository name will receive a redirect.\n\n### Behavior\n- GET /repos/{old_owner}/{old_name} → 301 Moved Permanently\n- Location header points to the new URL\n- Clients must follow the redirect or update their stored repository references\n\n**Note:** This change takes effect on April 1, 2026. Update your integrations to handle 301 redirects.",
+  "diff_text": "--- before\n+++ after\n@@ -1,8 +1,10 @@\n ## Repository Renames\n \n-When a repository is renamed, API calls using the old repository name will continue to work. The API transparently resolves the new name and returns the response as if the old name was used.\n+When a repository is renamed, API calls using the old repository name will receive a redirect.\n \n ### Behavior\n-- GET /repos/{old_owner}/{old_name} → 200 OK (resolves to new name)\n-- Response body contains the old name in the full_name field\n+- GET /repos/{old_owner}/{old_name} → 301 Moved Permanently\n+- Location header points to the new URL\n+- Clients must follow the redirect or update their stored repository references\n+\n+**Note:** This change takes effect on April 1, 2026. Update your integrations to handle 301 redirects.",
+  "ground_truth": {
+    "severity": "critical",
+    "is_breaking": true,
+    "breaking_reason": "HTTP status code changed from 200 to 301. Clients not handling redirects will break.",
+    "affected_endpoints": [
+      "All REST API endpoints using repository names"
+    ],
+    "action_required": "Ensure HTTP clients follow 301 redirects. Update any hardcoded repository URLs. Deadline: April 1, 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Clear breaking change - HTTP status code change"
+  }
+}

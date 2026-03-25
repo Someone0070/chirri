@@ -1,0 +1,19 @@
+{
+  "id": "adversarial-01",
+  "source": "Adversarial Test",
+  "title": "Cosmetic-only change: whitespace and formatting",
+  "date": "2026-03-01",
+  "raw_changelog": "Documentation reformatted for consistency.",
+  "before_text": "## Create a Payment Intent\n\nPOST /v1/payment_intents\n\nCreates a PaymentIntent object.\n\n### Parameters\n\n|  Parameter  |  Type  |  Required  |\n|---|---|---|\n|  amount  |  integer  |  Yes  |\n|  currency  |  string  |  Yes  |\n|  description  |  string  |  No  |",
+  "after_text": "## Create a Payment Intent\n\nPOST /v1/payment_intents\n\nCreates a PaymentIntent object.\n\n### Parameters\n\n| Parameter | Type | Required |\n|-----------|------|----------|\n| amount | integer | Yes |\n| currency | string | Yes |\n| description | string | No |",
+  "diff_text": "--- before\n+++ after\n@@ -8,6 +8,6 @@\n-|  Parameter  |  Type  |  Required  |\n-|---|---|---|\n-|  amount  |  integer  |  Yes  |\n-|  currency  |  string  |  Yes  |\n-|  description  |  string  |  No  |\n+| Parameter | Type | Required |\n+|-----------|------|----------|\n+| amount | integer | Yes |\n+| currency | string | Yes |\n+| description | string | No |",
+  "ground_truth": {
+    "severity": "none",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [],
+    "action_required": "No action needed. Whitespace and table formatting changes only.",
+    "cosmetic_only": true,
+    "confidence_notes": "Pure cosmetic change - whitespace normalization in markdown table"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "stripe-05",
+  "source": "Stripe API Changelog",
+  "title": "Adds settlement type to Application Fee objects",
+  "date": "2026-02-25",
+  "raw_changelog": "Adds settlement type to Application Fee objects. A new settlement_type field is added to Application Fee objects to indicate the settlement type.",
+  "before_text": "## Application Fee Object\n\n```json\n{\n  \"id\": \"fee_xxx\",\n  \"object\": \"application_fee\",\n  \"amount\": 100,\n  \"currency\": \"usd\",\n  \"created\": 1234567890,\n  \"account\": \"acct_xxx\",\n  \"application\": \"ca_xxx\"\n}\n```",
+  "after_text": "## Application Fee Object\n\n```json\n{\n  \"id\": \"fee_xxx\",\n  \"object\": \"application_fee\",\n  \"amount\": 100,\n  \"currency\": \"usd\",\n  \"created\": 1234567890,\n  \"account\": \"acct_xxx\",\n  \"application\": \"ca_xxx\",\n  \"settlement_type\": \"standard\"\n}\n```",
+  "diff_text": "--- before\n+++ after\n@@ -8,5 +8,6 @@\n   \"account\": \"acct_xxx\",\n-  \"application\": \"ca_xxx\"\n+  \"application\": \"ca_xxx\",\n+  \"settlement_type\": \"standard\"",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Application Fee API"
+    ],
+    "action_required": "No action required. New settlement_type field available on Application Fee objects.",
+    "cosmetic_only": false,
+    "confidence_notes": "Additive response field"
+  }
+}

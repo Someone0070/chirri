@@ -1,0 +1,21 @@
+{
+  "id": "github-01",
+  "source": "GitHub API Changelog",
+  "title": "REST API: Deprecation of the team discussions API",
+  "date": "2026-03-15",
+  "raw_changelog": "The team discussions API endpoints are deprecated and will be removed on March 1, 2027. Migrate to GitHub Discussions instead.",
+  "before_text": "## Team Discussions API\n\nList discussions for a team.\n\nGET /orgs/{org}/teams/{team_slug}/discussions\n\n### Response\nStatus: 200 OK\n```json\n[\n  {\n    \"number\": 1,\n    \"title\": \"Design meeting notes\",\n    \"body\": \"...\",\n    \"author\": { \"login\": \"octocat\" }\n  }\n]\n```",
+  "after_text": "## Team Discussions API (Deprecated)\n\n> **Deprecation Notice:** This API will be removed on March 1, 2027. Migrate to GitHub Discussions.\n\nList discussions for a team.\n\nGET /orgs/{org}/teams/{team_slug}/discussions\n\n### Response\nStatus: 200 OK\n```json\n[\n  {\n    \"number\": 1,\n    \"title\": \"Design meeting notes\",\n    \"body\": \"...\",\n    \"author\": { \"login\": \"octocat\" }\n  }\n]\n```",
+  "diff_text": "--- before\n+++ after\n@@ -1,4 +1,6 @@\n-## Team Discussions API\n+## Team Discussions API (Deprecated)\n \n-List discussions for a team.\n+> **Deprecation Notice:** This API will be removed on March 1, 2027. Migrate to GitHub Discussions.\n+\n+List discussions for a team.",
+  "ground_truth": {
+    "severity": "high",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "GET /orgs/{org}/teams/{team_slug}/discussions"
+    ],
+    "action_required": "Plan migration from Team Discussions API to GitHub Discussions before March 1, 2027 deadline.",
+    "cosmetic_only": false,
+    "confidence_notes": "Deprecation notice with clear removal date"
+  }
+}

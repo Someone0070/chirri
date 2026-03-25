@@ -1,0 +1,23 @@
+{
+  "id": "cloudflare-02",
+  "source": "Cloudflare Changelog",
+  "title": "OIDC Claims filtering in Gateway policies",
+  "date": "2026-03-24",
+  "raw_changelog": "Gateway now supports OIDC Claims as a selector in Firewall, Resolver, and Egress policies.",
+  "before_text": "## Gateway Policy Selectors\n\n| Selector | Available In |\n|----------|-------------|\n| Application | Firewall, Resolver |\n| User Email | Firewall, Resolver, Egress |\n| User Group | Firewall, Resolver, Egress |\n| Device Posture | Firewall |",
+  "after_text": "## Gateway Policy Selectors\n\n| Selector | Available In |\n|----------|-------------|\n| Application | Firewall, Resolver |\n| User Email | Firewall, Resolver, Egress |\n| User Group | Firewall, Resolver, Egress |\n| Device Posture | Firewall |\n| OIDC Claims | Firewall, Resolver, Egress |",
+  "diff_text": "--- before\n+++ after\n@@ -6,3 +6,4 @@\n | User Group | Firewall, Resolver, Egress |\n | Device Posture | Firewall |\n+| OIDC Claims | Firewall, Resolver, Egress |",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Gateway Firewall",
+      "Gateway Resolver",
+      "Gateway Egress"
+    ],
+    "action_required": "No action required. New OIDC Claims selector available for identity-based policies.",
+    "cosmetic_only": false,
+    "confidence_notes": "Additive new selector"
+  }
+}

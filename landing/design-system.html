@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chirri Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#FFB7C5', light: '#FFF0F3', dark: '#E8919F' },
+            secondary: '#8E9AAF',
+            tertiary: '#B8C4BB',
+            neutral: { 50: '#FAFAFA', 100: '#F5F5F5', 200: '#E5E5E5', 700: '#4A4A4A', 900: '#1A1A1A' },
+            severity: { critical: '#EF4444', high: '#F97316', medium: '#EAB308', low: '#3B82F6' },
+            forecast: '#A855F7',
+            healthy: '#22C55E',
+            muted: '#D1D5DB',
+            dark: { bg: '#0F0F0F', card: '#1A1A1A', border: '#2A2A2A' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          borderRadius: {
+            DEFAULT: '8px',
+            card: '12px',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .dot-pulse { animation: pulse-dot 1.5s ease-in-out infinite; }
+    .toggle-active { background-color: #FFB7C5; }
+    .toggle-active .toggle-knob { transform: translateX(20px); }
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Custom checkbox */
+    .chirri-checkbox { position: relative; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+    .chirri-checkbox input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .chirri-checkbox .mark {
+      width: 16px; height: 16px; border-radius: 3px; border: 1.5px solid #D1D5DB;
+      background: #FFFFFF; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .chirri-checkbox input:checked + .mark {
+      background: #FFB7C5; border-color: #FFB7C5;
+    }
+    .chirri-checkbox .mark svg { opacity: 0; transition: opacity 0.15s; }
+    .chirri-checkbox input:checked + .mark svg { opacity: 1; }
+
+    /* Custom radio */
+    .chirri-radio { position: relative; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+    .chirri-radio input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .chirri-radio .dot-ring {
+      width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #D1D5DB;
+      background: #FFFFFF; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s;
+    }
+    .chirri-radio .dot-ring::after {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: transparent; transition: background 0.15s;
+    }
+    .chirri-radio input:checked + .dot-ring { border-color: #FFB7C5; }
+    .chirri-radio input:checked + .dot-ring::after { background: #FFB7C5; }
+
+    /* Custom dropdown */
+    .chirri-select { position: relative; }
+    .chirri-select-trigger {
+      width: 100%; border: 1px solid #E5E5E5; border-radius: 8px;
+      padding: 10px 40px 10px 16px; font-size: 14px; color: #1A1A1A;
+      background: #FFFFFF; cursor: pointer; display: flex; align-items: center;
+      transition: border-color 0.2s, box-shadow 0.2s; user-select: none;
+    }
+    .chirri-select-trigger:focus, .chirri-select.open .chirri-select-trigger {
+      border-color: #D1D5DB; box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05); outline: none;
+    }
+    .chirri-select-chevron {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; color: #8E9AAF; transition: transform 0.2s;
+    }
+    .chirri-select.open .chirri-select-chevron { transform: translateY(-50%) rotate(180deg); }
+    .chirri-select-panel {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 50;
+      background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 8px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      padding: 4px; opacity: 0; transform: translateY(-4px);
+      transition: opacity 0.15s, transform 0.15s; pointer-events: none;
+    }
+    .chirri-select.open .chirri-select-panel { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .chirri-select-option {
+      padding: 8px 12px; border-radius: 6px; font-size: 14px; color: #4A4A4A;
+      cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.1s;
+    }
+    .chirri-select-option:hover { background: #FFF0F3; }
+    .chirri-select-option.selected { color: #1A1A1A; font-weight: 500; }
+    .chirri-select-option .check-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #FFB7C5; display: none;
+    }
+    .chirri-select-option.selected .check-dot { display: block; }
+  </style>
+</head>
+<body class="bg-white text-neutral-700">
+
+  <!-- Header -->
+  <header class="border-b border-neutral-200 sticky top-0 bg-white/90 backdrop-blur-sm z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-light text-neutral-900 tracking-tight">Chirri Design System</h1>
+        <p class="text-sm text-neutral-700 mt-0.5">chirri.io &middot; Visual Reference v1.0</p>
+      </div>
+      <span class="text-xs font-medium uppercase tracking-widest text-secondary">Japanese Zen Minimalism</span>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-12 space-y-20">
+
+    <!-- ============================================ -->
+    <!-- 1. COLOR PALETTE -->
+    <!-- ============================================ -->
+    <section id="colors">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Color Palette</h2>
+      <p class="text-neutral-700 mb-8">Brand, semantic, and neutral colors with tint/shade strips.</p>
+
+      <!-- Brand Colors -->
+      <h3 class="text-lg font-medium text-neutral-900 mb-4">Brand</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <!-- Primary -->
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-24" style="background:#FFB7C5"></div>
+          <div class="flex h-3">
+            <div class="flex-1" style="background:#FFF0F3"></div>
+            <div class="flex-1" style="background:#FFD4DE"></div>
+            <div class="flex-1" style="background:#FFB7C5"></div>
+            <div class="flex-1" style="background:#E8919F"></div>
+            <div class="flex-1" style="background:#C06B78"></div>
+          </div>
+          <div class="p-4">
+            <p class="text-sm font-medium text-neutral-900">Primary &middot; Sakura Pink</p>
+            <p class="text-xs font-mono text-neutral-700 mt-1">#FFB7C5</p>
+            <p class="text-xs text-secondary mt-1">CTA buttons, highlights, active states</p>
+          </div>
+        </div>
+        <!-- Primary Light -->
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-24" style="background:#FFF0F3"></div>
+          <div class="flex h-3">
+            <div class="flex-1" style="background:#FFFFFF"></div>
+            <div class="flex-1" style="background:#FFF8F9"></div>
+            <div class="flex-1" style="background:#FFF0F3"></div>
+            <div class="flex-1" style="background:#FFD4DE"></div>
+            <div class="flex-1" style="background:#FFB7C5"></div>
+          </div>
+          <div class="p-4">
+            <p class="text-sm font-medium text-neutral-900">Primary Light</p>
+            <p class="text-xs font-mono text-neutral-700 mt-1">#FFF0F3</p>
+            <p class="text-xs text-secondary mt-1">Card backgrounds, hover states, selected rows</p>
+          </div>
+        </div>
+        <!-- Primary Dark -->
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-24" style="background:#E8919F"></div>
+          <div class="flex h-3">
+            <div class="flex-1" style="background:#FFB7C5"></div>
+            <div class="flex-1" style="background:#F0A4B2"></div>
+            <div class="flex-1" style="background:#E8919F"></div>
+            <div class="flex-1" style="background:#C06B78"></div>
+            <div class="flex-1" style="background:#994D5A"></div>
+          </div>
+          <div class="p-4">
+            <p class="text-sm font-medium text-neutral-900">Primary Dark</p>
+            <p class="text-xs font-mono text-neutral-700 mt-1">#E8919F</p>
+            <p class="text-xs text-secondary mt-1">Pressed states, borders on pink elements</p>
+          </div>
+        </div>
+        <!-- Secondary -->
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-24" style="background:#8E9AAF"></div>
+          <div class="flex h-3">
+            <div class="flex-1" style="background:#C7CDD7"></div>
+            <div class="flex-1" style="background:#ABB3C3"></div>
+            <div class="flex-1" style="background:#8E9AAF"></div>
+            <div class="flex-1" style="background:#6B7A8F"></div>
+            <div class="flex-1" style="background:#4D5B6F"></div>
+          </div>
+          <div class="p-4">
+            <p class="text-sm font-medium text-neutral-900">Secondary &middot; Muted Blue-Grey</p>
+            <p class="text-xs font-mono text-neutral-700 mt-1">#8E9AAF</p>
+            <p class="text-xs text-secondary mt-1">Secondary buttons, metadata text</p>
+          </div>
+        </div>
+        <!-- Tertiary -->
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-24" style="background:#B8C4BB"></div>
+          <div class="flex h-3">
+            <div class="flex-1" style="background:#DCE2DD"></div>
+            <div class="flex-1" style="background:#CAD3CC"></div>
+            <div class="flex-1" style="background:#B8C4BB"></div>
+            <div class="flex-1" style="background:#8FA393"></div>
+            <div class="flex-1" style="background:#6B826E"></div>
+          </div>
+          <div class="p-4">
+            <p class="text-sm font-medium text-neutral-900">Tertiary &middot; Sage Green</p>
+            <p class="text-xs font-mono text-neutral-700 mt-1">#B8C4BB</p>
+            <p class="text-xs text-secondary mt-1">Success states, "healthy" indicators</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Neutrals -->
+      <h3 class="text-lg font-medium text-neutral-900 mb-4">Neutrals</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#FAFAFA"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Neutral 50</p><p class="text-xs font-mono text-neutral-700">#FAFAFA</p><p class="text-[10px] text-secondary">Page background</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#F5F5F5"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Neutral 100</p><p class="text-xs font-mono text-neutral-700">#F5F5F5</p><p class="text-[10px] text-secondary">Card bg, dividers</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#E5E5E5"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Neutral 200</p><p class="text-xs font-mono text-neutral-700">#E5E5E5</p><p class="text-[10px] text-secondary">Borders, separators</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#4A4A4A"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Neutral 700</p><p class="text-xs font-mono text-neutral-700">#4A4A4A</p><p class="text-[10px] text-secondary">Body text</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#1A1A1A"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Neutral 900</p><p class="text-xs font-mono text-neutral-700">#1A1A1A</p><p class="text-[10px] text-secondary">Headings</p></div>
+        </div>
+      </div>
+
+      <!-- Severity / Semantic -->
+      <h3 class="text-lg font-medium text-neutral-900 mb-4">Severity &amp; Semantic</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#EF4444"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Critical</p><p class="text-xs font-mono text-neutral-700">#EF4444</p><p class="text-[10px] text-secondary">Red dot</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#F97316"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">High</p><p class="text-xs font-mono text-neutral-700">#F97316</p><p class="text-[10px] text-secondary">Orange dot</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#EAB308"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Medium</p><p class="text-xs font-mono text-neutral-700">#EAB308</p><p class="text-[10px] text-secondary">Yellow dot</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#3B82F6"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Low</p><p class="text-xs font-mono text-neutral-700">#3B82F6</p><p class="text-[10px] text-secondary">Blue dot</p></div>
+        </div>
+        <div class="rounded-card overflow-hidden border border-neutral-200">
+          <div class="h-16" style="background:#A855F7"></div>
+          <div class="p-3"><p class="text-xs font-medium text-neutral-900">Forecast</p><p class="text-xs font-mono text-neutral-700">#A855F7</p><p class="text-[10px] text-secondary">Purple dot</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 2. TYPOGRAPHY -->
+    <!-- ============================================ -->
+    <section id="typography">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Typography</h2>
+      <p class="text-neutral-700 mb-8">Inter for UI, JetBrains Mono for code. Weights 300-600.</p>
+
+      <div class="space-y-6 border border-neutral-200 rounded-card p-8">
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Display</p>
+            <p class="text-[10px] text-secondary mt-0.5">300 &middot; 48px</p>
+          </div>
+          <p class="text-[48px] font-light text-neutral-900 leading-tight">Quiet signals, clear changes</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Headline</p>
+            <p class="text-[10px] text-secondary mt-0.5">300 &middot; 32px</p>
+          </div>
+          <p class="text-[32px] font-light text-neutral-900">Your API changelog, on autopilot</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Title</p>
+            <p class="text-[10px] text-secondary mt-0.5">400 &middot; 24px</p>
+          </div>
+          <p class="text-[24px] font-normal text-neutral-900">Tracked Providers</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Subtitle</p>
+            <p class="text-[10px] text-secondary mt-0.5">500 &middot; 18px</p>
+          </div>
+          <p class="text-[18px] font-medium text-neutral-900">Stripe API &middot; 12 endpoints</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Body</p>
+            <p class="text-[10px] text-secondary mt-0.5">400 &middot; 16px</p>
+          </div>
+          <p class="text-[16px] font-normal text-neutral-700">Chirri watches your API dependencies and alerts you when something changes. No more surprise breaking changes.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Body Small</p>
+            <p class="text-[10px] text-secondary mt-0.5">400 &middot; 14px</p>
+          </div>
+          <p class="text-[14px] font-normal text-neutral-700">Last checked 3 minutes ago</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Caption</p>
+            <p class="text-[10px] text-secondary mt-0.5">400 &middot; 12px</p>
+          </div>
+          <p class="text-[12px] font-normal text-secondary">Mar 24, 2026 &middot; 04:32 UTC</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-b border-neutral-100 pb-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Label</p>
+            <p class="text-[10px] text-secondary mt-0.5">500 &middot; 12px &middot; uppercase</p>
+          </div>
+          <p class="text-[12px] font-medium uppercase tracking-widest text-neutral-700">API SOURCE</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6">
+          <div class="w-32 shrink-0">
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary">Code</p>
+            <p class="text-[10px] text-secondary mt-0.5">Mono 400 &middot; 14px</p>
+          </div>
+          <p class="text-[14px] font-mono text-neutral-700 bg-neutral-100 px-3 py-1.5 rounded">GET /v1/charges &rarr; 200 OK</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 3. BUTTONS -->
+    <!-- ============================================ -->
+    <section id="buttons">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Buttons</h2>
+      <p class="text-neutral-700 mb-8">Primary, secondary, ghost, danger, and disabled variants in three sizes.</p>
+
+      <div class="space-y-8">
+        <!-- Variants -->
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-4">Variants</p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <button class="bg-primary hover:bg-primary-dark active:bg-[#C06B78] text-neutral-900 font-medium px-5 py-2.5 rounded-lg transition-colors">Primary</button>
+            <button class="bg-white border border-neutral-200 hover:bg-neutral-100 text-neutral-900 font-medium px-5 py-2.5 rounded-lg transition-colors">Secondary</button>
+            <button class="bg-transparent hover:bg-primary-light text-primary-dark font-medium px-5 py-2.5 rounded-lg transition-colors">Ghost</button>
+            <button class="bg-severity-critical hover:bg-red-700 text-white font-medium px-5 py-2.5 rounded-lg transition-colors">Danger</button>
+            <button class="bg-neutral-200 text-secondary font-medium px-5 py-2.5 rounded-lg cursor-not-allowed" disabled>Disabled</button>
+          </div>
+        </div>
+
+        <!-- Sizes -->
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-4">Sizes</p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <button class="bg-primary hover:bg-primary-dark text-neutral-900 font-medium text-xs px-3 py-1.5 rounded-lg transition-colors">Small</button>
+            <button class="bg-primary hover:bg-primary-dark text-neutral-900 font-medium text-sm px-5 py-2.5 rounded-lg transition-colors">Medium</button>
+            <button class="bg-primary hover:bg-primary-dark text-neutral-900 font-medium text-base px-7 py-3 rounded-lg transition-colors">Large</button>
+          </div>
+        </div>
+
+        <!-- States -->
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-4">States (Primary)</p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <div class="text-center">
+              <button class="bg-primary text-neutral-900 font-medium px-5 py-2.5 rounded-lg">Default</button>
+              <p class="text-[10px] text-secondary mt-2">Default</p>
+            </div>
+            <div class="text-center">
+              <button class="bg-primary-dark text-neutral-900 font-medium px-5 py-2.5 rounded-lg">Hover</button>
+              <p class="text-[10px] text-secondary mt-2">Hover</p>
+            </div>
+            <div class="text-center">
+              <button class="bg-[#C06B78] text-white font-medium px-5 py-2.5 rounded-lg">Active</button>
+              <p class="text-[10px] text-secondary mt-2">Active</p>
+            </div>
+            <div class="text-center">
+              <button class="bg-neutral-200 text-secondary font-medium px-5 py-2.5 rounded-lg cursor-not-allowed" disabled>Disabled</button>
+              <p class="text-[10px] text-secondary mt-2">Disabled</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 4. STATUS DOTS -->
+    <!-- ============================================ -->
+    <section id="status-dots">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Status Dots</h2>
+      <p class="text-neutral-700 mb-8">Colored circles replace emojis for semantic status indicators.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-healthy shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">Healthy / Active</p><p class="text-[10px] text-secondary">#22C55E · Resolved</p></div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-severity-medium shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">Warning</p><p class="text-[10px] text-secondary">#EAB308 · Medium severity</p></div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-severity-high shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">High Severity</p><p class="text-[10px] text-secondary">#F97316 · Orange dot</p></div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-severity-critical shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">Critical / Error</p><p class="text-[10px] text-secondary">#EF4444 · Breaking change</p></div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-severity-low shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">Info / Low</p><p class="text-[10px] text-secondary">#3B82F6 · Blue dot</p></div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-forecast shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">Forecast</p><p class="text-[10px] text-secondary">#A855F7 · Upcoming changes</p></div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-muted shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">Silent / Muted</p><p class="text-[10px] text-secondary">#D1D5DB · Paused</p></div>
+        </div>
+        <div class="flex items-center gap-3 p-4 border border-neutral-200 rounded-card">
+          <span class="w-2 h-2 rounded-full bg-primary dot-pulse shrink-0"></span>
+          <div><p class="text-sm font-medium text-neutral-900">Signal Detected</p><p class="text-[10px] text-secondary">#FFB7C5 · Pulsing</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 5. FORM ELEMENTS -->
+    <!-- ============================================ -->
+    <section id="forms">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Form Elements</h2>
+      <p class="text-neutral-700 mb-8">Inputs, selects, toggles, checkboxes, and radios.</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Text Input -->
+        <div>
+          <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-2 block">Text Input</label>
+          <input type="text" placeholder="Enter provider name..." class="w-full border border-neutral-200 rounded-lg px-4 py-2.5 text-sm text-neutral-900 placeholder:text-secondary focus:outline-none focus:border-neutral-300 focus:ring-2 focus:ring-black/5 transition-all">
+        </div>
+
+        <!-- Error State -->
+        <div>
+          <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-2 block">Error State</label>
+          <input type="text" value="invalid-url" class="w-full border border-severity-critical rounded-lg px-4 py-2.5 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all">
+          <p class="text-xs text-severity-critical mt-1.5">Please enter a valid URL</p>
+        </div>
+
+        <!-- URL Input -->
+        <div>
+          <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-2 block">URL Input</label>
+          <div class="flex">
+            <span class="inline-flex items-center px-3 text-xs font-medium text-secondary bg-neutral-100 border border-r-0 border-neutral-200 rounded-l-lg">https://</span>
+            <input type="text" placeholder="api.stripe.com/v1" class="flex-1 border border-neutral-200 rounded-r-lg px-4 py-2.5 text-sm text-neutral-900 placeholder:text-secondary focus:outline-none focus:border-neutral-300 focus:ring-2 focus:ring-black/5 transition-all">
+          </div>
+        </div>
+
+        <!-- Search Input -->
+        <div>
+          <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-2 block">Search Input</label>
+          <div class="relative">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary"></i>
+            <input type="text" placeholder="Search providers..." class="w-full border border-neutral-200 rounded-lg pl-10 pr-4 py-2.5 text-sm text-neutral-900 placeholder:text-secondary focus:outline-none focus:border-neutral-300 focus:ring-2 focus:ring-black/5 transition-all">
+          </div>
+        </div>
+
+        <!-- Select (Custom Dropdown) -->
+        <div>
+          <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-2 block">Select Dropdown</label>
+          <div class="chirri-select" data-value="All Sources">
+            <div class="chirri-select-trigger" tabindex="0">All Sources</div>
+            <div class="chirri-select-chevron"><i data-lucide="chevron-down" class="w-4 h-4"></i></div>
+            <div class="chirri-select-panel">
+              <div class="chirri-select-option selected" data-val="All Sources">All Sources<span class="check-dot"></span></div>
+              <div class="chirri-select-option" data-val="API">API<span class="check-dot"></span></div>
+              <div class="chirri-select-option" data-val="Changelog">Changelog<span class="check-dot"></span></div>
+              <div class="chirri-select-option" data-val="OpenAPI Spec">OpenAPI Spec<span class="check-dot"></span></div>
+              <div class="chirri-select-option" data-val="Status Page">Status Page<span class="check-dot"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toggle, Checkbox, Radio -->
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-3 block">Toggle Switch</label>
+            <div class="flex items-center gap-6">
+              <div class="flex items-center gap-2">
+                <div class="w-11 h-6 bg-neutral-200 rounded-full relative cursor-pointer transition-colors">
+                  <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform"></span>
+                </div>
+                <span class="text-sm text-neutral-700">Off</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-11 h-6 bg-primary rounded-full relative cursor-pointer transition-colors">
+                  <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform" style="transform:translateX(20px)"></span>
+                </div>
+                <span class="text-sm text-neutral-700">On</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-3 block">Checkboxes</label>
+            <div class="flex items-center gap-6">
+              <label class="chirri-checkbox">
+                <input type="checkbox" checked>
+                <span class="mark"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5L4 7.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="text-sm text-neutral-700">API changes</span>
+              </label>
+              <label class="chirri-checkbox">
+                <input type="checkbox">
+                <span class="mark"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5L4 7.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="text-sm text-neutral-700">Status updates</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-3 block">Radio Buttons</label>
+            <div class="flex items-center gap-6">
+              <label class="chirri-radio">
+                <input type="radio" name="freq" checked>
+                <span class="dot-ring"></span>
+                <span class="text-sm text-neutral-700">Instant</span>
+              </label>
+              <label class="chirri-radio">
+                <input type="radio" name="freq">
+                <span class="dot-ring"></span>
+                <span class="text-sm text-neutral-700">Daily digest</span>
+              </label>
+              <label class="chirri-radio">
+                <input type="radio" name="freq">
+                <span class="dot-ring"></span>
+                <span class="text-sm text-neutral-700">Weekly</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 6. CARDS -->
+    <!-- ============================================ -->
+    <section id="cards">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Cards</h2>
+      <p class="text-neutral-700 mb-8">Provider, change, source, and pricing card patterns.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Provider Card -->
+        <div class="border border-neutral-200 rounded-card p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+              <h4 class="text-[18px] font-medium text-neutral-900">stripe.com</h4>
+            </div>
+            <span class="text-xs text-secondary">3 min ago</span>
+          </div>
+          <p class="text-sm text-neutral-700 mb-3">Payment processing API</p>
+          <div class="flex items-center gap-4 text-xs text-secondary">
+            <span class="flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i> 12 endpoints</span>
+            <span class="flex items-center gap-1"><i data-lucide="activity" class="w-3 h-3"></i> 2 changes today</span>
+          </div>
+        </div>
+
+        <!-- Change Card -->
+        <div class="border border-neutral-200 rounded-card p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-severity-high"></span>
+              <span class="text-xs font-medium text-neutral-900">Stripe API</span>
+            </div>
+            <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded-full bg-primary-light text-primary-dark">New</span>
+          </div>
+          <p class="text-sm text-neutral-900 font-medium mb-1">Deprecated <code class="text-xs font-mono bg-neutral-100 px-1 py-0.5 rounded">/v1/charges</code> endpoint</p>
+          <p class="text-xs text-secondary">Response schema changed &middot; 2 fields removed</p>
+          <p class="text-[10px] text-secondary mt-3">Mar 24, 2026 &middot; 03:15 UTC</p>
+        </div>
+
+        <!-- Source Card -->
+        <div class="border border-neutral-200 rounded-card p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="code" class="w-4 h-4 text-secondary"></i>
+              <span class="text-xs font-medium uppercase tracking-widest text-secondary">OpenAPI Spec</span>
+            </div>
+            <div class="w-9 h-5 bg-primary rounded-full relative cursor-pointer">
+              <span class="absolute left-1 top-0.5 w-4 h-4 bg-white rounded-full shadow" style="transform:translateX(16px)"></span>
+            </div>
+          </div>
+          <p class="text-sm font-mono text-neutral-700 truncate">https://api.stripe.com/v1/openapi.json</p>
+          <p class="text-[10px] text-secondary mt-2">Last checked: 3 minutes ago</p>
+        </div>
+
+        <!-- Pricing Card -->
+        <div class="border-2 border-primary rounded-card p-5 relative">
+          <span class="absolute -top-3 left-4 bg-primary text-neutral-900 text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full">Most Popular</span>
+          <h4 class="text-xl font-medium text-neutral-900 mt-2">Pro</h4>
+          <div class="mt-2 mb-4">
+            <span class="text-3xl font-light text-neutral-900">$29</span>
+            <span class="text-sm text-secondary">/month</span>
+          </div>
+          <ul class="space-y-2 mb-6 text-sm text-neutral-700">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-tertiary"></i> 500 tracked URLs</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-tertiary"></i> Hourly checks</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-tertiary"></i> Slack + email alerts</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-tertiary"></i> Jira/Linear integration</li>
+          </ul>
+          <button class="w-full bg-primary hover:bg-primary-dark text-neutral-900 font-medium py-2.5 rounded-lg transition-colors">Get Started</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 7. BADGES / PILLS -->
+    <!-- ============================================ -->
+    <section id="badges">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Badges &amp; Pills</h2>
+      <p class="text-neutral-700 mb-8">Severity, status, source type, and plan badges.</p>
+
+      <div class="space-y-6">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Severity</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-severity-critical"></span>Critical</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-severity-high"></span>High</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-severity-medium"></span>Medium</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-severity-low"></span>Low</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Status</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>New</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-severity-low"></span>Tracked</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-neutral-200"></span>Ignored</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-severity-medium"></span>Snoozed</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700"><span class="w-1.5 h-1.5 rounded-full bg-healthy"></span>Resolved</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Source Type</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700">API</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700">Changelog</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700">OpenAPI</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700">Status</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700">SDK</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Plans</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-xs font-medium rounded-full border border-neutral-200 text-neutral-700">Free</span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700">Personal</span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full bg-primary-light border border-primary/30 text-neutral-700">Team</span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full bg-neutral-900 text-white">Business</span>
+          </div>
+          <p class="text-[10px] text-secondary mt-2">The pink-tinted badge indicates the user's current plan</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 8. NAVIGATION -->
+    <!-- ============================================ -->
+    <section id="navigation">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Navigation</h2>
+      <p class="text-neutral-700 mb-8">Sidebar, top bar, breadcrumbs, and tabs.</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Sidebar -->
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Sidebar</p>
+          <div class="w-56 border border-neutral-200 rounded-card overflow-hidden">
+            <div class="p-4 border-b border-neutral-200">
+              <p class="text-lg font-light text-neutral-900">chirri</p>
+            </div>
+            <nav class="p-2 space-y-0.5">
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-primary-dark bg-primary-light rounded-lg">
+                <i data-lucide="activity" class="w-4 h-4"></i> Dashboard
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors">
+                <i data-lucide="link" class="w-4 h-4"></i> Providers
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors">
+                <i data-lucide="git-branch" class="w-4 h-4"></i> Changes
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors">
+                <i data-lucide="bell" class="w-4 h-4"></i> Alerts
+              </a>
+              <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors">
+                <i data-lucide="settings" class="w-4 h-4"></i> Settings
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Top Bar + Breadcrumbs + Tabs -->
+        <div class="space-y-6">
+          <!-- Top Bar -->
+          <div>
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Top Bar</p>
+            <div class="border border-neutral-200 rounded-card px-4 py-3 flex items-center justify-between">
+              <span class="text-lg font-light text-neutral-900">chirri</span>
+              <div class="flex-1 max-w-xs mx-4">
+                <div class="relative">
+                  <i data-lucide="search" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-secondary"></i>
+                  <input type="text" placeholder="Search..." class="w-full border border-neutral-200 rounded-lg pl-8 pr-3 py-1.5 text-xs text-neutral-900 placeholder:text-secondary focus:outline-none focus:border-neutral-300 focus:ring-2 focus:ring-black/5 transition-all">
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <button class="relative p-1.5 text-secondary hover:text-neutral-900 transition-colors">
+                  <i data-lucide="bell" class="w-4 h-4"></i>
+                  <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-severity-critical rounded-full"></span>
+                </button>
+                <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-xs font-medium text-neutral-900">A</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Breadcrumbs -->
+          <div>
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Breadcrumbs</p>
+            <nav class="flex items-center gap-2 text-sm">
+              <a href="#" class="text-secondary hover:text-neutral-900 transition-colors">Dashboard</a>
+              <i data-lucide="chevron-right" class="w-3 h-3 text-neutral-200"></i>
+              <a href="#" class="text-secondary hover:text-neutral-900 transition-colors">Providers</a>
+              <i data-lucide="chevron-right" class="w-3 h-3 text-neutral-200"></i>
+              <span class="text-neutral-900 font-medium">stripe.com</span>
+            </nav>
+          </div>
+
+          <!-- Tabs -->
+          <div>
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Tabs</p>
+            <div class="border-b border-neutral-200 flex gap-6">
+              <button class="text-sm font-medium text-primary-dark border-b-2 border-primary pb-2 -mb-px">Overview</button>
+              <button class="text-sm text-secondary hover:text-neutral-900 pb-2 transition-colors">Changes</button>
+              <button class="text-sm text-secondary hover:text-neutral-900 pb-2 transition-colors">Sources</button>
+              <button class="text-sm text-secondary hover:text-neutral-900 pb-2 transition-colors">Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 9. MODALS -->
+    <!-- ============================================ -->
+    <section id="modals">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Modals</h2>
+      <p class="text-neutral-700 mb-8">Standard, create ticket, and confirmation dialogs.</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Standard Modal -->
+        <div class="border border-neutral-200 rounded-xl p-6 shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-neutral-900">Add Provider</h3>
+            <button class="text-secondary hover:text-neutral-900 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+          </div>
+          <p class="text-sm text-neutral-700 mb-4">Enter the base URL of the API you want to track.</p>
+          <div class="mb-4">
+            <label class="text-xs font-medium uppercase tracking-widest text-neutral-700 mb-1.5 block">Provider URL</label>
+            <input type="text" placeholder="api.example.com" class="w-full border border-neutral-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-neutral-300 focus:ring-2 focus:ring-black/5">
+          </div>
+          <div class="flex gap-3 justify-end">
+            <button class="px-4 py-2 text-sm font-medium text-neutral-700 border border-neutral-200 rounded-lg hover:bg-neutral-100 transition-colors">Cancel</button>
+            <button class="px-4 py-2 text-sm font-medium text-neutral-900 bg-primary rounded-lg hover:bg-primary-dark transition-colors">Add Provider</button>
+          </div>
+        </div>
+
+        <!-- Create Ticket Modal -->
+        <div class="border border-neutral-200 rounded-xl p-6 shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-neutral-900">Create Ticket</h3>
+            <button class="text-secondary hover:text-neutral-900 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+          </div>
+          <div class="flex gap-2 mb-4">
+            <button class="px-3 py-1.5 text-xs font-medium bg-primary-light text-primary-dark rounded-lg">Jira</button>
+            <button class="px-3 py-1.5 text-xs font-medium text-secondary border border-neutral-200 rounded-lg">Linear</button>
+            <button class="px-3 py-1.5 text-xs font-medium text-secondary border border-neutral-200 rounded-lg">GitHub</button>
+          </div>
+          <div class="space-y-3 mb-4">
+            <input type="text" value="Breaking: /v1/charges deprecated" class="w-full border border-neutral-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-neutral-300 focus:ring-2 focus:ring-black/5">
+            <textarea rows="2" class="w-full border border-neutral-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-neutral-300 focus:ring-2 focus:ring-black/5 resize-none" placeholder="Description...">Stripe deprecated the /v1/charges endpoint. Migrate to PaymentIntents.</textarea>
+          </div>
+          <div class="flex gap-3 justify-end">
+            <button class="px-4 py-2 text-sm font-medium text-neutral-700 border border-neutral-200 rounded-lg hover:bg-neutral-100 transition-colors">Cancel</button>
+            <button class="px-4 py-2 text-sm font-medium text-neutral-900 bg-primary rounded-lg hover:bg-primary-dark transition-colors">Create</button>
+          </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="border border-severity-critical/30 rounded-xl p-6 shadow-lg bg-red-50/30">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-severity-critical">Delete Provider</h3>
+            <button class="text-secondary hover:text-neutral-900 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+          </div>
+          <p class="text-sm text-neutral-700 mb-1">Are you sure you want to delete <strong>stripe.com</strong>?</p>
+          <p class="text-xs text-secondary mb-4">This will remove all tracked endpoints and change history. This action cannot be undone.</p>
+          <div class="flex gap-3 justify-end">
+            <button class="px-4 py-2 text-sm font-medium text-neutral-700 border border-neutral-200 rounded-lg hover:bg-neutral-100 transition-colors">Cancel</button>
+            <button class="px-4 py-2 text-sm font-medium text-white bg-severity-critical rounded-lg hover:bg-red-700 transition-colors">Delete</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 10. NOTIFICATIONS / TOASTS -->
+    <!-- ============================================ -->
+    <section id="notifications">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Notifications &amp; Toasts</h2>
+      <p class="text-neutral-700 mb-8">Contextual feedback with colored left borders.</p>
+
+      <div class="space-y-3 max-w-lg">
+        <div class="flex items-start gap-3 border border-neutral-200 border-l-4 border-l-tertiary rounded-lg p-4 bg-white shadow-sm">
+          <i data-lucide="check" class="w-4 h-4 text-tertiary shrink-0 mt-0.5"></i>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-neutral-900">Provider added successfully</p>
+            <p class="text-xs text-secondary mt-0.5">stripe.com is now being tracked</p>
+          </div>
+          <button class="text-secondary hover:text-neutral-900 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+
+        <div class="flex items-start gap-3 border border-neutral-200 border-l-4 border-l-severity-medium rounded-lg p-4 bg-white shadow-sm">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-severity-medium shrink-0 mt-0.5"></i>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-neutral-900">Approaching URL limit</p>
+            <p class="text-xs text-secondary mt-0.5">You have used 92 of 100 tracked URLs</p>
+          </div>
+          <button class="text-secondary hover:text-neutral-900 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+
+        <div class="flex items-start gap-3 border border-neutral-200 border-l-4 border-l-severity-critical rounded-lg p-4 bg-white shadow-sm">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-severity-critical shrink-0 mt-0.5"></i>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-neutral-900">Failed to check endpoint</p>
+            <p class="text-xs text-secondary mt-0.5">api.stripe.com/v1/charges returned 500</p>
+          </div>
+          <button class="text-secondary hover:text-neutral-900 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+
+        <div class="flex items-start gap-3 border border-neutral-200 border-l-4 border-l-severity-low rounded-lg p-4 bg-white shadow-sm">
+          <i data-lucide="info" class="w-4 h-4 text-severity-low shrink-0 mt-0.5"></i>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-neutral-900">New feature available</p>
+            <p class="text-xs text-secondary mt-0.5">OpenAPI spec diffing is now in beta</p>
+          </div>
+          <button class="text-secondary hover:text-neutral-900 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 11. DATA DISPLAY -->
+    <!-- ============================================ -->
+    <section id="data-display">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Data Display</h2>
+      <p class="text-neutral-700 mb-8">Diff viewer, tree view, timeline, stats, and empty states.</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Diff Viewer -->
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Diff Viewer</p>
+          <div class="border border-neutral-200 rounded-card overflow-hidden font-mono text-xs">
+            <div class="bg-neutral-100 px-4 py-2 border-b border-neutral-200 flex items-center justify-between">
+              <span class="text-neutral-700">openapi.json</span>
+              <span class="text-secondary">+3 -2</span>
+            </div>
+            <div class="divide-y divide-neutral-100">
+              <div class="px-4 py-1 text-neutral-700 bg-white flex"><span class="text-secondary w-8 shrink-0">14</span>"paths": {</div>
+              <div class="px-4 py-1 text-red-700 bg-red-50 flex"><span class="text-red-400 w-8 shrink-0">15</span>- &nbsp;"amount": { "type": "integer" },</div>
+              <div class="px-4 py-1 text-red-700 bg-red-50 flex"><span class="text-red-400 w-8 shrink-0">16</span>- &nbsp;"currency": { "type": "string" }</div>
+              <div class="px-4 py-1 text-green-700 bg-green-50 flex"><span class="text-green-400 w-8 shrink-0">15</span>+ &nbsp;"amount": { "type": "integer", "minimum": 50 },</div>
+              <div class="px-4 py-1 text-green-700 bg-green-50 flex"><span class="text-green-400 w-8 shrink-0">16</span>+ &nbsp;"currency": { "type": "string", "enum": ["usd","eur"] },</div>
+              <div class="px-4 py-1 text-green-700 bg-green-50 flex"><span class="text-green-400 w-8 shrink-0">17</span>+ &nbsp;"metadata": { "type": "object" }</div>
+              <div class="px-4 py-1 text-neutral-700 bg-white flex"><span class="text-secondary w-8 shrink-0">18</span>}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tree View -->
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Tree View</p>
+          <div class="border border-neutral-200 rounded-card p-4 text-sm space-y-1">
+            <div class="flex items-center gap-2">
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-secondary"></i>
+              <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+              <span class="font-medium text-neutral-900">stripe.com</span>
+              <span class="text-xs text-secondary ml-auto">12 endpoints</span>
+            </div>
+            <div class="ml-5 space-y-1">
+              <div class="flex items-center gap-2 ml-1">
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-secondary"></i>
+                <i data-lucide="link" class="w-3 h-3 text-secondary"></i>
+                <span class="text-neutral-700">/v1/charges</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-severity-high ml-auto"></span>
+              </div>
+              <div class="ml-7 space-y-0.5">
+                <div class="flex items-center gap-2 text-xs text-secondary">
+                  <i data-lucide="code" class="w-3 h-3"></i> OpenAPI Spec
+                  <span class="ml-auto text-[10px]">3 min ago</span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-secondary">
+                  <i data-lucide="file-text" class="w-3 h-3"></i> Changelog
+                  <span class="ml-auto text-[10px]">1 hr ago</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 ml-1">
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-secondary"></i>
+                <i data-lucide="link" class="w-3 h-3 text-secondary"></i>
+                <span class="text-neutral-700">/v1/payment_intents</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary ml-auto"></span>
+              </div>
+              <div class="flex items-center gap-2 ml-1">
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-secondary"></i>
+                <i data-lucide="link" class="w-3 h-3 text-secondary"></i>
+                <span class="text-neutral-700">/v1/customers</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary ml-auto"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div>
+          <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Timeline</p>
+          <div class="border border-neutral-200 rounded-card p-4">
+            <div class="space-y-0">
+              <div class="flex gap-4">
+                <div class="flex flex-col items-center">
+                  <span class="w-2.5 h-2.5 rounded-full bg-severity-critical mt-1"></span>
+                  <span class="w-px flex-1 bg-neutral-200"></span>
+                </div>
+                <div class="pb-6">
+                  <p class="text-sm font-medium text-neutral-900">Breaking change detected</p>
+                  <p class="text-xs text-neutral-700">Stripe /v1/charges &middot; 2 fields removed</p>
+                  <p class="text-[10px] text-secondary mt-1">Today, 03:15 UTC</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="flex flex-col items-center">
+                  <span class="w-2.5 h-2.5 rounded-full bg-severity-medium mt-1"></span>
+                  <span class="w-px flex-1 bg-neutral-200"></span>
+                </div>
+                <div class="pb-6">
+                  <p class="text-sm font-medium text-neutral-900">Schema update</p>
+                  <p class="text-xs text-neutral-700">Twilio /2010-04-01 &middot; New field added</p>
+                  <p class="text-[10px] text-secondary mt-1">Today, 01:42 UTC</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="flex flex-col items-center">
+                  <span class="w-2.5 h-2.5 rounded-full bg-severity-low mt-1"></span>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-neutral-900">New provider added</p>
+                  <p class="text-xs text-neutral-700">github.com/api added to tracking</p>
+                  <p class="text-[10px] text-secondary mt-1">Yesterday, 18:00 UTC</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Bar + Empty State -->
+        <div class="space-y-6">
+          <!-- Stats Bar -->
+          <div>
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Stats / Progress</p>
+            <div class="border border-neutral-200 rounded-card p-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-neutral-900">Tracked URLs</span>
+                <span class="text-sm text-neutral-700">47 / 100</span>
+              </div>
+              <div class="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+                <div class="h-full bg-primary rounded-full" style="width:47%"></div>
+              </div>
+              <p class="text-[10px] text-secondary mt-1.5">53 URLs remaining on your plan</p>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div>
+            <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Empty State</p>
+            <div class="border border-neutral-200 border-dashed rounded-card p-8 text-center">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-neutral-100 flex items-center justify-center">
+                <i data-lucide="eye" class="w-6 h-6 text-secondary"></i>
+              </div>
+              <p class="text-sm font-medium text-neutral-900 mb-1">No changes detected yet</p>
+              <p class="text-xs text-secondary mb-4">Chirri will notify you when your tracked APIs change</p>
+              <button class="bg-primary hover:bg-primary-dark text-neutral-900 text-sm font-medium px-4 py-2 rounded-lg transition-colors">Add a Provider</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 12. ICONS -->
+    <!-- ============================================ -->
+    <section id="icons">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Icons</h2>
+      <p class="text-neutral-700 mb-8">Lucide icon set. Consistent 20px stroke icons.</p>
+
+      <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-8 gap-4">
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="search" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">search</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="bell" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">bell</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="settings" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">settings</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="plus" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">plus</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="check" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">check</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="x" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">x</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="arrow-right" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">arrow-right</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="link" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">link</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="code" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">code</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="file-text" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">file-text</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="activity" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">activity</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="shield" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">shield</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="clock" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">clock</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="eye" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">eye</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="git-branch" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">git-branch</span>
+        </div>
+        <div class="flex flex-col items-center gap-2 p-4 border border-neutral-200 rounded-card hover:bg-neutral-100 transition-colors">
+          <i data-lucide="external-link" class="w-5 h-5 text-neutral-700"></i>
+          <span class="text-[10px] text-secondary">external-link</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 13. SPACING SCALE -->
+    <!-- ============================================ -->
+    <section id="spacing">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Spacing Scale</h2>
+      <p class="text-neutral-700 mb-8">Consistent spacing based on 4px increments.</p>
+
+      <div class="space-y-3">
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">4px</span>
+          <div class="h-4 bg-primary rounded" style="width:4px"></div>
+          <span class="text-xs text-neutral-700">0.25rem &middot; Tight spacing, icon gaps</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">8px</span>
+          <div class="h-4 bg-primary rounded" style="width:8px"></div>
+          <span class="text-xs text-neutral-700">0.5rem &middot; Inline element gaps</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">12px</span>
+          <div class="h-4 bg-primary rounded" style="width:12px"></div>
+          <span class="text-xs text-neutral-700">0.75rem &middot; Small padding</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">16px</span>
+          <div class="h-4 bg-primary rounded" style="width:16px"></div>
+          <span class="text-xs text-neutral-700">1rem &middot; Default padding, card internal</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">24px</span>
+          <div class="h-4 bg-primary rounded" style="width:24px"></div>
+          <span class="text-xs text-neutral-700">1.5rem &middot; Section gaps, card padding</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">32px</span>
+          <div class="h-4 bg-primary rounded" style="width:32px"></div>
+          <span class="text-xs text-neutral-700">2rem &middot; Component spacing</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">48px</span>
+          <div class="h-4 bg-primary rounded" style="width:48px"></div>
+          <span class="text-xs text-neutral-700">3rem &middot; Section spacing</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-mono text-secondary w-12 text-right shrink-0">64px</span>
+          <div class="h-4 bg-primary rounded" style="width:64px"></div>
+          <span class="text-xs text-neutral-700">4rem &middot; Page-level margins</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 14. SHADOWS -->
+    <!-- ============================================ -->
+    <section id="shadows">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Shadows</h2>
+      <p class="text-neutral-700 mb-8">Elevation levels and focus glow effects.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="p-6 rounded-card bg-white shadow-sm border border-neutral-200 text-center">
+          <p class="text-sm font-medium text-neutral-900">Shadow SM</p>
+          <p class="text-xs text-secondary mt-1">Cards, dropdowns</p>
+          <p class="text-[10px] font-mono text-secondary mt-2">shadow-sm</p>
+        </div>
+        <div class="p-6 rounded-card bg-white shadow-md text-center">
+          <p class="text-sm font-medium text-neutral-900">Shadow MD</p>
+          <p class="text-xs text-secondary mt-1">Hover cards, popovers</p>
+          <p class="text-[10px] font-mono text-secondary mt-2">shadow-md</p>
+        </div>
+        <div class="p-6 rounded-card bg-white shadow-lg text-center">
+          <p class="text-sm font-medium text-neutral-900">Shadow LG</p>
+          <p class="text-xs text-secondary mt-1">Modals, dialogs</p>
+          <p class="text-[10px] font-mono text-secondary mt-2">shadow-lg</p>
+        </div>
+        <div class="p-6 rounded-card bg-white text-center" style="box-shadow: 0 0 0 3px rgba(255,183,197,0.3), 0 1px 2px rgba(0,0,0,0.05)">
+          <p class="text-sm font-medium text-neutral-900">Pink Focus Glow</p>
+          <p class="text-xs text-secondary mt-1">Input focus, active states</p>
+          <p class="text-[10px] font-mono text-secondary mt-2">ring-primary/30</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 15. DARK MODE VARIANT -->
+    <!-- ============================================ -->
+    <section id="dark-mode">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Dark Mode</h2>
+      <p class="text-neutral-700 mb-8">Preview of the dark palette. Pink accent stays consistent.</p>
+
+      <div class="rounded-xl overflow-hidden" style="background:#0F0F0F">
+        <div class="p-8">
+          <!-- Dark Nav -->
+          <div class="flex items-center justify-between mb-8 pb-4" style="border-bottom:1px solid #2A2A2A">
+            <span class="text-lg font-light text-white">chirri</span>
+            <div class="flex items-center gap-3">
+              <button class="p-1.5 text-gray-500 hover:text-white transition-colors"><i data-lucide="bell" class="w-4 h-4"></i></button>
+              <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-xs font-medium text-neutral-900">A</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Dark Card -->
+            <div class="rounded-card p-5" style="background:#1A1A1A;border:1px solid #2A2A2A">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                  <h4 class="text-base font-medium text-white">stripe.com</h4>
+                </div>
+                <span class="text-xs text-gray-500">3 min ago</span>
+              </div>
+              <p class="text-sm text-gray-400 mb-3">Payment processing API</p>
+              <div class="flex items-center gap-4 text-xs text-gray-500">
+                <span>12 endpoints</span>
+                <span>2 changes</span>
+              </div>
+            </div>
+
+            <!-- Dark Toast -->
+            <div class="space-y-3">
+              <div class="flex items-start gap-3 rounded-lg p-4" style="background:#1A1A1A;border:1px solid #2A2A2A;border-left:4px solid #B8C4BB">
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-white">Provider added</p>
+                  <p class="text-xs text-gray-500 mt-0.5">stripe.com is now tracked</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <button class="bg-primary hover:bg-primary-dark text-neutral-900 font-medium text-sm px-5 py-2.5 rounded-lg transition-colors">Primary Button</button>
+                <button class="font-medium text-sm px-5 py-2.5 rounded-lg text-white transition-colors" style="border:1px solid #2A2A2A;background:#1A1A1A">Secondary</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dark Color Reference -->
+          <div class="mt-8 pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3" style="border-top:1px solid #2A2A2A">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded" style="background:#0F0F0F;border:1px solid #2A2A2A"></span>
+              <div><p class="text-[10px] text-gray-400">Background</p><p class="text-[10px] font-mono text-gray-500">#0F0F0F</p></div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded" style="background:#1A1A1A;border:1px solid #2A2A2A"></span>
+              <div><p class="text-[10px] text-gray-400">Card</p><p class="text-[10px] font-mono text-gray-500">#1A1A1A</p></div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded" style="background:#2A2A2A"></span>
+              <div><p class="text-[10px] text-gray-400">Border</p><p class="text-[10px] font-mono text-gray-500">#2A2A2A</p></div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded" style="background:#FFB7C5"></span>
+              <div><p class="text-[10px] text-gray-400">Accent</p><p class="text-[10px] font-mono text-gray-500">#FFB7C5</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 16. SAKURA PETALS -->
+    <!-- ============================================ -->
+    <section id="sakura-petals">
+      <h2 class="text-[32px] font-light text-neutral-900 mb-2">Sakura Petals</h2>
+      <p class="text-neutral-700 mb-8">SVG petal assets for decorative use. 5 styles &times; 3 color variants. See <a href="petals.html" class="text-primary-dark hover:underline">petals.html</a> for the full set.</p>
+
+      <!-- Shared SVG Defs for petals -->
+      <svg width="0" height="0" style="position:absolute">
+        <defs>
+          <radialGradient id="pg-full" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#FFD4DE"/>
+            <stop offset="100%" stop-color="#FFB7C5"/>
+          </radialGradient>
+          <radialGradient id="pg-faded" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#FFF0F3"/>
+            <stop offset="100%" stop-color="#FFD4DE"/>
+          </radialGradient>
+          <radialGradient id="pg-vfaded" cx="40%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#FFF0F3"/>
+          </radialGradient>
+        </defs>
+      </svg>
+
+      <!-- Petal Styles Grid -->
+      <div class="space-y-6 mb-10">
+        <p class="text-xs font-medium uppercase tracking-widest text-secondary">Petal Styles &amp; Color Variants</p>
+        <div class="border border-neutral-200 rounded-card p-6">
+          <div class="grid grid-cols-5 gap-6">
+            <!-- Headers -->
+            <div class="text-center"><p class="text-[10px] font-medium text-secondary uppercase tracking-widest">Teardrop</p></div>
+            <div class="text-center"><p class="text-[10px] font-medium text-secondary uppercase tracking-widest">Curved</p></div>
+            <div class="text-center"><p class="text-[10px] font-medium text-secondary uppercase tracking-widest">Thin</p></div>
+            <div class="text-center"><p class="text-[10px] font-medium text-secondary uppercase tracking-widest">Double</p></div>
+            <div class="text-center"><p class="text-[10px] font-medium text-secondary uppercase tracking-widest">Abstract</p></div>
+
+            <!-- Full pink row -->
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M50 10 C65 30, 75 55, 50 90 C25 55, 35 30, 50 10Z" fill="url(#pg-full)"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M45 10 C70 20, 80 50, 55 85 C40 70, 20 50, 45 10Z" fill="url(#pg-full)"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M50 5 C58 30, 58 65, 50 95 C42 65, 42 30, 50 5Z" fill="url(#pg-full)"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100">
+                <path d="M40 15 C55 30, 65 55, 40 85 C15 55, 25 30, 40 15Z" fill="#FFB7C5" opacity="0.7"/>
+                <path d="M60 10 C75 30, 80 55, 60 85 C35 55, 45 30, 60 10Z" fill="url(#pg-full)" opacity="0.85"/>
+              </svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100">
+                <defs><linearGradient id="ag-full" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFB7C5" stop-opacity="0.9"/><stop offset="100%" stop-color="#FFD4DE" stop-opacity="0.3"/></linearGradient></defs>
+                <path d="M25 75 Q25 25, 50 15 Q75 25, 75 75 Q50 60, 25 75Z" fill="url(#ag-full)"/>
+              </svg>
+            </div>
+
+            <!-- Faded row -->
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M50 10 C65 30, 75 55, 50 90 C25 55, 35 30, 50 10Z" fill="url(#pg-faded)"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M45 10 C70 20, 80 50, 55 85 C40 70, 20 50, 45 10Z" fill="url(#pg-faded)"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M50 5 C58 30, 58 65, 50 95 C42 65, 42 30, 50 5Z" fill="url(#pg-faded)"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100">
+                <path d="M40 15 C55 30, 65 55, 40 85 C15 55, 25 30, 40 15Z" fill="#FFD4DE" opacity="0.7"/>
+                <path d="M60 10 C75 30, 80 55, 60 85 C35 55, 45 30, 60 10Z" fill="url(#pg-faded)" opacity="0.85"/>
+              </svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100">
+                <defs><linearGradient id="ag-faded" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFD4DE" stop-opacity="0.7"/><stop offset="100%" stop-color="#FFF0F3" stop-opacity="0.2"/></linearGradient></defs>
+                <path d="M25 75 Q25 25, 50 15 Q75 25, 75 75 Q50 60, 25 75Z" fill="url(#ag-faded)"/>
+              </svg>
+            </div>
+
+            <!-- Very faded row -->
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M50 10 C65 30, 75 55, 50 90 C25 55, 35 30, 50 10Z" fill="url(#pg-vfaded)" stroke="#FFD4DE" stroke-width="0.5"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M45 10 C70 20, 80 50, 55 85 C40 70, 20 50, 45 10Z" fill="url(#pg-vfaded)" stroke="#FFD4DE" stroke-width="0.5"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100"><path d="M50 5 C58 30, 58 65, 50 95 C42 65, 42 30, 50 5Z" fill="url(#pg-vfaded)" stroke="#FFD4DE" stroke-width="0.5"/></svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100">
+                <path d="M40 15 C55 30, 65 55, 40 85 C15 55, 25 30, 40 15Z" fill="#FFF0F3" opacity="0.5"/>
+                <path d="M60 10 C75 30, 80 55, 60 85 C35 55, 45 30, 60 10Z" fill="url(#pg-vfaded)" stroke="#FFD4DE" stroke-width="0.5" opacity="0.7"/>
+              </svg>
+            </div>
+            <div class="text-center">
+              <svg width="32" height="32" viewBox="0 0 100 100">
+                <defs><linearGradient id="ag-vfaded" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF0F3" stop-opacity="0.4"/><stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05"/></linearGradient></defs>
+                <path d="M25 75 Q25 25, 50 15 Q75 25, 75 75 Q50 60, 25 75Z" fill="url(#ag-vfaded)" stroke="#FFD4DE" stroke-width="0.5"/>
+              </svg>
+            </div>
+          </div>
+          <!-- Row labels -->
+          <div class="flex justify-between mt-4 pt-4 border-t border-neutral-100">
+            <span class="text-[10px] text-secondary">Row 1: Full pink</span>
+            <span class="text-[10px] text-secondary">Row 2: Faded</span>
+            <span class="text-[10px] text-secondary">Row 3: Very faded</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Petal Demo Area -->
+      <p class="text-xs font-medium uppercase tracking-widest text-secondary mb-3">Scattered Petals — Static Decoration Demo</p>
+      <div class="border border-neutral-200 rounded-card bg-white relative overflow-hidden" style="height:200px">
+        <!-- Scattered petals at various positions, rotations, and opacities -->
+        <svg class="absolute" style="top:15%;left:8%;opacity:0.7" width="24" height="24" viewBox="0 0 100 100"><path d="M50 10 C65 30, 75 55, 50 90 C25 55, 35 30, 50 10Z" fill="url(#pg-full)" transform="rotate(25 50 50)"/></svg>
+        <svg class="absolute" style="top:60%;left:22%;opacity:0.35" width="18" height="18" viewBox="0 0 100 100"><path d="M45 10 C70 20, 80 50, 55 85 C40 70, 20 50, 45 10Z" fill="url(#pg-faded)" transform="rotate(-40 50 50)"/></svg>
+        <svg class="absolute" style="top:30%;left:45%;opacity:0.5" width="20" height="20" viewBox="0 0 100 100"><path d="M50 5 C58 30, 58 65, 50 95 C42 65, 42 30, 50 5Z" fill="url(#pg-full)" transform="rotate(70 50 50)"/></svg>
+        <svg class="absolute" style="top:70%;left:55%;opacity:0.25" width="28" height="28" viewBox="0 0 100 100"><path d="M50 10 C65 30, 75 55, 50 90 C25 55, 35 30, 50 10Z" fill="url(#pg-vfaded)" stroke="#FFD4DE" stroke-width="0.5" transform="rotate(-15 50 50)"/></svg>
+        <svg class="absolute" style="top:10%;left:70%;opacity:0.6" width="16" height="16" viewBox="0 0 100 100"><path d="M45 10 C70 20, 80 50, 55 85 C40 70, 20 50, 45 10Z" fill="url(#pg-full)" transform="rotate(120 50 50)"/></svg>
+        <svg class="absolute" style="top:50%;left:82%;opacity:0.4" width="22" height="22" viewBox="0 0 100 100"><path d="M50 10 C65 30, 75 55, 50 90 C25 55, 35 30, 50 10Z" fill="url(#pg-faded)" transform="rotate(200 50 50)"/></svg>
+        <svg class="absolute" style="top:80%;left:40%;opacity:0.2" width="14" height="14" viewBox="0 0 100 100"><path d="M50 5 C58 30, 58 65, 50 95 C42 65, 42 30, 50 5Z" fill="url(#pg-full)" transform="rotate(300 50 50)"/></svg>
+        <svg class="absolute" style="top:25%;left:90%;opacity:0.3" width="20" height="20" viewBox="0 0 100 100">
+          <path d="M40 15 C55 30, 65 55, 40 85 C15 55, 25 30, 40 15Z" fill="#FFD4DE" opacity="0.7"/>
+          <path d="M60 10 C75 30, 80 55, 60 85 C35 55, 45 30, 60 10Z" fill="url(#pg-faded)" opacity="0.85"/>
+        </svg>
+        <!-- Center text -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <p class="text-sm text-secondary">Petals as subtle page decoration — static, not animated</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-neutral-200 mt-20">
+    <div class="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
+      <p class="text-xs text-secondary">Chirri Design System v1.0 &middot; chirri.io</p>
+      <p class="text-xs text-secondary">Built with Tailwind CSS + Lucide Icons</p>
+    </div>
+  </footer>
+
+  <!-- Initialize Lucide Icons -->
+  <script>lucide.createIcons();</script>
+
+  <!-- Custom dropdown behavior -->
+  <script>
+    document.querySelectorAll('.chirri-select').forEach(sel => {
+      const trigger = sel.querySelector('.chirri-select-trigger');
+      const options = sel.querySelectorAll('.chirri-select-option');
+
+      trigger.addEventListener('click', () => {
+        // Close all other open selects
+        document.querySelectorAll('.chirri-select.open').forEach(s => {
+          if (s !== sel) s.classList.remove('open');
+        });
+        sel.classList.toggle('open');
+      });
+
+      options.forEach(opt => {
+        opt.addEventListener('click', () => {
+          options.forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          trigger.textContent = opt.dataset.val;
+          sel.dataset.value = opt.dataset.val;
+          sel.classList.remove('open');
+        });
+      });
+
+      // Close on outside click
+      document.addEventListener('click', e => {
+        if (!sel.contains(e.target)) sel.classList.remove('open');
+      });
+
+      // Keyboard support
+      trigger.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); trigger.click(); }
+        if (e.key === 'Escape') sel.classList.remove('open');
+      });
+    });
+  </script>
+
+<!--
+PROPOSED CHANGES (not applied):
+
+1. INPUT BORDERS — Replace pink focus:border-primary with subtle grey border + soft pink shadow glow:
+   border-color: #D1D5DB; box-shadow: 0 0 0 3px rgba(255, 183, 197, 0.15);
+   Error state: same approach with red glow instead of hard red border.
+   Rationale: more zen, whisper vs shout.
+
+2. CARD BORDERS — Replace border-neutral-200 with bg-neutral-100 no-border cards:
+   Default: #F5F5F5 background, no visible border.
+   Hover: subtle shadow-md lift.
+   Active/selected: thin #E5E5E5 border + slight pink shadow glow.
+   Rationale: shadows and whitespace define boundaries, not hard lines.
+
+3. STATUS DOT SIZE — Consider 10px (w-2.5 h-2.5) instead of 8px (w-2 h-2) for better
+   color differentiation at a glance in dense UI contexts.
+
+4. HEADER DECORATION — Add 3-4 subtle static sakura petals scattered in the header area
+   at different rotations and opacities (not animated, just placed).
+   Shows how petals integrate with the design as decorative elements.
+
+5. TEXTAREA STYLING — The textarea in the Create Ticket modal still uses basic focus styles.
+   Could match the zen input treatment (soft glow on focus).
+
+6. PRICING CARD — The "Most Popular" pricing card has a hard border-2 border-primary.
+   Could use a subtler pink shadow glow approach instead.
+
+7. DARK MODE SEVERITY DOTS — Dark mode section still uses old tertiary color for dots.
+   Should use the new healthy/severity/forecast/muted colors for consistency.
+
+8. NOTIFICATION TOAST BORDERS — Left-border colors reference old severity values.
+   Now mapped correctly via Tailwind config, but explicit inline colors
+   in the dark mode section could drift — consider consolidating.
+
+9. SOURCE TYPE BADGES — Could add small Lucide icons (code, file-text, file, activity, package)
+   before the text for additional visual differentiation without color.
+
+10. TOGGLE SWITCH — Currently uses raw divs. Could be made accessible with
+    role="switch" aria-checked attributes and keyboard toggle on Space/Enter.
+-->
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "id": "twilio-02",
+  "source": "Twilio Changelog",
+  "title": "Increased MMS rate limits for A2P 10DLC Phone Numbers",
+  "date": "2026-03-18",
+  "raw_changelog": "MMS rate limits for A2P 10DLC numbers are now determined by Brand Trust Score and Campaign use case, replacing the previous fixed 1 MPS cap.",
+  "before_text": "## MMS Rate Limits - A2P 10DLC\n\n| Phone Type | Rate Limit |\n|-----------|------------|\n| 10DLC | 1 MPS (fixed) |\n\nAll A2P 10DLC numbers share the same MMS rate limit regardless of brand trust score.",
+  "after_text": "## MMS Rate Limits - A2P 10DLC\n\n| Brand Trust Score | Rate Limit |\n|------------------|------------|\n| High (75-100) | 10 MPS |\n| Medium (50-74) | 5 MPS |\n| Low (1-49) | 1 MPS |\n\nMMS rate limits are now determined by your Brand Trust Score and Campaign use case.",
+  "diff_text": "--- before\n+++ after\n@@ -1,6 +1,8 @@\n ## MMS Rate Limits - A2P 10DLC\n \n-| Phone Type | Rate Limit |\n-|-----------|------------|\n-| 10DLC | 1 MPS (fixed) |\n-\n-All A2P 10DLC numbers share the same MMS rate limit regardless of brand trust score.\n+| Brand Trust Score | Rate Limit |\n+|------------------|------------|\n+| High (75-100) | 10 MPS |\n+| Medium (50-74) | 5 MPS |\n+| Low (1-49) | 1 MPS |\n+\n+MMS rate limits are now determined by your Brand Trust Score and Campaign use case.",
+  "ground_truth": {
+    "severity": "medium",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "MMS messaging via 10DLC numbers"
+    ],
+    "action_required": "Review your Brand Trust Score. High-trust brands benefit from higher limits. Low-trust brands retain 1 MPS.",
+    "cosmetic_only": false,
+    "confidence_notes": "Rate limit structure changed but default remains same for low-trust"
+  }
+}

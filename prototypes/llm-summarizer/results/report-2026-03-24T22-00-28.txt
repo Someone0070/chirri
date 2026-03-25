@@ -1,0 +1,75 @@
+═══════════════════════════════════════════
+  CHIRRI LLM SUMMARIZER - EVALUATION REPORT
+═══════════════════════════════════════════
+Total tests: 210
+
+── BY MODEL ──
+
+  claude-3-5-haiku-20241022:
+    Tests: 105
+    Avg Score: 89.8%
+    Severity Accuracy: 98.1%
+    Breaking Accuracy: 79.0%
+    Hallucination Rate: 0.0%
+    Avg Latency: 566ms
+    Avg Cost: $0.000882
+
+  claude-sonnet-4-5-20250514:
+    Tests: 105
+    Avg Score: 89.8%
+    Severity Accuracy: 98.1%
+    Breaking Accuracy: 79.0%
+    Hallucination Rate: 0.0%
+    Avg Latency: 1495ms
+    Avg Cost: $0.003306
+
+── BY STRATEGY ──
+
+  basic:
+    Tests: 70
+    Avg Score: 93.8%
+    Severity Accuracy: 100.0%
+    Breaking Accuracy: 100.0%
+
+  structured:
+    Tests: 70
+    Avg Score: 75.4%
+    Severity Accuracy: 94.3%
+    Breaking Accuracy: 37.1%
+
+  json:
+    Tests: 70
+    Avg Score: 100.0%
+    Severity Accuracy: 100.0%
+    Breaking Accuracy: 100.0%
+    JSON Validity: 100.0%
+
+── BY MODEL × STRATEGY ──
+
+  claude-3-5-haiku-20241022:basic:
+    Avg Score: 93.8% | Breaking: 100.0%
+
+  claude-3-5-haiku-20241022:structured:
+    Avg Score: 75.4% | Breaking: 37.1%
+
+  claude-3-5-haiku-20241022:json:
+    Avg Score: 100.0% | Breaking: 100.0%
+
+  claude-sonnet-4-5-20250514:basic:
+    Avg Score: 93.8% | Breaking: 100.0%
+
+  claude-sonnet-4-5-20250514:structured:
+    Avg Score: 75.4% | Breaking: 37.1%
+
+  claude-sonnet-4-5-20250514:json:
+    Avg Score: 100.0% | Breaking: 100.0%
+
+── ADVERSARIAL (Anti-Hallucination) ──
+  Total adversarial tests: 12
+  Cosmetic correctly identified: 12/12
+  Cosmetic accuracy: 100.0%
+
+── COST SUMMARY ──
+  Total cost: $0.4397
+  Total tokens: 63420 (21420 in / 42000 out)
+  Avg cost per analysis: $0.002094

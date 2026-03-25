@@ -1,0 +1,19 @@
+{
+  "id": "stripe-01",
+  "source": "Stripe API Changelog",
+  "title": "Adds Pay by Bank to the Billing API",
+  "date": "2026-02-25",
+  "raw_changelog": "Adds Pay by Bank to the Billing API. Affected Products: Billing, Payments. Breaking change: Non-breaking. Category: api. You can now use Pay by Bank as a payment method for billing subscriptions and invoices through the Stripe Billing API.",
+  "before_text": "## Billing API - Payment Methods\n\nThe Billing API supports the following payment methods for subscriptions:\n- Card (Visa, Mastercard, Amex)\n- ACH Direct Debit\n- SEPA Direct Debit\n- Bancontact\n- iDEAL\n\n### Creating a Subscription\n```\nPOST /v1/subscriptions\n{\n  \"customer\": \"cus_xxx\",\n  \"items\": [{\"price\": \"price_xxx\"}],\n  \"payment_settings\": {\n    \"payment_method_types\": [\"card\", \"us_bank_account\", \"sepa_debit\"]\n  }\n}\n```",
+  "after_text": "## Billing API - Payment Methods\n\nThe Billing API supports the following payment methods for subscriptions:\n- Card (Visa, Mastercard, Amex)\n- ACH Direct Debit\n- SEPA Direct Debit\n- Bancontact\n- iDEAL\n- Pay by Bank (US)\n\n### Creating a Subscription\n```\nPOST /v1/subscriptions\n{\n  \"customer\": \"cus_xxx\",\n  \"items\": [{\"price\": \"price_xxx\"}],\n  \"payment_settings\": {\n    \"payment_method_types\": [\"card\", \"us_bank_account\", \"sepa_debit\", \"us_bank_account_pay_by_bank\"]\n  }\n}\n```",
+  "diff_text": "--- before\n+++ after\n@@ -6,6 +6,7 @@\n - Bancontact\n - iDEAL\n+- Pay by Bank (US)\n \n ### Creating a Subscription\n@@ -14,7 +15,7 @@\n   \"payment_settings\": {\n-    \"payment_method_types\": [\"card\", \"us_bank_account\", \"sepa_debit\"]\n+    \"payment_method_types\": [\"card\", \"us_bank_account\", \"sepa_debit\", \"us_bank_account_pay_by_bank\"]\n   }",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": ["POST /v1/subscriptions"],
+    "action_required": "No immediate action required. New payment method option available for US customers.",
+    "cosmetic_only": false,
+    "confidence_notes": "Clear additive change, new payment method type added to supported list"
+  }
+}

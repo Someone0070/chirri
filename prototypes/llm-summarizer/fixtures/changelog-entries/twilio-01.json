@@ -1,0 +1,22 @@
+{
+  "id": "twilio-01",
+  "source": "Twilio Changelog",
+  "title": "Unified Opt-Outs across RCS, SMS, and MMS channels",
+  "date": "2026-03-15",
+  "raw_changelog": "Twilio Programmable Messaging automatically unifies opt-out management across RCS, SMS, and MMS channels. When an end-user opts out on one channel, it applies to all channels. Any attempt to message an opted-out user will fail with Error 21610.",
+  "before_text": "## Opt-Out Management\n\nOpt-outs are managed per channel:\n- SMS opt-outs only affect SMS messages\n- MMS opt-outs only affect MMS messages\n- RCS opt-outs only affect RCS messages\n\nSending to an opted-out user on one channel does not prevent sending on another channel.",
+  "after_text": "## Opt-Out Management\n\nOpt-outs are now unified across all messaging channels:\n- When a user opts out on ANY channel (SMS, MMS, or RCS), all channels are blocked\n- Opt-out keywords: STOP, CANCEL, UNSUBSCRIBE\n- Error 21610 returned for any attempt to message an opted-out user on any channel\n\n**This is active by default and requires no code changes to implement.**",
+  "diff_text": "--- before\n+++ after\n@@ -1,7 +1,8 @@\n ## Opt-Out Management\n \n-Opt-outs are managed per channel:\n-- SMS opt-outs only affect SMS messages\n-- MMS opt-outs only affect MMS messages\n-- RCS opt-outs only affect RCS messages\n-\n-Sending to an opted-out user on one channel does not prevent sending on another channel.\n+Opt-outs are now unified across all messaging channels:\n+- When a user opts out on ANY channel (SMS, MMS, or RCS), all channels are blocked\n+- Opt-out keywords: STOP, CANCEL, UNSUBSCRIBE\n+- Error 21610 returned for any attempt to message an opted-out user on any channel\n+\n+**This is active by default and requires no code changes to implement.**",
+  "ground_truth": {
+    "severity": "high",
+    "is_breaking": true,
+    "breaking_reason": "Behavior change: opt-outs now cascade across channels. Messages that previously succeeded may now fail with Error 21610.",
+    "affected_endpoints": [
+      "POST /Messages",
+      "Programmable Messaging API"
+    ],
+    "action_required": "Review messaging logic. If you rely on channel-specific opt-outs, users who opt out of SMS will now also be blocked on RCS/MMS. Update opt-out recovery flows.",
+    "cosmetic_only": false,
+    "confidence_notes": "Significant behavior change, active by default"
+  }
+}

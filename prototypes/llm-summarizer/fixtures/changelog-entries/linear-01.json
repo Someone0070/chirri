@@ -1,0 +1,21 @@
+{
+  "id": "linear-01",
+  "source": "Linear Changelog",
+  "title": "GraphQL API rate limit structure changed",
+  "date": "2026-03-01",
+  "raw_changelog": "Linear GraphQL API now uses complexity-based rate limiting instead of request count.",
+  "before_text": "## Rate Limits\n\n### GraphQL API\n- 1500 requests per hour\n- 250 requests per minute burst\n- Headers: X-RateLimit-Remaining, X-RateLimit-Reset",
+  "after_text": "## Rate Limits\n\n### GraphQL API\n- 10,000 complexity points per hour\n- 1,000 complexity points per minute burst\n- Simple queries: ~1-5 points\n- Nested queries: ~10-50 points\n- Headers: X-RateLimit-Complexity-Remaining, X-RateLimit-Complexity-Reset\n\n**Note:** The old request-count headers are no longer returned.",
+  "diff_text": "--- before\n+++ after\n@@ -3,4 +3,8 @@\n ### GraphQL API\n-- 1500 requests per hour\n-- 250 requests per minute burst\n-- Headers: X-RateLimit-Remaining, X-RateLimit-Reset\n+- 10,000 complexity points per hour\n+- 1,000 complexity points per minute burst\n+- Simple queries: ~1-5 points\n+- Nested queries: ~10-50 points\n+- Headers: X-RateLimit-Complexity-Remaining, X-RateLimit-Complexity-Reset\n+\n+**Note:** The old request-count headers are no longer returned.",
+  "ground_truth": {
+    "severity": "high",
+    "is_breaking": true,
+    "breaking_reason": "Rate limit headers changed. Code parsing old headers will break. Complex queries may hit limits sooner.",
+    "affected_endpoints": [
+      "GraphQL API"
+    ],
+    "action_required": "Update rate limit handling code to use new complexity-based headers. Review complex queries that may consume many points.",
+    "cosmetic_only": false,
+    "confidence_notes": "Breaking change in rate limit mechanism and headers"
+  }
+}

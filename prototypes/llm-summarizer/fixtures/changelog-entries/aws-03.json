@@ -1,0 +1,23 @@
+{
+  "id": "aws-03",
+  "source": "AWS Service Announcements",
+  "title": "DynamoDB changes default read consistency for Global Tables",
+  "date": "2026-01-20",
+  "raw_changelog": "DynamoDB Global Tables now default to eventual consistency for cross-region reads. Previously, strong consistency was available but is now deprecated for Global Tables.",
+  "before_text": "## Global Tables - Read Consistency\n\n### ConsistentRead Parameter\nFor Global Tables, you can use ConsistentRead=true to get strongly consistent reads from any region.\n\n```\nGET /dynamodb\n{\n  \"TableName\": \"my-global-table\",\n  \"Key\": {\"id\": {\"S\": \"123\"}},\n  \"ConsistentRead\": true\n}\n```\n\nReturns the most recent data from any replica.",
+  "after_text": "## Global Tables - Read Consistency\n\n### ConsistentRead Parameter\nFor Global Tables, ConsistentRead=true is only supported for reads from the table's home region. Cross-region reads always use eventual consistency.\n\n```\nGET /dynamodb\n{\n  \"TableName\": \"my-global-table\",\n  \"Key\": {\"id\": {\"S\": \"123\"}},\n  \"ConsistentRead\": true  // Only works in home region\n}\n```\n\n**Note:** Using ConsistentRead=true from a non-home region will return a ValidationException starting May 1, 2026.",
+  "diff_text": "--- before\n+++ after\n@@ -3,7 +3,7 @@\n ### ConsistentRead Parameter\n-For Global Tables, you can use ConsistentRead=true to get strongly consistent reads from any region.\n+For Global Tables, ConsistentRead=true is only supported for reads from the table's home region. Cross-region reads always use eventual consistency.\n \n ... \"ConsistentRead\": true\n+  // Only works in home region\n \n-Returns the most recent data from any replica.\n+**Note:** Using ConsistentRead=true from a non-home region will return a ValidationException starting May 1, 2026.",
+  "ground_truth": {
+    "severity": "critical",
+    "is_breaking": true,
+    "breaking_reason": "ConsistentRead=true from non-home regions will throw ValidationException. Applications relying on cross-region strong consistency will break.",
+    "affected_endpoints": [
+      "DynamoDB GetItem",
+      "DynamoDB Query",
+      "DynamoDB Scan"
+    ],
+    "action_required": "Audit Global Table reads. If using ConsistentRead=true from non-home regions, either route reads to home region or handle eventual consistency. Deadline: May 1, 2026.",
+    "cosmetic_only": false,
+    "confidence_notes": "Significant breaking change for distributed applications"
+  }
+}

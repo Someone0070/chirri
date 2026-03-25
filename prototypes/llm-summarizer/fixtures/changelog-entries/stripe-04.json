@@ -1,0 +1,21 @@
+{
+  "id": "stripe-04",
+  "source": "Stripe API Changelog",
+  "title": "Adds Terminal reader and location to payment method details",
+  "date": "2026-02-25",
+  "raw_changelog": "Adds Terminal reader and location to payment method details. The payment method details for Terminal payments now include the reader ID and location ID.",
+  "before_text": "## Payment Method Details - Card Present\n\n```json\n{\n  \"card_present\": {\n    \"brand\": \"visa\",\n    \"last4\": \"4242\",\n    \"exp_month\": 12,\n    \"exp_year\": 2027,\n    \"fingerprint\": \"abc123\"\n  }\n}\n```",
+  "after_text": "## Payment Method Details - Card Present\n\n```json\n{\n  \"card_present\": {\n    \"brand\": \"visa\",\n    \"last4\": \"4242\",\n    \"exp_month\": 12,\n    \"exp_year\": 2027,\n    \"fingerprint\": \"abc123\",\n    \"reader\": \"tmr_xxx\",\n    \"location\": \"tml_xxx\"\n  }\n}\n```",
+  "diff_text": "--- before\n+++ after\n@@ -7,5 +7,7 @@\n     \"exp_year\": 2027,\n-    \"fingerprint\": \"abc123\"\n+    \"fingerprint\": \"abc123\",\n+    \"reader\": \"tmr_xxx\",\n+    \"location\": \"tml_xxx\"",
+  "ground_truth": {
+    "severity": "low",
+    "is_breaking": false,
+    "breaking_reason": null,
+    "affected_endpoints": [
+      "Payment Method Details"
+    ],
+    "action_required": "No action required. New fields available in card_present payment method details for Terminal payments.",
+    "cosmetic_only": false,
+    "confidence_notes": "Additive change, new fields in response"
+  }
+}
