@@ -33,3 +33,9 @@ export { sendDiscordNotification } from './services/discord.js';
 export { deliverWebhook } from './services/webhook-delivery.js';
 export type { WebhookPayload, DeliveryResult } from './services/webhook-delivery.js';
 export { routeNotification } from './services/notification-router.js';
+export {
+  storeSnapshot,
+  getLatestSnapshot,
+  storeChange,
+  getRecentSnapshots,
+} from './services/snapshot-store.js';

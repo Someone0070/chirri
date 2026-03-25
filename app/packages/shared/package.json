@@ -11,7 +11,9 @@
     "./src/services/slack.js": "./src/services/slack.ts",
     "./src/services/discord.js": "./src/services/discord.ts",
     "./src/services/webhook-delivery.js": "./src/services/webhook-delivery.ts",
-    "./src/services/notification-router.js": "./src/services/notification-router.ts"
+    "./src/services/notification-router.js": "./src/services/notification-router.ts",
+    "./src/services/snapshot-store.js": "./src/services/snapshot-store.ts",
+    "./src/utils/id.js": "./src/utils/id.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.41.0",
