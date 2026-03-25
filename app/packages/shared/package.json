@@ -1,0 +1,27 @@
+{
+  "name": "@chirri/shared",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./db": "./src/db/index.ts",
+    "./db/schema": "./src/db/schema.ts",
+    "./src/services/email.js": "./src/services/email.ts",
+    "./src/services/slack.js": "./src/services/slack.ts",
+    "./src/services/discord.js": "./src/services/discord.ts",
+    "./src/services/webhook-delivery.js": "./src/services/webhook-delivery.ts",
+    "./src/services/notification-router.js": "./src/services/notification-router.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.41.0",
+    "pg": "^8.13.0",
+    "nanoid": "^5.0.0",
+    "normalize-url": "^8.0.0",
+    "resend": "^4.0.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.0"
+  }
+}

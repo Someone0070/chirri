@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-sakura: #FFB7C5;
+  --color-snow: #FAFAFA;
+  --color-night: #0F0F0F;
+  --color-ink: #1A1A1A;
+  --color-blossom: #FFD4DE;
+  --color-petal: #FF8FA3;
+  --color-stone: #6B7280;
+  --color-mist: #F3F4F6;
+  --color-charcoal: #1C1C1C;
+  --color-ash: #2A2A2A;
+  --color-bamboo: #10B981;
+  --color-amber: #F59E0B;
+  --color-vermillion: #EF4444;
+  --color-sky: #3B82F6;
+  --color-orchid: #8B5CF6;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-body;
+  }
+}
