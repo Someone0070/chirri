@@ -2,6 +2,10 @@
  * Voting Pipeline — runs all 4 diff strategies in parallel, counts votes,
  * and produces a structured result with confidence levels.
  *
+ * Integrated layers:
+ *   - Layer 1: Volatile Field Learning (strips segments that change >90% of the time)
+ *   - Layer 2: Confirmation Recheck (re-fetches after 5s to catch CDN/deploy transients)
+ *
  * Vote thresholds:
  *   0/4: NO CHANGE
  *   1/4: SUSPICIOUS (store, flag for learning, don't notify)
@@ -12,6 +16,8 @@
 
 import { createPatch } from 'diff';
 import { diffRawHtml, diffReadability, diffStructural, diffTextOnly, type DiffResult } from './differ.js';
+import { analyzeVolatility, stripVolatileSegments, getVolatilePatterns } from './learning.js';
+import { quickRecheck, computeDiffHash, confirmStage1 } from './confirmation.js';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -56,6 +62,11 @@ export interface VotingResult {
 
   // Raw diff results for further processing
   diffs: DiffResult[];
+
+  // Layer integrations
+  confirmed?: boolean;          // Layer 2: confirmation recheck result
+  confirmationMessage?: string; // Layer 2: human-readable confirmation status
+  volatileFieldsStripped?: number; // Layer 1: how many volatile segments were stripped
 }
 
 export interface SnapshotData {
@@ -63,6 +74,22 @@ export interface SnapshotData {
   readabilityText: string;
   structuralDom: string;
   textOnly: string;
+}
+
+/** Options for the full pipeline (with all layers) */
+export interface PipelineOptions {
+  /** URL being checked (needed for volatile learning DB lookups) */
+  url?: string;
+  /** Enable volatile field filtering (Layer 1). Default: true if url provided */
+  enableVolatileFiltering?: boolean;
+  /** Enable confirmation recheck (Layer 2). Default: false for batch/test mode */
+  enableConfirmation?: boolean;
+  /** Use Playwright for confirmation refetch. Default: false */
+  usePlaywright?: boolean;
+  /** Minimum snapshots before volatile learning kicks in. Default: 3 */
+  minSnapshotsForLearning?: number;
+  /** Pre-computed volatile patterns (skip DB lookup). For testing. */
+  volatilePatterns?: string[];
 }
 
 // ─── Vote Counting ──────────────────────────────────────────────────────────
@@ -196,6 +223,38 @@ function classifyChangeType(analysis: StructuralAnalysis, votes: StrategyVote[])
 // ─── Main Pipeline ──────────────────────────────────────────────────────────
 
 /**
+ * Apply volatile field filtering to snapshot data.
+ * Returns new SnapshotData with volatile segments stripped from text fields.
+ */
+function applyVolatileFiltering(
+  data: SnapshotData,
+  volatilePatterns: string[],
+): { filtered: SnapshotData; strippedCount: number } {
+  if (volatilePatterns.length === 0) {
+    return { filtered: data, strippedCount: 0 };
+  }
+
+  const filteredReadability = stripVolatileSegments(data.readabilityText, volatilePatterns);
+  const filteredTextOnly = stripVolatileSegments(data.textOnly, volatilePatterns);
+  const filteredStructural = stripVolatileSegments(data.structuralDom, volatilePatterns);
+
+  // Count how many lines were stripped (approximate)
+  const origLines = data.readabilityText.split('\n').length + data.textOnly.split('\n').length;
+  const filtLines = filteredReadability.split('\n').length + filteredTextOnly.split('\n').length;
+  const strippedCount = Math.max(0, origLines - filtLines);
+
+  return {
+    filtered: {
+      rawHtml: data.rawHtml, // Don't filter raw HTML — too risky
+      readabilityText: filteredReadability,
+      structuralDom: filteredStructural,
+      textOnly: filteredTextOnly,
+    },
+    strippedCount,
+  };
+}
+
+/**
  * Run the full voting pipeline on two snapshots.
  *
  * All 4 strategies run on the same HTML. Each votes independently.
@@ -204,13 +263,30 @@ function classifyChangeType(analysis: StructuralAnalysis, votes: StrategyVote[])
 export function runVotingPipeline(
   before: SnapshotData,
   after: SnapshotData,
+  options?: PipelineOptions,
 ): VotingResult {
+  let effectiveBefore = before;
+  let effectiveAfter = after;
+  let volatileFieldsStripped = 0;
+
+  // Layer 1: Volatile Field Filtering
+  if (options?.url && options.enableVolatileFiltering !== false) {
+    const patterns = options.volatilePatterns ?? getVolatilePatterns(options.url);
+    if (patterns.length > 0) {
+      const beforeResult = applyVolatileFiltering(before, patterns);
+      const afterResult = applyVolatileFiltering(after, patterns);
+      effectiveBefore = beforeResult.filtered;
+      effectiveAfter = afterResult.filtered;
+      volatileFieldsStripped = beforeResult.strippedCount + afterResult.strippedCount;
+    }
+  }
+
   // Run all 4 strategies
   const diffs: DiffResult[] = [
-    diffReadability(before.readabilityText, after.readabilityText),
-    diffTextOnly(before.textOnly, after.textOnly),
-    diffStructural(before.structuralDom, after.structuralDom),
-    diffRawHtml(before.rawHtml, after.rawHtml),
+    diffReadability(effectiveBefore.readabilityText, effectiveAfter.readabilityText),
+    diffTextOnly(effectiveBefore.textOnly, effectiveAfter.textOnly),
+    diffStructural(effectiveBefore.structuralDom, effectiveAfter.structuralDom),
+    diffRawHtml(effectiveBefore.rawHtml, effectiveAfter.rawHtml),
   ];
 
   // Cast votes
@@ -242,7 +318,96 @@ export function runVotingPipeline(
     readabilityDiff: readabilityPatch,
     readyForLlm: yesVotes >= 2,
     diffs,
+    volatileFieldsStripped: volatileFieldsStripped > 0 ? volatileFieldsStripped : undefined,
   };
+}
+
+/**
+ * Run the full pipeline with all layers (voting + confirmation + volatile learning).
+ *
+ * For live monitoring:
+ *   1. Check volatile field DB for this URL, strip known volatile segments
+ *   2. Run voting pipeline
+ *   3. If 2+ votes, do confirmation recheck (re-fetch after 5s)
+ *   4. Return result with confirmed boolean
+ */
+export async function runFullPipeline(
+  url: string,
+  before: SnapshotData,
+  after: SnapshotData,
+  options?: PipelineOptions,
+): Promise<VotingResult> {
+  const opts: PipelineOptions = {
+    url,
+    enableVolatileFiltering: true,
+    enableConfirmation: false,
+    minSnapshotsForLearning: 3,
+    ...options,
+  };
+
+  // Step 1: Run voting pipeline (with volatile filtering built in)
+  const result = runVotingPipeline(before, after, opts);
+
+  // Step 2: Confirmation recheck (only if enabled and 2+ votes)
+  if (opts.enableConfirmation && result.votes >= 2) {
+    const confirmation = await confirmStage1(
+      url,
+      before.readabilityText, // Compare against the PREVIOUS snapshot
+      result.diffs,
+      opts.usePlaywright,
+    );
+
+    result.confirmed = confirmation.confirmed || !confirmation.discarded;
+    result.confirmationMessage = confirmation.message;
+
+    // If discarded by confirmation, downgrade confidence
+    if (confirmation.discarded) {
+      result.confirmed = false;
+      result.confidence = Math.min(result.confidence, 0.2);
+      result.readyForLlm = false;
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Simulate confirmation for Wayback historical data.
+ *
+ * Since we can't re-fetch historical pages, we simulate confirmation by
+ * checking if a change persists across consecutive pairs:
+ *   - If pair N shows change AND pair N+1 also shows change → confirmed
+ *   - If pair N shows change but pair N+1 does NOT → likely transient
+ *
+ * Returns an array of booleans parallel to the input results, indicating
+ * whether each detected change was "confirmed" by the next pair.
+ */
+export function simulateConfirmation(
+  results: VotingResult[],
+): boolean[] {
+  const confirmed: boolean[] = new Array(results.length).fill(false);
+
+  for (let i = 0; i < results.length; i++) {
+    if (results[i].votes < 2) {
+      // No change detected, nothing to confirm
+      confirmed[i] = false;
+      continue;
+    }
+
+    // Change detected at pair i
+    if (i < results.length - 1) {
+      // Check if next pair ALSO shows a change (any votes >= 1 counts as "still different")
+      // The logic: if the page changed at pair N and is still different at pair N+1,
+      // the change was real and persisted. If pair N+1 shows 0 votes (identical),
+      // the change at pair N was transient.
+      confirmed[i] = results[i + 1].votes >= 1;
+    } else {
+      // Last pair: can't confirm, assume confirmed (benefit of the doubt)
+      confirmed[i] = true;
+    }
+  }
+
+  return confirmed;
 }
 
 /**
