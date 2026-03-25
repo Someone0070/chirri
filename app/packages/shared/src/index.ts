@@ -26,7 +26,7 @@ export { encrypt, decrypt } from './utils/crypto.js';
 export { buildIssueBody, buildIssueTitle } from './templates/github-issue.js';
 
 // Services
-export { sendChangeAlert, sendWeeklyDigest, sendWelcome, sendDunning } from './services/email.js';
+export { sendChangeAlert, sendWeeklyDigest, sendWelcome, sendDunning, sendAgentSignupEmail } from './services/email.js';
 export type { ChangeInfo } from './services/email.js';
 export { sendSlackNotification } from './services/slack.js';
 export { sendDiscordNotification } from './services/discord.js';

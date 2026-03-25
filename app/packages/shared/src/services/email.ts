@@ -353,6 +353,70 @@ export async function sendWelcome(
   }
 }
 
+export async function sendAgentSignupEmail(
+  to: string,
+  verifyUrl: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: 'Your AI agent set up Chirri for you',
+      html: agentSignupEmailHtml(verifyUrl),
+      text: agentSignupEmailText(verifyUrl),
+    });
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: (err as Error).message };
+  }
+}
+
+function agentSignupEmailHtml(verifyUrl: string): string {
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #1a1a1a;">
+  <h2 style="margin: 0 0 16px 0;">Your AI agent set up Chirri for you 🤖</h2>
+  
+  <p style="color: #374151; line-height: 1.6;">
+    An AI agent is monitoring your API dependencies using Chirri. Your account is active and watching for changes.
+  </p>
+
+  <p style="color: #374151; line-height: 1.6;">
+    Click below to access your dashboard and configure notifications, add more APIs, or manage your account.
+  </p>
+
+  <a href="${verifyUrl}" style="display: inline-block; background: #2563EB; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; margin: 16px 0;">
+    Access Your Dashboard →
+  </a>
+
+  <p style="color: #6B7280; font-size: 13px; line-height: 1.6; margin-top: 24px;">
+    If you didn't expect this, you can safely ignore this email. The free plan monitors up to 3 API endpoints with daily checks.
+  </p>
+
+  <hr style="border: none; border-top: 1px solid #E5E7EB; margin: 32px 0 16px 0;">
+  <p style="color: #9CA3AF; font-size: 12px;">
+    <a href="${DASHBOARD_URL}" style="color: #6B7280;">Chirri</a> — APIs change. We'll let you know.
+  </p>
+</body>
+</html>`;
+}
+
+function agentSignupEmailText(verifyUrl: string): string {
+  return `Your AI agent set up Chirri for you 🤖
+
+An AI agent is monitoring your API dependencies using Chirri. Your account is active and watching for changes.
+
+Access your dashboard and configure notifications: ${verifyUrl}
+
+If you didn't expect this, you can safely ignore this email. The free plan monitors up to 3 API endpoints with daily checks.
+
+---
+Chirri — APIs change. We'll let you know.`;
+}
+
 export async function sendDunning(
   to: string,
   daysLeft: number,

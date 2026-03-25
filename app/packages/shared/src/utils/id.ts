@@ -39,3 +39,5 @@ export const githubIssueId = () => createId('ghi_');
 export const apiKeyId = () => createId('apk_');
 export const liveApiKey = () => createId('ck_live_', 32);
 export const testApiKey = () => createId('ck_test_', 32);
+export const freeApiKey = () => createId('ck_free_', 32);
+export const verificationToken = () => nanoid(48);
