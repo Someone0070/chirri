@@ -9,6 +9,8 @@
  *   npx tsx src/index.ts --concurrency 5    # Concurrent fetches (default: 3)
  *   npx tsx src/index.ts --report json      # Output JSON instead of text
  *   npx tsx src/index.ts --strategy readability  # Force specific strategy (readability|text_only|raw_html|structural)
+ *   npx tsx src/index.ts --pipeline voting       # Use voting pipeline (default)
+ *   npx tsx src/index.ts --pipeline legacy        # Use old readability-first approach
  *
  * 6-Layer FP Defense flags:
  *   npx tsx src/index.ts --learn            # Learning mode: collect snapshots, build volatile field list
@@ -30,6 +32,7 @@ import { updateAllStabilityScores, getAllStabilityScores, calculateStability, fo
 import { correlateSignals } from './correlation.js';
 import { getLastNormalizationAudit } from './normalizer.js';
 import { extractSections, type ExtractionResult, type ExtractionConfidence } from './section-extractor.js';
+import { runVotingPipeline, formatVotingResult, type VotingResult } from './pipeline.js';
 import { storeSectionSnapshot, getLatestSectionSnapshot } from './snapshot.js';
 import { createHash } from 'crypto';
 
@@ -41,6 +44,8 @@ interface UrlEntry {
   url: string;
   type: string;
 }
+
+type PipelineMode = 'voting' | 'legacy';
 
 interface CliArgs {
   limit: number;
@@ -54,6 +59,7 @@ interface CliArgs {
   resource?: string;
   urls?: string[];
   strategy?: DiffStrategy;
+  pipeline: PipelineMode;
 }
 
 function parseArgs(): CliArgs {
@@ -69,6 +75,7 @@ function parseArgs(): CliArgs {
   let resource: string | undefined;
   let urls: string[] | undefined;
   let strategy: DiffStrategy | undefined;
+  let pipeline: PipelineMode = 'voting'; // Default to voting
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--limit' && args[i + 1]) {
@@ -100,6 +107,15 @@ function parseArgs(): CliArgs {
         urls = [args[i + 1]];
       }
       i++;
+    } else if (args[i] === '--pipeline' && args[i + 1]) {
+      const val = args[i + 1].toLowerCase();
+      if (val === 'voting' || val === 'legacy') {
+        pipeline = val as PipelineMode;
+      } else {
+        console.error(`Unknown pipeline mode: ${val}. Valid: voting, legacy`);
+        process.exit(1);
+      }
+      i++;
     } else if (args[i] === '--strategy' && args[i + 1]) {
       const val = args[i + 1] as DiffStrategy;
       if (['readability', 'text_only', 'raw_html', 'structural'].includes(val)) {
@@ -112,7 +128,7 @@ function parseArgs(): CliArgs {
     }
   }
 
-  return { limit, usePlaywright, concurrency, reportFormat, learn, confirm, stability, fullPipeline, resource, urls, strategy };
+  return { limit, usePlaywright, concurrency, reportFormat, learn, confirm, stability, fullPipeline, resource, urls, strategy, pipeline };
 }
 
 /**
@@ -122,7 +138,7 @@ async function processUrls(
   urls: UrlEntry[],
   usePlaywright: boolean,
   concurrency: number,
-  options: { confirm: boolean; fullPipeline: boolean }
+  options: { confirm: boolean; fullPipeline: boolean; pipeline: PipelineMode }
 ): Promise<UrlReport[]> {
   const results: UrlReport[] = [];
   let idx = 0;
@@ -213,10 +229,34 @@ async function processUrls(
           afterData.textOnly = stripVolatileSegments(afterData.textOnly, volatilePatterns);
         }
 
-        // Run diff (Layer 4 proactive FP detection happens inside normalizer)
+        // Run diff — choose pipeline mode
+        if (options.pipeline === 'voting') {
+          // ── Voting Pipeline ──
+          const votingResult = runVotingPipeline(beforeData, afterData);
+          diffs = votingResult.diffs;
+
+          if (votingResult.votes > 0) {
+            console.log(`  ${formatVotingResult(votingResult, true)} (${fetchResult.fetchTimeMs}ms)`);
+          } else {
+            console.log(`  ✨ No changes — 0/4 votes (${fetchResult.fetchTimeMs}ms)`);
+          }
+
+          // Store voting metadata on the report
+          (results as any)[current] = {
+            url: entry.url,
+            company: entry.company,
+            type: entry.type,
+            hasHistory: true,
+            fetchMethod: fetchResult.fetchMethod,
+            fetchTimeMs: fetchResult.fetchTimeMs,
+            diffs,
+            votingResult,
+          };
+
+        } else {
+        // ── Legacy Pipeline ──
         diffs = diffAll(beforeData, afterData);
 
-        // Apply tuned strategy selection: only report if readability or text_only (low-noise) detects it
         const reportDecision = shouldReport(diffs);
         const changedStrategies = diffs.filter(d => d.changed).map(d => d.strategy);
         if (changedStrategies.length > 0) {
@@ -261,6 +301,7 @@ async function processUrls(
         } else {
           console.log(`  ✨ No changes (${fetchResult.fetchTimeMs}ms)`);
         }
+        } // end legacy pipeline else
       } else {
         console.log(`  📸 First snapshot stored (${fetchResult.fetchTimeMs}ms)`);
       }
@@ -445,7 +486,7 @@ async function runSectionExtraction(
 }
 
 async function main() {
-  const { limit, usePlaywright, concurrency, reportFormat, learn, confirm, stability, fullPipeline, resource, urls: cliUrls } = parseArgs();
+  const { limit, usePlaywright, concurrency, reportFormat, learn, confirm, stability, fullPipeline, resource, urls: cliUrls, pipeline } = parseArgs();
 
   // --stability: Show stability scores and exit
   if (stability) {
@@ -503,7 +544,7 @@ async function main() {
   const allUrls: UrlEntry[] = JSON.parse(readFileSync(urlsPath, 'utf-8'));
   const urls = allUrls.slice(0, limit);
 
-  const pipelineMode = fullPipeline ? 'FULL 6-LAYER PIPELINE' : confirm ? 'WITH CONFIRMATION' : 'STANDARD';
+  const pipelineMode = pipeline === 'voting' ? 'VOTING PIPELINE' : fullPipeline ? 'FULL 6-LAYER PIPELINE' : confirm ? 'WITH CONFIRMATION' : 'STANDARD';
 
   console.log(`\n🚀 Chirri Diff Engine - Starting (${pipelineMode})`);
   console.log(`   URLs: ${urls.length}${limit < Infinity ? ` (limited from ${allUrls.length})` : ''}`);
@@ -515,7 +556,7 @@ async function main() {
   console.log('');
 
   const startTime = Date.now();
-  const results = await processUrls(urls, usePlaywright, concurrency, { confirm, fullPipeline });
+  const results = await processUrls(urls, usePlaywright, concurrency, { confirm, fullPipeline, pipeline });
   const elapsed = Date.now() - startTime;
 
   // Gather volatile stats
