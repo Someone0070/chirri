@@ -29,6 +29,7 @@ export const learningSampleId = () => createId('ls_');
 export const domainPatternId = () => createId('dp_');
 export const packageVersionId = () => createId('pv_');
 export const specSnapshotId = () => createId('sp_');
+export const mcpToolSnapshotId = () => createId('mts_');
 export const featureFlagId = () => createId('ff_');
 export const notificationRuleId = () => createId('nr_');
 export const simulationId = () => createId('sim_');

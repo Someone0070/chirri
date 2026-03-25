@@ -13,6 +13,7 @@ import { stripeWebhookRoute } from './routes/stripe-webhook.js';
 import { githubRoutes } from './integrations/github/routes.js';
 import { githubIssuesRoute } from './routes/github-issues.js';
 import { agentSignupRoute } from './routes/agent-signup.js';
+import { mcpRoute } from './routes/mcp.js';
 
 export const app = new Hono();
 
@@ -34,6 +35,7 @@ app.route('/', authRoute);
 app.route('/api/v1/auth', agentSignupRoute);
 app.route('/api/v1/api-keys', apiKeysRoute);
 app.route('/api/v1/urls', urlsRoute);
+app.route('/api/v1/urls/mcp', mcpRoute);
 app.route('/api/v1/billing', billingRoute);
 app.route('/api/v1/notifications', notificationsRoute);
 app.route('/api/v1/webhooks', webhooksRoute);

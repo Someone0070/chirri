@@ -120,6 +120,10 @@ export const urls = pgTable(
     url: text('url').notNull(),
     urlHash: text('url_hash').notNull(),
     name: text('name'),
+    sourceType: text('source_type').notNull().default('http'),
+    // Values: 'http' | 'mcp_server'
+    mcpConfig: jsonb('mcp_config').default({}),
+    // MCP-specific config: { transport, endpoint, authHeader, serverInfo }
     method: text('method').notNull().default('GET'),
     postConsent: boolean('post_consent').notNull().default(false),
     postConsentAt: timestamp('post_consent_at', { withTimezone: true }),
@@ -159,6 +163,7 @@ export const urls = pgTable(
     index('idx_urls_next_check').on(table.nextCheckAt),
     index('idx_urls_domain_path').on(table.parsedDomain, table.parsedPath),
     index('idx_urls_domain_active').on(table.parsedDomain),
+    index('idx_urls_source_type').on(table.sourceType, table.nextCheckAt),
   ],
 );
 
@@ -769,7 +774,32 @@ export const specSnapshots = pgTable(
   (table) => [index('idx_spec_snapshots_url').on(table.sharedUrlId, table.capturedAt)],
 );
 
-// 6.5 source_alert_preferences
+// 6.5 mcp_tool_snapshots
+export const mcpToolSnapshots = pgTable(
+  'mcp_tool_snapshots',
+  {
+    id: text('id').primaryKey(), // mts_ + nanoid(21)
+    sharedUrlId: text('shared_url_id')
+      .notNull()
+      .references(() => sharedUrls.id, { onDelete: 'cascade' }),
+    toolsJson: jsonb('tools_json').notNull(),
+    // Structure: { tools: McpToolDefinition[] }
+    toolsHash: text('tools_hash').notNull(),
+    // SHA-256 of canonical JSON (sorted keys)
+    toolHashes: jsonb('tool_hashes').notNull(),
+    // Structure: { [toolName]: sha256(canonicalJson(tool)) }
+    serverInfo: jsonb('server_info'),
+    // Structure: { name, version, vendor, capabilities }
+    capturedAt: timestamp('captured_at', { withTimezone: true }).notNull().defaultNow(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index('idx_mcp_tool_snapshots_url').on(table.sharedUrlId, table.capturedAt),
+    index('idx_mcp_tool_snapshots_hash').on(table.sharedUrlId, table.toolsHash),
+  ],
+);
+
+// 6.6 source_alert_preferences
 export const sourceAlertPreferences = pgTable(
   'source_alert_preferences',
   {

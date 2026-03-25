@@ -17,6 +17,7 @@ import { runVotingPipeline, type SnapshotData } from '../checkers/pipeline.js';
 import { extractSections } from '../checkers/section-extractor.js';
 import { analyzeVolatility } from '../checkers/learning.js';
 import { notificationQueue } from './notifications.js';
+import { checkMcpServer } from '../checkers/mcp/pipeline.js';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -52,6 +53,42 @@ export function createCheckUrlWorker(): Worker<CheckUrlJobData> {
       const { urlId, url, userId, resource, sharedUrlId } = job.data;
 
       console.log(`[check-url] Processing job=${job.id} url=${url}`);
+
+      // ── Branch: check source_type for MCP servers ──
+      const urlRows = await db
+        .select({
+          sourceType: schema.urls.sourceType,
+          mcpConfig: schema.urls.mcpConfig,
+        })
+        .from(schema.urls)
+        .where(eq(schema.urls.id, urlId))
+        .limit(1);
+
+      const urlRecord = urlRows[0];
+      if (urlRecord?.sourceType === 'mcp_server') {
+        const mcpConfig = (urlRecord.mcpConfig || {}) as {
+          transport?: 'sse' | 'http';
+          endpoint: string;
+          authHeader?: string;
+          serverInfo?: { name: string; version: string; vendor?: string };
+        };
+
+        await checkMcpServer({
+          urlId,
+          userId,
+          sharedUrlId,
+          mcpConfig: {
+            ...mcpConfig,
+            endpoint: mcpConfig.endpoint || url,
+          },
+        });
+
+        // Update timestamps after MCP check
+        await updateCheckTimestamps(urlId, sharedUrlId);
+        return;
+      }
+
+      // ── HTTP monitoring path (existing) ──
 
       // Step 1: Fetch page
       const fetchResult = await fetchUrl(url);
